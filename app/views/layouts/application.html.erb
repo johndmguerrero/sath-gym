@@ -24,7 +24,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="header-layout">
-
+  <body class="">
+    <div class="sidebar-layout">
+      <aside id="sidebar">
+        <%= render "layouts/partials/sidebar_menu" %>
+      </aside>
+      <main id="main">
+        <%= render "layouts/partials/mobile_menu" %>
+      </main>
+    </div>
   </body>
 </html>
