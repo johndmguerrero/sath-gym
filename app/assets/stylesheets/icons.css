@@ -45,3 +45,12 @@ img.icon {
 .icon--gallery-vertical-end { --svg: url("gallery-vertical-end.svg"); }
 .icon--book-open { --svg: url("book-open.svg"); }
 .icon--settings-2 { --svg: url("settings-2.svg"); }
+.icon--hexagon { --svg: url("hexagon.svg"); }
+.icon--chart-pie { --svg: url("chart-pie.svg"); }
+.icon--id-card-lanyard { --svg: url("id-card-lanyard.svg"); }
+.icon--wallet { --svg: url("wallet.svg"); }
+.icon--bot-message-square { --svg: url("bot-message-square.svg"); }
+.icon--circle-alert { --svg: url("circle-alert.svg"); }
+.icon--dumbbells { --svg: url("dumbbells.svg"); }
+
+/* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

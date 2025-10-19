@@ -1,5 +1,5 @@
 <div class="sidebar-menu">
-  <%= link_to "#", class: "btn sidebar-menu__button" do %>
+  <%= link_to "#", class: "btn sidebar-menu__button disabled" do %>
     <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
       <span class="icon icon--gallery-vertical-end m-2"></span>
     </div>
@@ -13,64 +13,48 @@
     <div class="sidebar-menu__group">
       <div class="sidebar-menu__group-label">Platform</div>
       <div class="sidebar-menu__items">
+        <%= link_to "#", class: "btn sidebar-menu__button" do %>
+          <span class="icon icon--chart-pie" aria-hidden="true"></span>
+          <span class="overflow-ellipsis">Dashboard</span>
+        <% end %>
         <details open>
           <summary class="btn sidebar-menu__button">
-            <span class="icon icon--square-terminal" aria-hidden="true"></span>
-            <span class="overflow-ellipsis">Playground</span>
+            <span class="icon icon--id-card-lanyard" aria-hidden="true"></span>
+            <span class="overflow-ellipsis">Gym-goers</span>
           </summary>
           <nav class="sidebar-menu__sub">
-            <%= link_to "History", "#", class: "btn sidebar-menu__button", aria: { current: "page" } %>
-            <%= link_to "Starred", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Settings", "#", class: "btn sidebar-menu__button" %>
+            <%= link_to "Attendance", "#", class: "btn sidebar-menu__button" %>
+            <%= link_to "Members", "#", class: "btn sidebar-menu__button", aria: { current: "page" } %>
+            <%= link_to "Tier/Plans", "#", class: "btn sidebar-menu__button" %>
           </nav>
         </details>
         <details>
           <summary class="btn sidebar-menu__button">
-            <span class="icon icon--bot" aria-hidden="true"></span>
-            <span class="overflow-ellipsis">Models</span>
+            <span class="icon icon--wallet" aria-hidden="true"></span>
+            <span class="overflow-ellipsis">Payments</span>
           </summary>
           <nav class="sidebar-menu__sub">
-            <%= link_to "Genesis", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Explorer", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Quantum", "#", class: "btn sidebar-menu__button" %>
+            <%= link_to "Transaction", "#", class: "btn sidebar-menu__button" %>
+            <%= link_to "Renewal", "#", class: "btn sidebar-menu__button" %>
+            <%= link_to "Invoice", "#", class: "btn sidebar-menu__button" %>
           </nav>
         </details>
-        <details>
-          <summary class="btn sidebar-menu__button">
-            <span class="icon icon--book-open" aria-hidden="true"></span>
-            <span class="overflow-ellipsis">Documentation</span>
-          </summary>
-          <nav class="sidebar-menu__sub">
-            <%= link_to "Documentation", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Get Started", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Tutorials", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Changelog", "#", class: "btn sidebar-menu__button" %>
-          </nav>
-        </details>
-        <details>
-          <summary class="btn sidebar-menu__button">
-            <span class="icon icon--settings-2" aria-hidden="true"></span>
-            <span class="overflow-ellipsis">Settings</span>
-          </summary>
-          <nav class="sidebar-menu__sub">
-            <%= link_to "General", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Teams", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Billing", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Limits", "#", class: "btn sidebar-menu__button" %>
-          </nav>
-        </details>
+        <%= link_to "#", class: "btn sidebar-menu__button" do %>
+          <span class="icon icon--dumbbells" aria-hidden="true"></span>
+          <span class="overflow-ellipsis">Equipments</span>
+        <% end %>
       </div>
     </div>
     <div class="sidebar-menu__group">
-      <div class="sidebar-menu__group-label">Projects</div>
+      <div class="sidebar-menu__group-label">AI Assistance</div>
       <nav class="sidebar-menu__items">
         <%= link_to "#", class: "btn sidebar-menu__button" do %>
-          <span class="icon icon--frame" aria-hidden="true"></span>
-          <span class="overflow-ellipsis">Design Engineering</span>
+          <span class="icon icon--hexagon" aria-hidden="true"></span>
+          <span class="overflow-ellipsis">Social Media</span>
         <% end %>
         <%= link_to "#", class: "btn sidebar-menu__button" do %>
-          <span class="icon icon--chart-pie" aria-hidden="true"></span>
-          <span class="overflow-ellipsis">Sales & Marketing</span>
+          <span class="icon icon--bot-message-square" aria-hidden="true"></span>
+          <span class="overflow-ellipsis">Chatbot</span>
         <% end %>
       </nav>
     </div>
@@ -80,8 +64,8 @@
       <%# image_tag "cartoon.jpg", size: 32, alt: "CN" %>
     </div>
     <div class="flex flex-col text-start leading-tight overflow-hidden">
-      <span class="overflow-ellipsis max-i-full font-semibold">Lázaro Nixon</span>
-      <span class="overflow-ellipsis max-i-full text-xs">lazaronixon@hotmail.com</span>
+      <span class="overflow-ellipsis max-i-full font-semibold">Allysa Ramos</span>
+      <span class="overflow-ellipsis max-i-full text-xs">Administrator</span>
     </div>
     <span class="icon icon--chevrons-up-down mis-auto" aria-hidden="true"></span>
   <% end %>

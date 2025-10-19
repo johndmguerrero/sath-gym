@@ -65,3 +65,5 @@ end
 gem "css-zero", "~> 2.0"
 
 gem "tailwindcss-rails", "~> 4.3"
+
+gem "breadcrumbs_on_rails", "~> 4.1"
