@@ -67,3 +67,7 @@ gem "css-zero", "~> 2.0"
 gem "tailwindcss-rails", "~> 4.3"
 
 gem "breadcrumbs_on_rails", "~> 4.1"
+
+gem "money-rails", "~> 1.15"
+
+gem "devise", "~> 4.9"
