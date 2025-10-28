@@ -1,0 +1,29 @@
+<%= form_with model: resource, as: resource_name, url: session_path(resource_name), class: "card flex flex-col gap" do |form| %>
+  <div class="flex flex-col">
+    <h3 class="font-semibold leading-none mbe-1">Login</h3>
+    <p class="text-sm text-subtle">Enter your email below to login to your account.</p>
+  </div>
+
+  <div class="flex flex-col gap mb-2">
+    <div class="flex flex-col gap-half">
+      <%= form.label :email, class: "text-sm font-medium leading-none" %>
+      <%= form.email_field :email, autofocus: true, autocomplete: "email", placeholder: "m@example.com", class: "input" %>
+    </div>
+
+    <div class="flex flex-col gap-half">
+      <%= form.label :password, class: "text-sm font-medium leading-none" %>
+      <%= form.password_field :password, autocomplete: "current-password", class: "input" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="flex items-center gap-half">
+        <%= form.check_box :remember_me, class: "checkbox" %>
+        <%= form.label :remember_me, class: "text-sm font-medium leading-none" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex items-center">
+    <%= form.submit "Sign in", class: "btn btn--primary i-full" %>
+  </div>
+<% end %>

@@ -59,14 +59,30 @@
       </nav>
     </div>
   </div>
-  <%= link_to "#", class: "btn sidebar-menu__button mbs-auto" do %>
-    <div class="flex shrink-0 overflow-hidden rounded-lg">
-      <%# image_tag "cartoon.jpg", size: 32, alt: "CN" %>
+  <div class="mbs-auto">
+    <div contents data-controller="popover" data-popover-placement-value="top-start">
+      <button class="btn sidebar-menu__button" data-popover-target="trigger" popovertarget="popover" aria-haspopup="true">
+        <div class="flex shrink-0 overflow-hidden rounded-lg">
+          <%= image_tag "zoom.jpg", size: 32, alt: "CN" %>
+        </div>
+        <div class="flex flex-col text-start leading-tight overflow-hidden">
+          <span class="overflow-ellipsis max-i-full font-semibold capitalize"><%= current_user.fullname %></span>
+          <span class="overflow-ellipsis max-i-full text-xs"><%= current_user.role %></span>
+        </div>
+        <span class="icon icon--chevrons-up-down mis-auto" aria-hidden="true"></span>
+      </button>
+
+      <div popover id="popover" class="popover" style="--popover-size: 15rem;" data-popover-target="content" role="menu" aria-label="Menu">
+        <div class="menu">
+          <%= link_to "Edit", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
+          <%= link_to "Make a copy", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
+          <%= link_to "Favorite", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
+          <hr class="menu__separator" role="separator"/>
+          <%= link_to "Classify", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
+          <hr class="menu__separator" role="separator"/>
+          <%= link_to "Sign Out", destroy_user_session_path, class: "btn menu__item !text-red-500", data: { menu_target: "item", turbo_method: :delete }, role: "menuitem" %>
+        </div>
+      </div>
     </div>
-    <div class="flex flex-col text-start leading-tight overflow-hidden">
-      <span class="overflow-ellipsis max-i-full font-semibold">Allysa Ramos</span>
-      <span class="overflow-ellipsis max-i-full text-xs">Administrator</span>
-    </div>
-    <span class="icon icon--chevrons-up-down mis-auto" aria-hidden="true"></span>
-  <% end %>
+  </div>
 </div>

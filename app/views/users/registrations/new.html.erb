@@ -1,0 +1,65 @@
+<div class="min-h-screen flex items-center justify-center bg-black p-4">
+  <div class="w-full max-w-md">
+    <div class="bg-neutral-900 rounded-3xl p-8 shadow-2xl border border-neutral-800">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-white text-3xl font-bold mb-3">Create an account</h1>
+        <p class="text-neutral-400 text-base">Enter your details below to create your account</p>
+      </div>
+
+      <!-- Form -->
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
+        <%= render "users/shared/error_messages", resource: resource %>
+
+        <!-- Email Field -->
+        <div>
+          <label for="user_email" class="block text-white text-lg font-medium mb-3">Email</label>
+          <%= f.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              placeholder: "m@example.com",
+              class: "w-full px-4 py-4 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent transition-all text-base" %>
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <label for="user_password" class="block text-white text-lg font-medium mb-3">
+            Password
+            <% if @minimum_password_length %>
+              <span class="text-neutral-500 text-sm font-normal">(<%= @minimum_password_length %> characters minimum)</span>
+            <% end %>
+          </label>
+          <%= f.password_field :password,
+              autocomplete: "new-password",
+              class: "w-full px-4 py-4 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent transition-all text-base" %>
+        </div>
+
+        <!-- Password Confirmation Field -->
+        <div>
+          <label for="user_password_confirmation" class="block text-white text-lg font-medium mb-3">Confirm password</label>
+          <%= f.password_field :password_confirmation,
+              autocomplete: "new-password",
+              class: "w-full px-4 py-4 bg-neutral-800 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent transition-all text-base" %>
+        </div>
+
+        <!-- Sign Up Button -->
+        <%= f.submit "Sign up", class: "w-full py-4 bg-neutral-200 hover:bg-white text-black font-semibold rounded-xl transition-colors cursor-pointer text-base" %>
+      <% end %>
+
+      <!-- Google Sign Up Button (OAuth - needs OmniAuth setup) -->
+      <%# Uncomment when OmniAuth is configured %>
+      <%# button_to "Sign up with Google", user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "w-full mt-4 py-4 bg-transparent border border-neutral-700 text-white font-medium rounded-xl hover:bg-neutral-800 transition-colors text-base" %>
+
+      <!-- Placeholder Google Button (remove when OAuth is set up) -->
+      <button type="button" class="w-full mt-4 py-4 bg-transparent border border-neutral-700 text-white font-medium rounded-xl hover:bg-neutral-800 transition-colors text-base">
+        Sign up with Google
+      </button>
+
+      <!-- Login Link -->
+      <p class="text-center text-neutral-400 mt-6 text-base">
+        Already have an account?
+        <%= link_to "Login", new_session_path(resource_name), class: "text-white hover:underline font-medium" %>
+      </p>
+    </div>
+  </div>
+</div>

@@ -71,3 +71,5 @@ gem "breadcrumbs_on_rails", "~> 4.1"
 gem "money-rails", "~> 1.15"
 
 gem "devise", "~> 4.9"
+
+gem "awesome_print", "~> 1.9"

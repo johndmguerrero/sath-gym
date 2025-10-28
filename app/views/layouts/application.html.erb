@@ -25,16 +25,22 @@
   </head>
 
   <body class="">
-    <div class="sidebar-layout">
-      <aside id="sidebar">
-        <%= render "layouts/partials/sidebar_menu" %>
-      </aside>
-      <main id="main">
-        <%= render "layouts/partials/mobile_menu" %>
-        <div>
-        <%= render "layouts/partials/breadcrumbs" %>
-        </div>
+    <% if user_signed_in? %>
+      <div class="sidebar-layout">
+        <aside id="sidebar">
+          <%= render "layouts/partials/sidebar_menu" %>
+        </aside>
+        <main id="main">
+          <%= render "layouts/partials/mobile_menu" %>
+          <div>
+          <%= render "layouts/partials/breadcrumbs" %>
+          </div>
+        </main>
+      </div>
+    <% else %>
+      <main class="centered-layout">
+        <%= yield %>
       </main>
-    </div>
+    <% end %>
   </body>
 </html>

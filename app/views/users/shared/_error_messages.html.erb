@@ -1,0 +1,12 @@
+<% if resource.errors.any? %>
+  <div class="bg-red-900/20 border border-red-700 rounded-xl p-4 mb-6">
+    <h2 class="text-red-400 font-semibold mb-2">
+      <%= pluralize(resource.errors.count, "error") %> prohibited this <%= resource_name.to_s.gsub('_', ' ') %> from being saved:
+    </h2>
+    <ul class="list-disc list-inside text-red-300 text-sm space-y-1">
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
