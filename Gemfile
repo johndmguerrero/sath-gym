@@ -64,4 +64,4 @@ end
 
 gem "css-zero", "~> 2.0"
 
-gem "tailwindcss-rails", "~> 4.3"
+gem "tailwindcss-rails", "~> 4.4"
