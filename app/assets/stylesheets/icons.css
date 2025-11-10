@@ -52,5 +52,6 @@ img.icon {
 .icon--bot-message-square { --svg: url("bot-message-square.svg"); }
 .icon--circle-alert { --svg: url("circle-alert.svg"); }
 .icon--dumbbells { --svg: url("dumbbells.svg"); }
+.icon--log-out { --svg: url("log-out.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

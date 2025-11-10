@@ -1,9 +1,9 @@
-<nav class="breadcrumb" aria-label="Breadcrumb">
-  <%= link_to "Home", "#home" %>
-  <span class="icon icon--chevron-right" aria-hidden="true"></span>
-  <span class="icon icon--ellipsis" aria-hidden="true"></span>
-  <span class="icon icon--chevron-right" aria-hidden="true"></span>
-  <%= link_to "Components", "#components" %>
-  <span class="icon icon--chevron-right" aria-hidden="true"></span>
-  <span class="text-primary" aria-disabled="true" aria-current="page" role="link">Breadcrumb</span>
+<nav class="breadcrumb mbe-5" aria-label="Breadcrumb">
+  <%= breadcrumbs.map.with_index do |item, index|
+    if index == breadcrumbs.length - 1
+      content_tag(:span, item.name, class: "text-primary", aria: { current: "page", disabled: "true" }, role: "link")
+    else
+      link_to(item.name, send("#{item.path}"))
+    end
+  end.join(breadcrumbs_divider).html_safe %>
 </nav>

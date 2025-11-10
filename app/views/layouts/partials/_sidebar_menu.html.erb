@@ -13,18 +13,18 @@
     <div class="sidebar-menu__group">
       <div class="sidebar-menu__group-label">Platform</div>
       <div class="sidebar-menu__items">
-        <%= link_to "#", class: "btn sidebar-menu__button" do %>
+        <%= nav_link_to root_path, class: "btn sidebar-menu__button" do %>
           <span class="icon icon--chart-pie" aria-hidden="true"></span>
           <span class="overflow-ellipsis">Dashboard</span>
         <% end %>
-        <details open>
+        <details <%= "open" if gym_goers_menu_open? %>>
           <summary class="btn sidebar-menu__button">
             <span class="icon icon--id-card-lanyard" aria-hidden="true"></span>
             <span class="overflow-ellipsis">Gym-goers</span>
           </summary>
           <nav class="sidebar-menu__sub">
-            <%= link_to "Attendance", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Members", "#", class: "btn sidebar-menu__button", aria: { current: "page" } %>
+            <%= nav_link_to "Attendance", attendances_path, class: "btn sidebar-menu__button" %>
+            <%= nav_link_to "Members", members_path, class: "btn sidebar-menu__button" %>
             <%= link_to "Tier/Plans", "#", class: "btn sidebar-menu__button" %>
           </nav>
         </details>
@@ -74,13 +74,10 @@
 
       <div popover id="popover" class="popover" style="--popover-size: 15rem;" data-popover-target="content" role="menu" aria-label="Menu">
         <div class="menu">
-          <%= link_to "Edit", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
-          <%= link_to "Make a copy", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
-          <%= link_to "Favorite", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
-          <hr class="menu__separator" role="separator"/>
-          <%= link_to "Classify", "", class: "btn menu__item", data: { menu_target: "item" }, role: "menuitem" %>
-          <hr class="menu__separator" role="separator"/>
-          <%= link_to "Sign Out", destroy_user_session_path, class: "btn menu__item !text-red-500", data: { menu_target: "item", turbo_method: :delete }, role: "menuitem" %>
+          <%= link_to destroy_user_session_path, class: "btn menu__item !text-red-500", data: { menu_target: "item", turbo_method: :delete }, role: "menuitem" do %>
+            <span class="icon icon--log-out" aria-hidden="true"></span>
+            <span class="overflow-ellipsis">Sign out</span>
+          <% end %>
         </div>
       </div>
     </div>

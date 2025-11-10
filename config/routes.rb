@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   resources :equipments, only: :index
+  resources :members, only: :index
+  resources :attendances, only: :index
 end
