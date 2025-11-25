@@ -50,7 +50,8 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem "log_bench"
+  # Generate fake data for seeding [https://github.com/faker-ruby/faker]
+  gem "faker"
 end
 
 group :development do
@@ -75,3 +76,7 @@ gem "money-rails", "~> 1.15"
 gem "devise", "~> 4.9"
 
 gem "awesome_print", "~> 1.9"
+
+gem "ransack"
+
+gem "pagy", "~> 9.3"

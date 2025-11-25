@@ -1,0 +1,13 @@
+<%= search_form_for search, url: members_path, class: "flex items-center justify-between gap mbe-4" do |form| %>
+  <div class="flex items-center flex-item-grow gap">
+    <%= form.search_field :nickname_or_first_name_or_last_name, placeholder: "Filter member...", autocomplete: "off", class: "input", style: "max-inline-size: 250px" %>
+    <%# form.select :status_eq, %w(backlog todo in_progress done canceled), { include_blank: "Status" }, { class: "input", style: "--input-inline-size: 85px" } %>
+    <%# form.select :priority_eq, %w(low medium high), { include_blank: "Priority" }, { class: "input", style: "--input-inline-size: 85px" } %>
+    <%= link_to "Reset", members_path, class: "btn btn--borderless show@md" if params.has_key?(:q) %>
+    <%= form.submit "Search", class: "btn" %>
+  </div>
+
+  <%= link_to new_member_path, class: "btn btn--primary" do %>
+    Add Member <span class="icon icon--user-plus" aria-hidden="true"></span>
+  <% end %>
+<% end %>

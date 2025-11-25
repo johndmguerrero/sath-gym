@@ -53,5 +53,12 @@ img.icon {
 .icon--circle-alert { --svg: url("circle-alert.svg"); }
 .icon--dumbbells { --svg: url("dumbbells.svg"); }
 .icon--log-out { --svg: url("log-out.svg"); }
+.icon--check-check { --svg: url("check-check.svg"); }
+.icon--chevrons-left { --svg: url("chevrons-left.svg"); }
+.icon--chevrons-right { --svg: url("chevrons-right.svg"); }
+.icon--user-plus { --svg: url("user-plus.svg"); }
+.icon--footprints { --svg: url("footprints.svg"); }
+.icon--user-x { --svg: url("user-x.svg"); }
+.icon--arrow-up-right { --svg: url("arrow-up-right.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

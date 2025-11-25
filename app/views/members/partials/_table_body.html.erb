@@ -1,0 +1,32 @@
+<tbody>
+  <% if !members.any? %>
+    <tr><td colspan="6" class="text-center p-8">No Results.</td></tr>
+  <% else %>
+    <% members.each do |member| %>
+      <tr>
+        <td><%= check_box_tag "selected_ids[]", member.id, class: "input", data: { action: "check-all#check", check_all_target: "dependant" } %></td>
+        <td class="whitespace-nowrap">#<%= member.customer_number %></td>
+        <td class="whitespace-nowrap">
+          <div class="flex items-center gap">
+            <span class="overflow-ellipsis" style="inline-size: 450px"><%= member.email %></span>
+          </div>
+        </td>
+        <td class="whitespace-nowrap">
+          <p>--</p>
+        </td>
+        <td class="whitespace-nowrap">
+          <div class="flex items-center gap">
+            <span class="icon <%= status_icons[member.status] %>" aria-hidden="true"></span>
+            <span><%= member.status.titleize %></span>
+          </div>
+        </td>
+        <td class="whitespace-nowrap">
+          <%= link_to edit_member_path(member.customer_number), class: "btn btn--plain p-1 !cursor-pointer !text-blue-400", data: { turbo_frame: "_top" } do %>
+            Edit
+            <span class="icon icon--arrow-up-right" aria-hidden="true"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>
