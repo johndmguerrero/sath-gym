@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.btn.btn--tabs-plain {
+  @apply pb-3;
+}

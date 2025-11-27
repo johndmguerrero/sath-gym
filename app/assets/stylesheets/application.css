@@ -8,3 +8,39 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+
+.tabs {
+  & .btn--wrapper{
+    --tabs-btn-wrapper-bottom-width: 1px;
+    --tabs-btn-wrapper-bottom-color: transparent;
+
+    border-block-end-width: var(--tabs-btn-wrapper-bottom-width);
+    border-block-end-color: var(--tabs-btn-wrapper-bottom-color);
+
+    &:has(button[aria-selected=true]) {
+      --tabs-btn-wrapper-bottom-color: var(--color-text);
+    }
+    &:hover {
+      --tabs-btn-wrapper-bottom-color: var(--color-text);
+
+      & .btn--tabs-plain {
+        --btn-color: var(--color-text);
+      }
+    }
+  }
+
+
+}
+.btn.btn--tabs-plain {
+  --btn-color: var(--color-text-subtle);
+  cursor: pointer;
+
+  & span {
+    pointer-events: none;
+  }
+
+  &:is([aria-selected="true"]) {
+    --btn-color: var(--color-text);
+  }
+}

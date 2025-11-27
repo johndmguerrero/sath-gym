@@ -20,7 +20,6 @@ class MembersController < ApplicationController
   def edit
     add_breadcrumb "Members", :members_path
     add_breadcrumb "#{@member.customer_number}"
-
   end
 
   private

@@ -1,3 +1,30 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  age                    :integer
+#  customer_number        :string
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  first_name             :string
+#  height                 :integer
+#  last_name              :string
+#  nickname               :string
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  role                   :string
+#  status                 :integer          default("active"), not null
+#  weight                 :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
 class User < ApplicationRecord
   enum :status, { active: 0, deactivate: 1, walkins: 2}
 
@@ -46,7 +73,7 @@ class User < ApplicationRecord
   end
 
   def self.generate_unique_customer_number
-    alphanumeric = ("0".."9").to_a + ("A".."Z").to_a
+    alphanumeric = ("0".."9").to_a + ("a".."z").to_a
     random_code = 6.times.map { alphanumeric.sample }.join
     "CUST-#{random_code}"
   end

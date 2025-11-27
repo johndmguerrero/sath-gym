@@ -60,5 +60,9 @@ img.icon {
 .icon--footprints { --svg: url("footprints.svg"); }
 .icon--user-x { --svg: url("user-x.svg"); }
 .icon--arrow-up-right { --svg: url("arrow-up-right.svg"); }
+.icon--info { --svg: url("info.svg"); }
+.icon--id-card { --svg: url("id-card.svg"); }
+.icon--user-cog { --svg: url("user-cog.svg"); }
+.icon--calendar-days { --svg: url("calendar-days.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */
