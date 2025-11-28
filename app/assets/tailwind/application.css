@@ -3,3 +3,7 @@
 .btn.btn--tabs-plain {
   @apply pb-3;
 }
+
+.btn--wrapper {
+  @apply px-3;
+}

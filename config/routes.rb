@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   resources :equipments, only: :index
   resources :members, only: [:index, :new, :edit]
   resources :attendances, only: :index
-  resources :plans, only: :index
+  resources :products, only: :index
 end

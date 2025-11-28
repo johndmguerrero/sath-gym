@@ -52,6 +52,9 @@ group :development, :test do
 
   # Generate fake data for seeding [https://github.com/faker-ruby/faker]
   gem "faker"
+
+  gem "rspec-rails", "~> 7.1"
+  gem "factory_bot_rails"
 end
 
 group :development do
@@ -65,6 +68,10 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  gem "shoulda-matchers", "~> 6.0"
+  gem "database_cleaner-active_record"
+  gem "simplecov", require: false
 end
 
 gem "css-zero", "~> 2.0"

@@ -10,17 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_24_121045) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_27_161235) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "product_plans", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "PHP", null: false
+    t.integer "interval"
+    t.integer "interval_count"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_plans_on_product_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.integer "status", default: 0, null: false
-    t.integer "price_cents", default: 0, null: false
-    t.string "price_currency", default: "PHP", null: false
-    t.integer "interval", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -57,6 +66,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_24_121045) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "product_plans", "products"
   add_foreign_key "subscriptions", "products"
   add_foreign_key "subscriptions", "users"
 end

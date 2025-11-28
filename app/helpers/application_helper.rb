@@ -1,7 +1,7 @@
 module ApplicationHelper
   include Pagy::Frontend
 
-  GYM_GOERS_MENU = ["members", "attendances", "plans"].freeze
+  GYM_GOERS_MENU = ["members", "attendances", "products"].freeze
 
   def breadcrumbs_divider
     '<span class="icon icon--chevron-right" aria-hidden="true"></span>'.html_safe
