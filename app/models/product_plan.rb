@@ -22,7 +22,7 @@
 #
 class ProductPlan < ApplicationRecord
   enum :status, { active: 0, inactive: 1}
-  enum :interval, { monthly: 0, yearly: 1}, default: 0
+  enum :interval, { monthly: 0, yearly: 1, daily: 2}, default: 0
   belongs_to :product
 
   monetize :price_cents

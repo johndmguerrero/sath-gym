@@ -4,8 +4,8 @@
 #
 #  id                     :bigint           not null, primary key
 #  address                :string
-#  age                    :integer
 #  customer_number        :string
+#  date_of_birth          :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
@@ -29,7 +29,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  enum :status, { active: 0, deactivate: 1, walkins: 2}
+  enum :status, { active: 0, draft: 1, inactive: 2}
   enum :gender, { male: 0, female: 1 }
 
   # Include default devise modules. Others available are:

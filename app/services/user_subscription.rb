@@ -15,24 +15,8 @@ class UserSubscription
       expires_at: set_expiry
     )
 
-    subscription.transactions.build(
-      payment_method: params[:payment_method],
-      remarks: params[:remarks],
-      reference_number: params[:reference_number],
-      paying_amount: params[:paying_amount]
-    )
-
     subscription.save
     subscription
-  end
-
-  def renew
-    subscription = user.subscription
-    self.product_plan = subscription.product_plan
-
-    subscription.expires_at = set_expiry
-    subscription.status = subscription_statuses["active"] if subscription.inactive?
-    subscription.save
   end
 
   private

@@ -15,6 +15,12 @@ class MembersController < ApplicationController
     add_breadcrumb "Members", :members_path
     add_breadcrumb "Add Member"
 
+    @member = User.new
+
+  end
+
+  def create
+
   end
 
   def edit

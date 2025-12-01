@@ -1,0 +1,44 @@
+  <div class="page-title mbe-5 flex items-center gap-4">
+    <div class="page-title-btn-wrapper">
+      <%= link_to "",  class: "btn btn--icon", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
+        <span class="icon icon--chevron-left" aria-hidden="true"></span>
+
+      <% end %>
+    </div>
+    <h2 class="text-2xl">Add Member</h2>
+  </div>
+
+  <%= form_with url: members_path, model: @member, id: "register-member" do |f| %>
+  <div class="card personal-information container">
+    <div class="card-header mbe-3">
+      <div class="flex items-center gap-2 ">
+        <span class="icon icon--id-card-lanyard" aria-hidden="true" style="--icon-size: 1.5rem"></span>
+        <h4 class="text-2xl">
+          Personal Information
+        </h4>
+      </div>
+      <p class="text-subtle">Basic details about the member</p>
+    </div>
+    <div class="grid gap-4 grid-cols-1 lg:grid-cols-3 mbe-3">
+      <div class="form-first-name">
+        <%= f.label :first_name, class: "text-subtle mbe-2 block" %>
+        <%= f.text_field :first_name, class: "input" %>
+      </div>
+      <div class="form-last-name">
+        <%= f.label :last_name, class: "text-subtle mbe-2 block" %>
+        <%= f.text_field :last_name, class: "input" %>
+      </div>
+      <div class="form-nickname">
+        <%= f.label :nickname, class: "text-subtle mbe-2 block" %>
+        <%= f.text_field :nickname, class: "input" %>
+      </div>
+    </div>
+    <div class="grid gap-4 grid-cols-1 lg:grid-cols-2">
+      <div class="form-nickname">
+        <%= f.label :email, class: "text-subtle mbe-2 block" %>
+        <%= f.email_field :email, class: "input" %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+

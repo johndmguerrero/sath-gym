@@ -8,60 +8,14 @@
       <% end %>
     </div>
     <h2 class="text-3xl"><%= @member.fullname %></h2>
-  </div>
+    <p class="text-subtle"> Last activty <%= @member.updated_at %></p>
 
-  <div class="member-content card mbe-5">
-    <div class="grid gap-4 grid-cols-2 lg:grid-cols-4 lg:gap-8">
-      <div class="member-name text-xs">
-        <p class="text-subtle mbe-3 uppercase">Customer Number</p>
-        <p class="text-base">
-          <span class="text-subtle text-xs">#</span>
-          <%= @member.customer_number %>
-        </p>
-      </div>
-      <div class="member-email text-xs">
-        <p class="text-subtle mbe-3 uppercase">Email</p>
-        <p class="text-base"><%= @member.email %></p>
-      </div>
-      <div class="member-gender text-xs">
-        <p class="text-subtle mbe-3 uppercase">gender</p>
-        <p class="text-base capitalize">
-          <%= @member.gender %>
-        </p>
-      </div>
-      <div class="member-age text-xs">
-        <p class="text-subtle mbe-3 uppercase">Age</p>
-        <p class="text-base">
-          <%= calculate_age(@member.date_of_birth) %>
-          <span class="text-subtle text-xs">years old</span>
-        </p>
-      </div>
-      <div class="member-phone_number text-xs">
-        <p class="text-subtle mbe-3 uppercase">Phone Number</p>
-        <p class="text-base">
-          <%= @member.phone_number %>
-        </p>
-      </div>
-      <div class="member-address text-xs">
-        <p class="text-subtle mbe-3 uppercase">Address</p>
-        <p class="text-base"><%= @member.address %></p>
-      </div>
-      <div class="member-weight text-xs">
-        <p class="text-subtle mbe-3">Registered Weight</p>
-        <p class="text-base">
-          <%= @member.weight %>
-          <span class="text-subtle text-xs">kg</span>
-        </p>
-      </div>
-      <div class="member-height text-xs">
-        <p class="text-subtle mbe-3">Registered Height</p>
-        <p class="text-base">
-          <%= @member.height %>
-          <span class="text-subtle text-xs">cm</span>
-        </p>
-      </div>
+    <div class="mis-auto">
+      <button class="btn btn--secondary">Renew</button>
     </div>
   </div>
+
+  <%= render partial: "members/partials/edit/members-content", locals: { member: @member} %>
 
   <%= render "members/partials/edit/member-tab" %>
   <div class="tab_member-content pb-3">

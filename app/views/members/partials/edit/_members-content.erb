@@ -1,0 +1,53 @@
+  <div class="member-content card mbe-5">
+    <div class="grid gap-4 grid-cols-1 lg:grid-cols-4 lg:gap-8">
+      <div class="member-name text-xs">
+        <p class="text-subtle mbe-3 uppercase">Customer Number</p>
+        <p class="text-base">
+          <span class="text-subtle text-xs">#</span>
+          <%= member.customer_number %>
+        </p>
+      </div>
+      <div class="member-email text-xs">
+        <p class="text-subtle mbe-3 uppercase">Email</p>
+        <p class="text-base"><%= display_value(member.email) %></p>
+      </div>
+      <div class="member-gender text-xs">
+        <p class="text-subtle mbe-3 uppercase">gender</p>
+        <p class="text-base capitalize">
+          <%= display_value(member.gender) %>
+        </p>
+      </div>
+      <div class="member-age text-xs">
+        <p class="text-subtle mbe-3 uppercase">Age</p>
+        <p class="text-base">
+          <% age = calculate_age(member.date_of_birth) %>
+          <%= age.present? ? "#{age} " : "--" %>
+          <span class="text-subtle text-xs"><%= "years old" if age.present? %></span>
+        </p>
+      </div>
+      <div class="member-phone_number text-xs">
+        <p class="text-subtle mbe-3 uppercase">Phone Number</p>
+        <p class="text-base">
+          <%= display_value(member.phone_number) %>
+        </p>
+      </div>
+      <div class="member-address text-xs">
+        <p class="text-subtle mbe-3 uppercase">Address</p>
+        <p class="text-base"><%= display_value(member.address) %></p>
+      </div>
+      <div class="member-weight text-xs">
+        <p class="text-subtle mbe-3">Registered Weight</p>
+        <p class="text-base">
+          <%= member.weight.present? ? "#{member.weight} " : "--" %>
+          <span class="text-subtle text-xs"><%= "kg" if member.weight.present? %></span>
+        </p>
+      </div>
+      <div class="member-height text-xs">
+        <p class="text-subtle mbe-3">Registered Height</p>
+        <p class="text-base">
+          <%= member.height.present? ? "#{member.height} " : "--" %>
+          <span class="text-subtle text-xs"><%= "cm" if member.height.present? %></span>
+        </p>
+      </div>
+    </div>
+  </div>
