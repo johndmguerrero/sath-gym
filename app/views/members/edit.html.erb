@@ -1,45 +1,69 @@
 <div class="edit_member" data-controller="tabs">
-  <div class="border-be border-gray-200">
-    <div class="tabs !flex-row" role="tablist">
 
-      <div class="btn--wrapper">
-        <button class="btn btn--plain btn--tabs-plain" type="button"
-                id="trigger_information" data-tabs-target="button" data-action="tabs#select" role="tab" aria-selected="true" aria-controls="tab_information"
-        >
-          <span class="icon icon--id-card-lanyard" aria-hidden="true"></span>
-          <span>Information</span>
-        </button>
+  <div class="page-title mbe-5 flex items-center gap-4 items-center">
+    <div class="page-title-btn-wrapper">
+      <%= link_to "",  class: "btn btn--icon", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
+        <span class="icon icon--chevron-left" aria-hidden="true"></span>
+
+      <% end %>
+    </div>
+    <h2 class="text-3xl"><%= @member.fullname %></h2>
+  </div>
+
+  <div class="member-content card mbe-5">
+    <div class="grid gap-4 grid-cols-2 lg:grid-cols-4 lg:gap-8">
+      <div class="member-name text-xs">
+        <p class="text-subtle mbe-3 uppercase">Customer Number</p>
+        <p class="text-base">
+          <span class="text-subtle text-xs">#</span>
+          <%= @member.customer_number %>
+        </p>
       </div>
-
-      <div class="btn--wrapper">
-        <button class="btn btn--plain btn--tabs-plain" type="button"
-                id="trigger_membership" data-tabs-target="button" data-action="tabs#select" role="tab" aria-controls="tab_membership"
-        >
-          <span class="icon icon--id-card" aria-hidden="true"></span>
-          <span>Membership</span>
-        </button>
+      <div class="member-email text-xs">
+        <p class="text-subtle mbe-3 uppercase">Email</p>
+        <p class="text-base"><%= @member.email %></p>
       </div>
-
-      <div class="btn--wrapper">
-        <button class="btn btn--plain btn--tabs-plain" type="button"
-                id="trigger_attendance" data-tabs-target="button" data-action="tabs#select" role="tab" aria-controls="tab_attendance"
-        >
-          <span class="icon icon--calendar-days" aria-hidden="true"></span>
-          <span>Attendance</span>
-        </button>
+      <div class="member-gender text-xs">
+        <p class="text-subtle mbe-3 uppercase">gender</p>
+        <p class="text-base capitalize">
+          <%= @member.gender %>
+        </p>
       </div>
-
-      <div class="btn--wrapper">
-        <button class="btn btn--plain btn--tabs-plain" type="button"
-                id="trigger_settings" data-tabs-target="button" data-action="tabs#select" role="tab" aria-controls="tab_settings"
-        >
-          <span class="icon icon--user-cog" aria-hidden="true"></span>
-          <span>Settings</span>
-        </button>
+      <div class="member-age text-xs">
+        <p class="text-subtle mbe-3 uppercase">Age</p>
+        <p class="text-base">
+          <%= calculate_age(@member.date_of_birth) %>
+          <span class="text-subtle text-xs">years old</span>
+        </p>
+      </div>
+      <div class="member-phone_number text-xs">
+        <p class="text-subtle mbe-3 uppercase">Phone Number</p>
+        <p class="text-base">
+          <%= @member.phone_number %>
+        </p>
+      </div>
+      <div class="member-address text-xs">
+        <p class="text-subtle mbe-3 uppercase">Address</p>
+        <p class="text-base"><%= @member.address %></p>
+      </div>
+      <div class="member-weight text-xs">
+        <p class="text-subtle mbe-3">Registered Weight</p>
+        <p class="text-base">
+          <%= @member.weight %>
+          <span class="text-subtle text-xs">kg</span>
+        </p>
+      </div>
+      <div class="member-height text-xs">
+        <p class="text-subtle mbe-3">Registered Height</p>
+        <p class="text-base">
+          <%= @member.height %>
+          <span class="text-subtle text-xs">cm</span>
+        </p>
       </div>
     </div>
   </div>
 
+  <%= render "members/partials/edit/member-tab" %>
   <div class="tab_member-content pb-3">
     <%= render "members/partials/edit/information", locals: { member: @member } %>
     <%= render "members/partials/edit/membership", locals: { member: @member } %>

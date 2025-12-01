@@ -64,5 +64,9 @@ img.icon {
 .icon--id-card { --svg: url("id-card.svg"); }
 .icon--user-cog { --svg: url("user-cog.svg"); }
 .icon--calendar-days { --svg: url("calendar-days.svg"); }
+.icon--square-arrow-out-up-right { --svg: url("square-arrow-out-up-right.svg"); }
+.icon--calendar-sync { --svg: url("calendar-sync.svg"); }
+.icon--weight { --svg: url("weight.svg"); }
+.icon--smartphone { --svg: url("smartphone.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

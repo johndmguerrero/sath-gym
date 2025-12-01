@@ -1,0 +1,159 @@
+<div class="index-product">
+  <div class="page-title mbe-5 flex items-center gap-4">
+    <div class="page-title-btn-wrapper">
+      <%= link_to "",  class: "btn", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
+        <span class="icon icon--chevron-left" aria-hidden="true"></span>
+        Back
+      <% end %>
+    </div>
+    <h2 class="text-2xl">Manage Products</h2>
+    <div class="quick-action mis-auto">
+      <%= link_to new_product_path, class: "btn btn--primary" do %>
+        Add Product <span class="icon icon--calendar-sync" aria-hidden="true"></span>
+      <% end %>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
+    <div class="product-wrapper border rounded-lg p-5 ">
+      <div class="product-card-header inline-flex justify-start gap-3 items-center w-full">
+        <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+          <span class="icon icon--gallery-vertical-end m-2"></span>
+        </div>
+        <div class="flex flex-col text-start leading-tight overflow-hidden">
+          <span class="overflow-ellipsis font-semibold">Sath Gym Membership</span>
+        </div>
+        <div class="product-status mis-auto">
+          <%= check_box_tag :status, checked: true, class: "switch", role: "switch" %>
+        </div>
+      </div>
+      <div class="product-card-body pb-3">
+        <p>Streamline software project, sprint planning, and bug tracking with Linear.</p>
+      </div>
+      <div class="product-card-footer w-full">
+        <div class="product-status mie-auto">
+          <%= link_to edit_product_path(id: 1), class: "btn btn--icon", target: "_blank" do %>
+            <span class="icon icon--square-arrow-out-up-right" aria-hidden="true"></span>
+            Edit
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="product-wrapper border rounded-lg p-5">
+      <div class="product-card-header inline-flex justify-start gap-3 items-center w-full">
+        <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+          <span class="icon icon--gallery-vertical-end m-2"></span>
+        </div>
+        <div class="flex flex-col text-start leading-tight overflow-hidden">
+          <span class="overflow-ellipsis font-semibold text-white">Sath Gym Membership</span>
+        </div>
+        <div class="product-status mis-auto">
+          <%= check_box_tag :status, checked: true, class: "switch", role: "switch" %>
+        </div>
+      </div>
+      <div class="product-card-body pb-3">
+        <p>Streamline software project, sprint planning, and bug tracking with Linear.</p>
+      </div>
+      <div class="product-card-footer w-full">
+        <div class="product-status mie-auto">
+          <%= link_to edit_product_path(id: 1), class: "btn btn--icon", target: "_blank" do %>
+            <span class="icon icon--square-arrow-out-up-right" aria-hidden="true"></span>
+            Edit
+          <% end %>
+        </div>
+      </div>
+    </div>    <div class="product-wrapper border rounded-lg p-5">
+      <div class="product-card-header inline-flex justify-start gap-3 items-center w-full">
+        <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+          <span class="icon icon--gallery-vertical-end m-2"></span>
+        </div>
+        <div class="flex flex-col text-start leading-tight overflow-hidden">
+          <span class="overflow-ellipsis font-semibold">Sath Gym Membership</span>
+        </div>
+        <div class="product-status mis-auto">
+          <%= check_box_tag :status, checked: true, class: "switch", role: "switch" %>
+        </div>
+      </div>
+      <div class="product-card-body pb-3">
+        <p>Streamline software project, sprint planning, and bug tracking with Linear.</p>
+      </div>
+      <div class="product-card-footer w-full">
+        <div class="product-status mie-auto">
+          <%= link_to edit_product_path(id: 1), class: "btn btn--icon", target: "_blank" do %>
+            <span class="icon icon--square-arrow-out-up-right" aria-hidden="true"></span>
+            Edit
+          <% end %>
+        </div>
+      </div>
+    </div>    <div class="product-wrapper border rounded-lg p-5">
+      <div class="product-card-header inline-flex justify-start gap-3 items-center w-full">
+        <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+          <span class="icon icon--gallery-vertical-end m-2"></span>
+        </div>
+        <div class="flex flex-col text-start leading-tight overflow-hidden">
+          <span class="overflow-ellipsis font-semibold">Sath Gym Membership</span>
+        </div>
+        <div class="product-status mis-auto">
+          <%= check_box_tag :status, checked: true, class: "switch", role: "switch" %>
+        </div>
+      </div>
+      <div class="product-card-body pb-3">
+        <p>Streamline software project, sprint planning, and bug tracking with Linear.</p>
+      </div>
+      <div class="product-card-footer w-full">
+        <div class="product-status mie-auto">
+          <%= link_to edit_product_path(id: 1), class: "btn btn--icon", target: "_blank" do %>
+            <span class="icon icon--square-arrow-out-up-right" aria-hidden="true"></span>
+            Edit
+          <% end %>
+        </div>
+      </div>
+    </div>    <div class="product-wrapper border rounded-lg p-5">
+      <div class="product-card-header inline-flex justify-start gap-3 items-center w-full">
+        <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+          <span class="icon icon--gallery-vertical-end m-2"></span>
+        </div>
+        <div class="flex flex-col text-start leading-tight overflow-hidden">
+          <span class="overflow-ellipsis font-semibold">Sath Gym Membership</span>
+        </div>
+        <div class="product-status mis-auto">
+          <%= check_box_tag :status, checked: true, class: "switch", role: "switch" %>
+        </div>
+      </div>
+      <div class="product-card-body pb-3">
+        <p>Streamline software project, sprint planning, and bug tracking with Linear.</p>
+      </div>
+      <div class="product-card-footer w-full">
+        <div class="product-status mie-auto">
+          <%= link_to edit_product_path(id: 1), class: "btn btn--icon", target: "_blank" do %>
+            <span class="icon icon--square-arrow-out-up-right" aria-hidden="true"></span>
+            Edit
+          <% end %>
+        </div>
+      </div>
+    </div>    <div class="product-wrapper border rounded-lg p-5">
+      <div class="product-card-header inline-flex justify-start gap-3 items-center w-full">
+        <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+          <span class="icon icon--gallery-vertical-end m-2"></span>
+        </div>
+        <div class="flex flex-col text-start leading-tight overflow-hidden">
+          <span class="overflow-ellipsis font-semibold">Sath Gym Membership</span>
+        </div>
+        <div class="product-status mis-auto">
+          <%= check_box_tag :status, checked: true, class: "switch", role: "switch" %>
+        </div>
+      </div>
+      <div class="product-card-body pb-3">
+        <p>Streamline software project, sprint planning, and bug tracking with Linear.</p>
+      </div>
+      <div class="product-card-footer w-full">
+        <div class="product-status mie-auto">
+          <%= link_to edit_product_path(id: 1), class: "btn btn--icon", target: "_blank" do %>
+            <span class="icon icon--square-arrow-out-up-right" aria-hidden="true"></span>
+            Edit
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

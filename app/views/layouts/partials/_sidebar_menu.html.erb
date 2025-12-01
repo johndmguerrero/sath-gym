@@ -28,18 +28,18 @@
             <%= nav_link_to "Product & Plans", products_path, class: "btn sidebar-menu__button" %>
           </nav>
         </details>
-        <details>
+        <details <%= "open" if payment_menu_open? %> >
           <summary class="btn sidebar-menu__button">
             <span class="icon icon--wallet" aria-hidden="true"></span>
             <span class="overflow-ellipsis">Payments</span>
           </summary>
           <nav class="sidebar-menu__sub">
-            <%= link_to "Transaction", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Renewal", "#", class: "btn sidebar-menu__button" %>
-            <%= link_to "Invoice", "#", class: "btn sidebar-menu__button" %>
+            <%= nav_link_to "Transaction", transactions_path, class: "btn sidebar-menu__button" %>
+            <%= nav_link_to "Renewal", "#", class: "btn sidebar-menu__button" %>
+            <%= nav_link_to "Invoice", "#", class: "btn sidebar-menu__button" %>
           </nav>
         </details>
-        <%= link_to "#", class: "btn sidebar-menu__button" do %>
+        <%= nav_link_to equipments_path, class: "btn sidebar-menu__button" do %>
           <span class="icon icon--dumbbells" aria-hidden="true"></span>
           <span class="overflow-ellipsis">Equipments</span>
         <% end %>

@@ -2,9 +2,18 @@ module ApplicationHelper
   include Pagy::Frontend
 
   GYM_GOERS_MENU = ["members", "attendances", "products"].freeze
+  PAYMENTS_MENU = ["transactions", "renewals", "invoices"].freeze
 
   def breadcrumbs_divider
     '<span class="icon icon--chevron-right" aria-hidden="true"></span>'.html_safe
+  end
+
+  def payment_menu
+    PAYMENTS_MENU
+  end
+
+  def payment_menu_open?
+    PAYMENTS_MENU.include?(controller_name)
   end
 
   def gym_goers_menu
@@ -36,6 +45,16 @@ module ApplicationHelper
     else
       link_to(name, options, html_options)
     end
+  end
+
+  # Calculate age from date of birth to current date
+  def calculate_age(date_of_birth)
+    return nil unless date_of_birth
+
+    now = Time.current.to_date
+    age = now.year - date_of_birth.year
+    age -= 1 if now.month < date_of_birth.month || (now.month == date_of_birth.month && now.day < date_of_birth.day)
+    age
   end
 
   private

@@ -10,9 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_27_161235) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_01_095446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
+
+  create_table "equipment", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "brand"
+    t.text "description"
+    t.integer "weight"
+    t.integer "height"
+    t.string "sku"
+    t.bigint "equipment_categories_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "quantity"
+    t.index ["equipment_categories_id"], name: "index_equipment_on_equipment_categories_id"
+  end
+
+  create_table "equipment_categories", force: :cascade do |t|
+    t.string "name"
+    t.text "desciption"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "product_plans", force: :cascade do |t|
     t.bigint "product_id", null: false
@@ -36,19 +65,34 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_161235) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "product_id", null: false
-    t.date "expires_at"
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_subscriptions_on_product_id"
+    t.bigint "product_plan_id", null: false
+    t.datetime "expires_at", null: false
+    t.index ["product_plan_id"], name: "index_subscriptions_on_product_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.string "remarks"
+    t.integer "paying_amount_cents", default: 0, null: false
+    t.string "paying_amount_currency", default: "PHP", null: false
+    t.integer "subtotal_cents", default: 0, null: false
+    t.string "subtotal_currency", default: "PHP", null: false
+    t.integer "total_cents", default: 0, null: false
+    t.string "total_currency", default: "PHP", null: false
+    t.integer "payment_method", default: 0, null: false
+    t.string "reference_number"
+    t.bigint "subscription_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscription_id"], name: "index_transactions_on_subscription_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.integer "age"
     t.integer "height"
     t.integer "weight"
     t.string "nickname"
@@ -62,11 +106,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_27_161235) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0, null: false
     t.string "customer_number"
+    t.string "phone_number"
+    t.string "address"
+    t.integer "gender", default: 0
+    t.datetime "date_of_birth"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "attendances", "users"
+  add_foreign_key "equipment", "equipment_categories", column: "equipment_categories_id"
   add_foreign_key "product_plans", "products"
-  add_foreign_key "subscriptions", "products"
+  add_foreign_key "subscriptions", "product_plans"
   add_foreign_key "subscriptions", "users"
 end

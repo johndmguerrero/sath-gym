@@ -3,14 +3,17 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  address                :string
 #  age                    :integer
 #  customer_number        :string
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
+#  gender                 :integer          default("male")
 #  height                 :integer
 #  last_name              :string
 #  nickname               :string
+#  phone_number           :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -27,6 +30,7 @@
 #
 class User < ApplicationRecord
   enum :status, { active: 0, deactivate: 1, walkins: 2}
+  enum :gender, { male: 0, female: 1 }
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -35,6 +39,8 @@ class User < ApplicationRecord
 
   has_one :subscription
   has_one :subscription_product, through: :subscription
+
+  has_many :attendances
 
   before_create :generate_customer_number, if: -> { customer_number.blank? }
 
@@ -75,6 +81,6 @@ class User < ApplicationRecord
   def self.generate_unique_customer_number
     alphanumeric = ("0".."9").to_a + ("a".."z").to_a
     random_code = 6.times.map { alphanumeric.sample }.join
-    "CUST-#{random_code}"
+    "cust-#{random_code}"
   end
 end
