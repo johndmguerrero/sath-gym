@@ -68,5 +68,8 @@ img.icon {
 .icon--calendar-sync { --svg: url("calendar-sync.svg"); }
 .icon--weight { --svg: url("weight.svg"); }
 .icon--smartphone { --svg: url("smartphone.svg"); }
+.icon--diameter { --svg: url("diameter.svg"); }
+.icon--circle-off { --svg: url("circle-off.svg"); }
+.icon--circle-dashed { --svg: url("circle-dashed.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

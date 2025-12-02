@@ -10,9 +10,11 @@
     <h2 class="text-3xl"><%= @member.fullname %></h2>
     <p class="text-subtle"> Last activty <%= @member.updated_at %></p>
 
+    <% if @member.active? %>
     <div class="mis-auto">
       <button class="btn btn--secondary">Renew</button>
     </div>
+    <% end %>
   </div>
 
   <%= render partial: "members/partials/edit/members-content", locals: { member: @member} %>

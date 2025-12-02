@@ -60,8 +60,9 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem "log_bench"
+  # gem "log_bench"
   gem "annotaterb"
+  gem "byebug"
 end
 
 group :test do
@@ -74,7 +75,7 @@ group :test do
   gem "simplecov", require: false
 end
 
-gem "css-zero", "~> 2.0"
+gem "css-zero", "~> 3.1"
 
 gem "tailwindcss-rails", "~> 4.3"
 

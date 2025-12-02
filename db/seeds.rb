@@ -4,7 +4,42 @@
 
 require "faker"
 
-puts "Seeding member users..."
+puts "[SEED] Default Product..."
+
+product = Product.new(
+  name: "Sath Gym Membership",
+  description: "Defaullt non-promo gym membership"
+)
+
+product.plans.build(
+  interval_count: 30,
+  price: 2000
+)
+
+product.plans.build(
+  interval: 1,
+  interval_count: 30,
+  price: 2000
+)
+
+product.save
+
+puts "[SEED] Creating default Admin"
+
+User.create(
+  first_name: "Admin",
+  last_name: "Sath",
+  role: "Admin",
+  email: "admin@email.com",
+  password: "Testing123",
+  password_confirmation: "Testing123",
+  subscription_attributes: {
+    product_plan_id: 1,
+    expires_at: DateTime.now + 10.years
+  }
+)
+
+puts "[SEED] Members..."
 
 
 30.times do
@@ -29,31 +64,25 @@ puts "Seeding member users..."
   email = Faker::Internet.unique.email(name: "#{first_name}.#{last_name}")
 
   # Random status distribution (80% active, 15% deactivate, 5% walkins)
-  status = [ :active, :active, :active, :active, :active, :active, :active, :active, :deactivate, :walkins ].sample
+  status = [ :draft, :draft, :draft, :draft, :draft, :draft, :draft, :active, :active, :inactive ].sample
 
-  user = User.create!(
+  user = User.create(
     email: email,
     first_name: first_name,
     last_name: last_name,
     nickname: nickname,
-    age: age,
+    date_of_birth: DateTime.now - 20.years,
     height: height,
     weight: weight,
     role: User::ROLE_MEMBER,
     status: status,
     password: "Testing123",
-    password_confirmation: "Testing123"
+    password_confirmation: "Testing123",
+    subscription_attributes: {
+      product_plan_id: 2,
+      expires_at: DateTime.now + 1.year
+    }
   )
 
   puts "Created member: #{user.email} - #{user.fullname} (#{user.status})"
 end
-
-puts "\n" + "=" * 30
-puts "Seeding complete!"
-puts "Total users: #{User.count}"
-puts "Admin users: #{User.where(role: User::ROLE_ADMIN).count}"
-puts "Member users: #{User.where(role: User::ROLE_MEMBER).count}"
-puts "Active: #{User.where(status: :active).count}"
-puts "Deactivated: #{User.where(status: :deactivate).count}"
-puts "Walk-ins: #{User.where(status: :walkins).count}"
-puts "=" * 30

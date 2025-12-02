@@ -1,7 +1,7 @@
 module MembersHelper
 
   def status_icons
-    { "active" => "icon--check-check", "walkins" => "icon--footprints", "deactivate" => "icon--user-x" }
+    { "active" => "icon--check-check", "inactive" => "icon--circle-off", "draft" => "icon--circle-dashed" }
   end
 
   def priority_icons

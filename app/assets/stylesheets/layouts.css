@@ -1,9 +1,15 @@
 .sidebar-layout {
+  block-size: 100dvh;
   display: grid;
   grid-template-areas: "header header" "sidebar main";
   grid-template-columns: var(--sidebar-width, 0) 1fr;
   grid-template-rows: auto 1fr;
-  block-size: 100dvh;
+
+  &:is(.closed) {
+    --sidebar-border-width: 0;
+    --sidebar-padding: 0;
+    --sidebar-width: 0;
+  }
 
   @media (width >= 48rem) {
     --sidebar-border-width: var(--border);
@@ -13,16 +19,16 @@
 }
 
 .header-layout {
+  block-size: 100dvh;
   display: grid;
   grid-template-areas: "header" "main";
   grid-template-rows: auto 1fr;
-  block-size: 100dvh;
 }
 
 .centered-layout {
+  block-size: 100dvh;
   display: grid;
   place-items: center;
-  block-size: 100dvh;
 }
 
 .container {
@@ -34,8 +40,8 @@
 #header {
   align-items: center;
   background-color: rgb(from var(--color-border-light) r g b / .5);
-  border-block-end-width: var(--border);
   block-size: var(--size-16);
+  border-block-end-width: var(--border);
   column-gap: var(--size-4);
   display: flex;
   grid-area: header;

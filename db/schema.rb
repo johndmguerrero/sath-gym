@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_01_095446) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_02_060411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,7 +47,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_01_095446) do
     t.bigint "product_id", null: false
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "PHP", null: false
-    t.integer "interval"
+    t.integer "interval", default: 0
     t.integer "interval_count"
     t.integer "status", default: 0
     t.datetime "created_at", null: false

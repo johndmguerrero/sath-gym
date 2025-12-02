@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   resources :equipments, only: [:index, :new, :create, :edit, :destroy]
-  resources :members, only: [:index, :new, :edit, :create]
+  resources :members, only: [:index, :new, :edit, :create] do
+    post "on_subscription_change", on: :collection
+  end
   resources :attendances, only: :index
   resources :products, except: :show
   resources :transactions, only: [:index, :edit]

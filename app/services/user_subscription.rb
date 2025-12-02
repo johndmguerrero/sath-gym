@@ -6,20 +6,21 @@ class UserSubscription
     self.product_plan = product_plan
     self.product      = product
     self.options      = options
+
+    self.user         = User.new(options) if !self.user
   end
 
   def register
-    subscription = user.build_subscription(
-      product_plan: product_plan,
-      user: user,
-      expires_at: set_expiry
-    )
-
-    subscription.save
-    subscription
+    self.user = User.new(options)
+    user.subscription.expires_at = set_expiry
+    user.save
   end
 
   private
+
+  def create_user
+    @user = User.new(options)
+  end
 
   def set_expiry
     DateTime.now + product_plan.interval_count.days

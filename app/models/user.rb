@@ -18,7 +18,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :string
-#  status                 :integer          default("active"), not null
+#  status                 :integer          default("draft"), not null
 #  weight                 :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -29,7 +29,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  enum :status, { active: 0, draft: 1, inactive: 2}
+  enum :status, { draft: 0, active: 1, inactive: 2}
   enum :gender, { male: 0, female: 1 }
 
   # Include default devise modules. Others available are:
@@ -41,6 +41,12 @@ class User < ApplicationRecord
   has_one :subscription_product, through: :subscription
 
   has_many :attendances
+
+  after_initialize :build_default_subscription, if: :new_record?
+
+  before_validation :set_default_required_values, on: :create
+
+  accepts_nested_attributes_for :subscription
 
   before_create :generate_customer_number, if: -> { customer_number.blank? }
 
@@ -70,6 +76,16 @@ class User < ApplicationRecord
   end
 
   private
+
+  def build_default_subscription
+    build_subscription unless subscription
+  end
+
+  def set_default_required_values
+    self.role ||= ROLE_MEMBER
+    self.password = "Testing123"
+    self.password_confirmation = "Testing123"
+  end
 
   def generate_customer_number
     loop do

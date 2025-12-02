@@ -1,0 +1,111 @@
+  <%= form_with url: members_path, html: { autocomplete: "off" }, model: member, id: "register-member", data: { controller: "form" } do |f| %>
+    <div class="card personal-information mbe-5">
+      <div class="card-header mbe-3">
+        <div class="flex items-center gap-2 mbe-2">
+          <span class="icon icon--id-card-lanyard" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+          <h4 class="text-xl">
+            Personal Information
+          </h4>
+        </div>
+        <p class="text-subtle">Basic details about the member</p>
+      </div>
+      <div class="separator mb-4" aria-hidden="true"></div>
+      <div class="grid gap-4 grid-cols-1 lg:grid-cols-3 mbe-3">
+        <div class="form-first-name">
+          <%= f.label :first_name, class: "mbe-2 block required" %>
+          <%= f.text_field :first_name, class: "input" %>
+        </div>
+        <div class="form-last-name">
+          <%= f.label :last_name, class: "mbe-2 block required" %>
+          <%= f.text_field :last_name, class: "input" %>
+        </div>
+        <div class="form-nickname">
+          <%= f.label :nickname, class: "mbe-2 block" %>
+          <%= f.text_field :nickname, class: "input" %>
+        </div>
+      </div>
+      <div class="grid gap-4 grid-cols-1 lg:grid-cols-4 mbe-3">
+        <div class="form-email lg:col-span-2">
+          <%= f.label :email, class: "mbe-2 block required" %>
+          <%= f.email_field :email, class: "input" %>
+        </div>
+        <div class="form-phone-number">
+          <%= f.label :phone_number, class: "mbe-2 block required" %>
+          <%= f.text_field :phone_number, class: "input" %>
+        </div>
+        <div class="form-gender">
+          <%= f.label :gender, class: "mbe-2 block required" %>
+          <%= f.collection_select :gender, genders, :to_s, :humanize, {}, { class: "input" } %>
+        </div>
+      </div>
+      <div class="grid gap-4 grid-cols-1 lg:grid-cols-4 mbe-3">
+        <div class="form-date-of-birth">
+          <%= f.label :date_of_birth, class: "mbe-2 block required" %>
+          <%= f.text_field :date_of_birth, class: "input", placeholder: "Pick members birthday", data: { controller: "datepicker"} %>
+        </div>
+        <div class="form-address lg:col-span-3">
+          <%= f.label :address, class: "mbe-2 block" %>
+          <%= f.text_field :address, class: "input" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card health-information mbe-5">
+      <div class="card-header mbe-3">
+        <div class="flex items-center gap-2 mbe-2">
+          <span class="icon icon--diameter" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+          <h4 class="text-xl">
+            Physical Measurements
+          </h4>
+        </div>
+        <p class="text-subtle">Body metrics for personalized training programs</p>
+      </div>
+      <div class="separator mb-4" aria-hidden="true"></div>
+      <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3">
+        <div class="form-weight">
+          <%= f.label :weight, class: "mbe-2 block" %>
+          <%= f.number_field :weight, class: "input" %>
+        </div>
+        <div class="form-height">
+          <%= f.label :height, class: "mbe-2 block" %>
+          <%= f.number_field :height, class: "input" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="card membership-information mbe-5">
+      <div class="card-header mbe-3">
+        <div class="flex items-center gap-2 mbe-2">
+          <span class="icon icon--id-card" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+          <h4 class="text-xl">
+            Membership Information
+          </h4>
+        </div>
+        <p class="text-subtle">Choose the plan that fits your needs</p>
+      </div>
+      <div class="separator mb-4" aria-hidden="true"></div>
+      <%= f.fields_for :subscription do |sub| %>
+        <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3">
+          <div class="form-weight">
+            <%= f.label :product, class: "mbe-2 block" %>
+            <%= f.collection_select :product_id, @products, :id, :name, { include_blank: "Select one" } ,{ class: "input", data: { action: "form#submit", form_submitter_param: "on_subscription_change" } } %>
+          </div>
+          <div class="form-height">
+            <%= sub.label :product_plan_id, class: "mbe-2 block" %>
+            <%= sub.collection_select :product_plan_id, [], :id, :name, { include_blank: "Select one" }, { class: "input" } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex form-actions">
+      <div class="mis-auto flex gap-4">
+        <%= link_to "",  class: "btn btn--borderless", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
+          Cancel
+        <% end %>
+        <%= f.button "Register Member", type: "submit", class: "btn btn--primary btn--busy" %>
+        <%= f.submit id: "on_subscription_change", hidden: true, formaction: on_subscription_change_members_path, formmethod: :post, formnovalidate: true %>
+      </div>
+    </div>
+
+  <% end %>

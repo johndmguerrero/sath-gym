@@ -3,7 +3,7 @@
 # Table name: product_plans
 #
 #  id             :bigint           not null, primary key
-#  interval       :integer
+#  interval       :integer          default("monthly")
 #  interval_count :integer
 #  price_cents    :integer          default(0), not null
 #  price_currency :string           default("PHP"), not null
@@ -26,4 +26,8 @@ class ProductPlan < ApplicationRecord
   belongs_to :product
 
   monetize :price_cents
+
+  def display_plan
+    "#{price_cents} -- #{interval}"
+  end
 end
