@@ -25,10 +25,24 @@ services:
       SATH_GYM_DATABASE_PASSWORD: password
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       RAILS_SERVE_STATIC_FILES: "true"
+      ANTHROPIC_API_KEY:
       DISABLE_SSL: "true"
     depends_on:
       db:
         condition: service_healthy
 
+  jobs:
+    build: .
+    command: bin/jobs
+    environment:
+      RAILS_ENV: production
+      DB_HOST: db
+      SATH_GYM_DATABASE_PASSWORD: password
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      ANTHROPIC_API_KEY:
+      DISABLE_SSL: "true"
+    depends_on:
+      db:
+        condition: service_healthy
 volumes:
   postgres_data:
