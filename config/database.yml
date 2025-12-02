@@ -84,6 +84,7 @@ production:
     database: sath_gym_production
     username: sath_gym
     password: <%= ENV["SATH_GYM_DATABASE_PASSWORD"] %>
+    host: <%= ENV.fetch("DB_HOST", "localhost") %>
   cache:
     <<: *primary_production
     database: sath_gym_production_cache
