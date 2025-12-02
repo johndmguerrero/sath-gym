@@ -71,5 +71,6 @@ img.icon {
 .icon--diameter { --svg: url("diameter.svg"); }
 .icon--circle-off { --svg: url("circle-off.svg"); }
 .icon--circle-dashed { --svg: url("circle-dashed.svg"); }
+.icon--wallet-card { --svg: url("wallet-card.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

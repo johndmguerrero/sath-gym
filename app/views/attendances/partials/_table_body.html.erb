@@ -1,0 +1,18 @@
+<tbody>
+  <% if !attendances.any? %>
+    <tr><td colspan="6" class="text-center p-8">No Results.</td></tr>
+  <% else %>
+    <% attendances.each do |attendance| %>
+      <tr>
+        <td><%= check_box_tag "selected_ids[]", attendance.id, id: "selected_ids_#{attendance.id}", class: "input", data: { action: "check-all#check", check_all_target: "dependant" } %></td>
+        <td class="whitespace-nowrap">#<%= attendance.customer_number %></td>
+        <td class="whitespace-nowrap">
+          <p>--</p>
+        </td>
+        <td class="whitespace-nowrap">
+          <span><%= attendance.created_at %></span>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>

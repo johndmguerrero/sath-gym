@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :chats do
+    resources :messages, only: [:create]
+  end
+  resources :models, only: [:index, :show] do
+    collection do
+      post :refresh
+    end
+  end
   devise_for :users
   get "dashboard/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -18,7 +26,9 @@ Rails.application.routes.draw do
   resources :members, only: [:index, :new, :edit, :create] do
     post "on_subscription_change", on: :collection
   end
-  resources :attendances, only: :index
+  resources :attendances, only: [:index, :create]
   resources :products, except: :show
-  resources :transactions, only: [:index, :edit]
+  resources :transactions, only: [:index, :edit] do
+    get "checkout/:customer_number", to: "transactions#checkout", on: :collection, as: :checkout
+  end
 end

@@ -17,4 +17,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Attendance < ApplicationRecord
+  belongs_to :user
+
+  delegate :customer_number, to: :user
 end
