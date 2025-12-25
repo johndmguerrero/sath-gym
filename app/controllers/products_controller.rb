@@ -1,10 +1,11 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product, only: [:edit, :destroy]
+  before_action :set_product, only: [:edit, :destroy, :toggle_status]
 
   def index
     add_breadcrumb "Product & Plans"
 
+    @products = Product.all
   end
 
   def new
@@ -23,17 +24,21 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    add_breadcrumb "Product & Plans", :products_path
+    add_breadcrumb "Edit \"#{@product.name}\""
 
+  end
+
+  def toggle_status
+    @product.update(status: params[:status])
   end
 
   def destroy
 
   end
 
-  private
-
   def set_product
-    @product = Product.include(:product_plans).find_by_id(params[:id])
+    @product = Product.includes(:product_plans).find_by_id(params[:id])
   end
 
   def product_params

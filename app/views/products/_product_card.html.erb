@@ -1,0 +1,27 @@
+<div id="product_<%= product.id %>" class="product-wrapper flex flex-col border rounded-lg p-5 h-[200px]" data-controller="product" data-product-id-value="<%= product.id %>">
+  <div class="product-card-header inline-flex justify-start gap-3 items-center w-full">
+    <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+      <span class="icon icon--package m-2"></span>
+    </div>
+    <div class="flex flex-col text-start leading-tight overflow-hidden">
+      <span class="overflow-ellipsis font-semibold"><%= product.name %></span>
+    </div>
+    <div class="product-status mis-auto">
+      <%= check_box_tag "status_#{product.id}", "1", product.active?,
+          class: "switch",
+          role: "switch",
+          data: { action: "change->product#toggleStatus" } %>
+    </div>
+  </div>
+  <div class="product-card-body pb-3">
+    <p><%= product.description %></p>
+  </div>
+  <div class="product-card-footer w-full mbs-auto">
+    <div class="product-status">
+      <%= link_to edit_product_path(id: product.id), class: "btn btn--icon" do %>
+        <span class="icon icon--square-arrow-out-up-right" aria-hidden="true"></span>
+        Edit
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -72,5 +72,8 @@ img.icon {
 .icon--circle-off { --svg: url("circle-off.svg"); }
 .icon--circle-dashed { --svg: url("circle-dashed.svg"); }
 .icon--wallet-card { --svg: url("wallet-card.svg"); }
+.icon--package { --svg: url("package.svg"); }
+.icon--arrow-left { --svg: url("arrow-left.svg"); }
+.icon--save { --svg: url("save.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

@@ -27,7 +27,9 @@ Rails.application.routes.draw do
     post "on_subscription_change", on: :collection
   end
   resources :attendances, only: [:index, :create]
-  resources :products, except: :show
+  resources :products, except: :show do
+    patch "toggle_status", to: "products#toggle_status", on: :member, as: :toggle_status
+  end
   resources :transactions, only: [:index, :edit] do
     get "checkout/:customer_number", to: "transactions#checkout", on: :collection, as: :checkout
   end
