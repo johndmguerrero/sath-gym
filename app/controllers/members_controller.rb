@@ -1,7 +1,8 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:show]
   include Pagy::Backend
-  before_action :set_member, only: [:edit]
+  before_action :set_member, only: [:edit, :show]
   before_action :set_product_plan, only: [:create]
 
   def index
@@ -30,6 +31,16 @@ class MembersController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.json {
+        render json: @member,
+               include: { subscription: { methods: [:active?] } },
+               methods: :fullname
+      }
+    end
+  end
+
   def edit
     add_breadcrumb "Members", :members_path
     add_breadcrumb "#{@member.customer_number}"
@@ -42,7 +53,7 @@ class MembersController < ApplicationController
   private
 
   def set_member
-    @member = User.members.find_by_customer_number(params[:id])
+    @member = User.members.includes(:subscription).find_by_customer_number(params[:id])
   end
 
   def set_product_plan

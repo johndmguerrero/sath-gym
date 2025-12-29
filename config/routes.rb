@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   resources :members, only: [:index, :new, :edit, :create] do
     post "on_subscription_change", on: :collection
   end
+
+  get "members/:id", to: "members#show", defaults: { format: :json }, constraints: { format: :json }, as: :member_json
   resources :attendances, only: [:index, :create]
   resources :products, except: :show do
     patch "toggle_status", to: "products#toggle_status", on: :member, as: :toggle_status
