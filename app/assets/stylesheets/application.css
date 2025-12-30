@@ -54,3 +54,7 @@ label.required::after {
   background-image: url("background-sath-gym.jpg");
   background-size: cover;
 }
+
+.message--system {
+  display: none !important;
+}
