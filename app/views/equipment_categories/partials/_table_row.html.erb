@@ -1,0 +1,18 @@
+<tr id="equipment_category_<%= equipment_category.id %>">
+  <td><%= check_box_tag "selected_ids[]", equipment_category.id, id: "selected_ids_#{equipment_category.id}", class: "input", data: { action: "check-all#check", check_all_target: "dependant" } %></td>
+  <td class="whitespace-nowrap">
+    <span class="overflow-ellipsis" style="inline-size: 200px"><%= equipment_category.name %></span>
+  </td>
+  <td class="whitespace-nowrap">
+    <span class="overflow-ellipsis" style="inline-size: 300px"><%= equipment_category.desciption || "--" %></span>
+  </td>
+  <td class="whitespace-nowrap text-center">
+    <%= equipment_category.equipment.size %>
+  </td>
+  <td class="whitespace-nowrap">
+    <%= link_to edit_equipment_category_path(equipment_category), class: "btn btn--plain p-1 !cursor-pointer !text-blue-400", data: { turbo_frame: "equipment_category_dialog", action: "dialog#showModal" } do %>
+      Edit
+      <span class="icon icon--arrow-up-right" aria-hidden="true"></span>
+    <% end %>
+  </td>
+</tr>

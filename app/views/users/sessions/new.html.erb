@@ -1,4 +1,14 @@
 <%= form_with model: resource, as: resource_name, url: session_path(resource_name), class: "card flex flex-col gap" do |form| %>
+<div class="flex flex-row gap-2 items-center justify-center">
+  <div class="flex shrink-0 overflow-hidden rounded-lg bg-black text-reversed">
+    <%= image_tag "company-log.jpeg", size: 32, alt: "CN" %>
+  </div>
+  <div class="flex flex-col text-start leading-tight overflow-hidden">
+    <span class="overflow-ellipsis font-semibold">Sath Gym</span>
+    <span class="overflow-ellipsis text-xs hidden">Enterprise</span>
+  </div>
+</div>
+
   <div class="flex flex-col">
     <h3 class="font-semibold leading-none mbe-1">Login</h3>
     <p class="text-sm text-subtle">Enter your email below to login to your account.</p>

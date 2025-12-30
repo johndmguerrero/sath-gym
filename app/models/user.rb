@@ -8,6 +8,7 @@
 #  date_of_birth          :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  face_scan              :boolean          default(FALSE)
 #  first_name             :string
 #  gender                 :integer          default("male")
 #  height                 :integer
@@ -47,6 +48,14 @@ class User < ApplicationRecord
   before_validation :set_default_required_values, on: :create
 
   accepts_nested_attributes_for :subscription
+
+  # Validations for member creation
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :phone_number, presence: true
+  validates :gender, presence: true
+  validates :date_of_birth, presence: true
 
   before_create :generate_customer_number, if: -> { customer_number.blank? }
 

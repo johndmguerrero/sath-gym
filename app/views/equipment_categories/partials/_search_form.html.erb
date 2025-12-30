@@ -1,0 +1,11 @@
+<%= search_form_for search, url: equipment_categories_path, class: "flex items-center justify-between gap mbe-4" do |form| %>
+  <div class="flex items-center flex-item-grow gap">
+    <%= form.search_field :name_cont, placeholder: "Filter category by name...", autocomplete: "off", class: "input", style: "max-inline-size: 300px" %>
+    <%= link_to "Reset", equipment_categories_path, class: "btn btn--borderless show@md" if params.has_key?(:q) %>
+    <%= form.submit "Search", class: "btn" %>
+  </div>
+
+  <%= link_to new_equipment_category_path, class: "btn btn--primary", data: { action: "dialog#showModal", turbo_frame: "equipment_category_dialog" } do %>
+    Add Category <span class="icon icon--plus" aria-hidden="true"></span>
+  <% end %>
+<% end %>

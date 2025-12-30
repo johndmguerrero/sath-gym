@@ -1,0 +1,11 @@
+<thead>
+  <tr>
+    <th><%= check_box_tag :check_all, class: "input", data: { action: "check-all#check", check_all_target: "dependee" } %></th>
+    <th><%= sort_link(search, :sku, class: "flex items-center") %></th>
+    <th><%= sort_link(search, :name, class: "flex items-center") %></th>
+    <th><%= sort_link(search, :brand, class: "flex items-center") %></th>
+    <th>Category</th>
+    <th><%= sort_link(search, :quantity, class: "flex items-center") %></th>
+    <th style="min-inline-size: 3rem"></th>
+  </tr>
+</thead>

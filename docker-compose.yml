@@ -25,7 +25,7 @@ services:
       SATH_GYM_DATABASE_PASSWORD: password
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       RAILS_SERVE_STATIC_FILES: "true"
-      ANTHROPIC_API_KEY:
+      ANTHROPIC_API_KEY: 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
       DISABLE_SSL: "true"
     depends_on:
       db:
@@ -39,7 +39,7 @@ services:
       DB_HOST: db
       SATH_GYM_DATABASE_PASSWORD: password
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
-      ANTHROPIC_API_KEY:
+      ANTHROPIC_API_KEY: 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
       DISABLE_SSL: "true"
     depends_on:
       db:

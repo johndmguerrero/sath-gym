@@ -1,0 +1,9 @@
+<thead>
+  <tr>
+    <th><%= sort_link(search, :created_at, "Date", class: "flex items-center") %></th>
+    <th>Member</th>
+    <th>Payment Method</th>
+    <th>Reference #</th>
+    <th class="text-right"><%= sort_link(search, :total_cents, "Total", class: "flex items-center justify-end") %></th>
+  </tr>
+</thead>

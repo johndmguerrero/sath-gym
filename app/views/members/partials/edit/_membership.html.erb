@@ -1,3 +1,23 @@
 <div hidden id="tab_membership" data-tabs-target="tab" role="tabpanel" aria-labelledby="trigger_membership">
-  membership
+  <div class="card">
+    <h3>Membership Information</h3>
+
+    <% if @member.subscription.present? %>
+      <dl>
+        <dt>Product</dt>
+        <dd><%= @member.subscription.product_plan.product.name %></dd>
+
+        <dt>Plan</dt>
+        <dd><%= @member.subscription.product_plan.display_plan %></dd>
+
+        <dt>Status</dt>
+        <dd><%= @member.subscription.status.titleize %></dd>
+
+        <dt>Expires At</dt>
+        <dd><%= @member.subscription.expires_at.strftime("%B %d, %Y") if @member.subscription.expires_at %></dd>
+      </dl>
+    <% else %>
+      <p>No active subscription</p>
+    <% end %>
+  </div>
 </div>

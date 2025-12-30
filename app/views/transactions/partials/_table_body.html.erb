@@ -1,0 +1,9 @@
+<tbody id="transactions_tbody">
+  <% if !transactions.any? %>
+    <tr><td colspan="5" class="text-center p-8">No transactions found.</td></tr>
+  <% else %>
+    <% transactions.each do |transaction| %>
+      <%= render partial: "transactions/partials/table_row", locals: { transaction: transaction } %>
+    <% end %>
+  <% end %>
+</tbody>

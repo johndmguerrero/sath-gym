@@ -23,4 +23,13 @@
 #  fk_rails_...  (equipment_categories_id => equipment_categories.id)
 #
 class Equipment < ApplicationRecord
+  belongs_to :equipment_categories, foreign_key: :equipment_categories_id, class_name: "EquipmentCategory"
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["brand", "created_at", "description", "equipment_categories_id", "height", "id", "name", "quantity", "sku", "updated_at", "weight"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["equipment_category"]
+  end
 end

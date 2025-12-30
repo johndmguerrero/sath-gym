@@ -1,0 +1,32 @@
+<tbody>
+  <% if !equipments.any? %>
+    <tr><td colspan="7" class="text-center p-8">No Results.</td></tr>
+  <% else %>
+    <% equipments.each do |equipment| %>
+      <tr>
+        <td><%= check_box_tag "selected_ids[]", equipment.id, id: "selected_ids_#{equipment.id}", class: "input", data: { action: "check-all#check", check_all_target: "dependant" } %></td>
+        <td class="whitespace-nowrap">
+          <span class="overflow-ellipsis" style="inline-size: 150px"><%= equipment.sku || "--" %></span>
+        </td>
+        <td class="whitespace-nowrap">
+          <span class="overflow-ellipsis" style="inline-size: 200px"><%= equipment.name %></span>
+        </td>
+        <td class="whitespace-nowrap">
+          <span class="overflow-ellipsis" style="inline-size: 150px"><%= equipment.brand || "--" %></span>
+        </td>
+        <td class="whitespace-nowrap">
+          <%= equipment.equipment_categories&.name || "--" %>
+        </td>
+        <td class="whitespace-nowrap">
+          <%= equipment.quantity || 0 %>
+        </td>
+        <td class="whitespace-nowrap">
+          <%= link_to edit_equipment_path(equipment), class: "btn btn--plain p-1 !cursor-pointer !text-blue-400", data: { turbo_frame: "_top" } do %>
+            Edit
+            <span class="icon icon--arrow-up-right" aria-hidden="true"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>

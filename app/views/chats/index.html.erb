@@ -1,16 +1,43 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Chats" %>
 
-<h1>Chats</h1>
+<!-- Page Header -->
+<div class="flex items-center justify-between mbe-6">
+  <div>
+    <h1 class="text-2xl font-bold text-(--color-text)">Chats</h1>
+    <p class="text-sm text-(--color-text-muted) mbs-1">Manage your AI conversations</p>
+  </div>
 
-<div id="chats">
-  <% @chats.each do |chat| %>
-    <%= render chat %>
-    <p>
-      <%= link_to "Show this chat", chat %>
-    </p>
+  <%= link_to new_chat_path, class: "btn btn--primary" do %>
+    <span class="icon icon--plus" style="--icon-size: var(--size-4);"></span>
+    New Chat
   <% end %>
 </div>
 
-<%= link_to "New chat", new_chat_path %>
+<!-- Flash Notice -->
+<% if notice.present? %>
+  <div class="flash flash--positive mbe-4">
+    <%= notice %>
+  </div>
+<% end %>
+
+<!-- Chats List -->
+<div id="chats">
+  <% if @chats.any? %>
+    <% @chats.each do |chat| %>
+      <%= render chat %>
+    <% end %>
+  <% else %>
+    <!-- Empty State -->
+    <div class="card text-center pbs-12 pbe-12">
+      <div class="inline-flex items-center justify-center p-4 rounded-full bg-(--color-secondary) mbe-4">
+        <span class="icon icon--bot-message-square text-(--color-text-muted)" style="--icon-size: var(--size-8);"></span>
+      </div>
+      <h3 class="font-semibold text-(--color-text) mbe-2">No chats yet</h3>
+      <p class="text-sm text-(--color-text-muted) mbe-4">Start a conversation with the AI assistant</p>
+      <%= link_to new_chat_path, class: "btn btn--primary" do %>
+        <span class="icon icon--plus" style="--icon-size: var(--size-4);"></span>
+        Start Your First Chat
+      <% end %>
+    </div>
+  <% end %>
+</div>

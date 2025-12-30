@@ -1,0 +1,36 @@
+<%= form_with model: transaction, id: "transaction_form", class: "flex flex-col gap", autocomplete: "off" do |form| %>
+  <div class="flex flex-col">
+    <h3 class="font-semibold leading-none mbe-1">New Walk-in Transaction</h3>
+    <p class="text-sm text-subtle">Record a transaction for walk-in customers.</p>
+  </div>
+
+  <div class="flex flex-col gap mb-2">
+    <div class="flex flex-col gap-half">
+      <%= form.label :payment_method, "Payment Method", class: "text-sm font-medium leading-none" %>
+      <%= form.select :payment_method, Transaction.payment_methods.keys.map { |k| [k.titleize.gsub('_', ' '), k] }, {}, class: "input" %>
+    </div>
+
+    <div class="flex flex-col gap-half">
+      <%= form.label :reference_number, "Reference Number", class: "text-sm font-medium leading-none" %>
+      <%= form.text_field :reference_number, class: "input", placeholder: "Optional" %>
+    </div>
+
+    <div class="flex flex-col gap-half">
+      <%= form.label :total, "Total Amount (PHP)", class: "text-sm font-medium leading-none" %>
+      <%= form.number_field :total_cents, class: "input", required: true, min: 0, step: 1, placeholder: "Amount in centavos" %>
+      <% if transaction.errors[:total_cents].any? %>
+        <p class="text-sm text-red-600"><%= transaction.errors[:total_cents].first %></p>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col gap-half">
+      <%= form.label :remarks, "Remarks", class: "text-sm font-medium leading-none" %>
+      <%= form.text_area :remarks, class: "input", rows: 3, placeholder: "Optional notes" %>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end gap">
+    <button type="button" class="btn" data-action="dialog#close">Cancel</button>
+    <%= form.submit "Create Transaction", class: "btn btn--primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<tbody id="equipment_categories_tbody">
+  <% if !equipment_categories.any? %>
+    <tr><td colspan="5" class="text-center p-8">No Results.</td></tr>
+  <% else %>
+    <% equipment_categories.each do |category| %>
+      <%= render partial: "equipment_categories/partials/table_row", locals: { equipment_category: category } %>
+    <% end %>
+  <% end %>
+</tbody>

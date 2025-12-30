@@ -1,0 +1,154 @@
+<%= form_with(model: product, url: product.persisted? ? product_path(product) : products_path, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div class="alert alert--negative mbe-5" role="alert">
+      <div class="flex items-start gap-3">
+        <span class="icon icon--exclamation-triangle" aria-hidden="true"></span>
+        <div class="flex-1">
+          <h4 class="font-semibold mbe-2">
+            <%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:
+          </h4>
+          <ul class="list-disc pis-4">
+            <% product.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <section class="card mbe-5">
+    <div class="card-header mbe-3">
+      <div class="flex items-center justify-between gap-2 mbe-2">
+        <div class="flex items-center gap-2">
+          <span class="icon icon--box" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+          <h4 class="text-xl">Product Details</h4>
+        </div>
+        <div class="flex items-center gap-2">
+          <%= form.label :status, "Active", class: "text-sm" %>
+          <%= form.check_box :status, { checked: product.active?, class: "switch" }, "active", "inactive" %>
+        </div>
+      </div>
+      <p class="text-sm text-gray-600">Basic information about your subscription product</p>
+    </div>
+    <div class="separator mb-4" aria-hidden="true"></div>
+
+    <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3">
+      <div class="form-name col-span-2 lg:col-span-1">
+        <%= form.label :name, "Product Name" %>
+        <%= form.text_field :name, placeholder: "e.g. v0 Pro", class: "input", required: true %>
+        <p class="text-xs text-gray-500 mt-1">This will be displayed on invoices and receipts</p>
+      </div>
+
+      <div class="form-product-id hidden col-span-2 lg:col-span-1">
+        <%= form.label :id, "Product ID" %>
+        <div class="input bg-gray-100 text-gray-600" style="cursor: not-allowed;">
+          <%= product.persisted? ? "prod_#{product.id}" : "Auto-generated after save" %>
+        </div>
+        <p class="text-xs text-gray-500 mt-1">Used for API integration</p>
+      </div>
+
+      <div class="form-description col-span-2">
+        <%= form.label :description, "Description" %>
+        <%= form.text_area :description, rows: 4, placeholder: "The ultimate AI-powered development platform for building modern web applications.", class: "input" %>
+      </div>
+    </div>
+  </section>
+
+  <section class="card mbe-5" data-controller="product-plans">
+    <div class="card-header mbe-3">
+      <div class="flex items-center justify-between gap-2 mbe-2">
+        <div class="flex items-center gap-2">
+          <span class="icon icon--credit-card" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+          <h4 class="text-xl">Pricing Plans</h4>
+        </div>
+        <%= link_to "#", class: "btn btn--sm btn--positive", data: { action: "click->product-plans#addPlan" } do %>
+          <span class="icon icon--plus" aria-hidden="true"></span>
+          Add Plan
+        <% end %>
+      </div>
+      <p class="text-sm text-gray-600">Manage the different pricing tiers for your product</p>
+    </div>
+    <div class="separator mb-4" aria-hidden="true"></div>
+
+    <div id="product-plans-container" data-product-plans-target="container">
+      <%= form.fields_for :product_plans do |plan_form| %>
+        <div class="product-plan-fields card mbe-4" data-product-plans-target="planFields">
+          <div class="flex items-center justify-between mbe-3">
+            <div class="flex items-center gap-2">
+              <h5 class="text-lg font-semibold">
+                <%= plan_form.object.persisted? ? "Plan ##{plan_form.index + 1}" : "New Plan" %>
+              </h5>
+              <% if plan_form.object.persisted? %>
+                <span class="badge badge--<%= plan_form.object.active? ? 'positive' : 'secondary' %>">
+                  <%= plan_form.object.status.humanize %>
+                </span>
+              <% end %>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-2">
+                <%= plan_form.label :status, "Active", class: "text-sm" %>
+                <%= plan_form.check_box :status, { checked: plan_form.object.active?, class: "switch" }, "active", "inactive" %>
+              </div>
+
+              <% if plan_form.object.persisted? %>
+                <%= link_to "#", class: "btn btn--icon btn--danger", data: { action: "click->product-plans#removePlan" } do %>
+                  <span class="icon icon--x" aria-hidden="true"></span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="separator mb-3" aria-hidden="true"></div>
+
+          <div class="grid gap-4 grid-cols-1 lg:grid-cols-3">
+            <div class="form-price">
+              <%= plan_form.label :price_cents, "Price" %>
+              <div class="input-group">
+                <%= plan_form.number_field :price_cents, placeholder: "0", class: "input", min: 0, step: 1 %>
+                <span class="input-addon"><%= plan_form.object.price_currency || "PHP" %></span>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Amount in cents</p>
+            </div>
+
+            <div class="form-interval">
+              <%= plan_form.label :interval, "Billing Interval" %>
+              <%= plan_form.select :interval,
+                  ProductPlan.intervals.keys.map { |k| [k.humanize, k] },
+                  { prompt: "Select interval" },
+                  { class: "input" } %>
+            </div>
+
+            <div class="form-interval-count">
+              <%= plan_form.label :interval_count, "Interval Count" %>
+              <%= plan_form.number_field :interval_count, placeholder: "1", class: "input", min: 1 %>
+              <p class="text-xs text-gray-500 mt-1">e.g. 3 for quarterly</p>
+            </div>
+
+            <div class="form-currency">
+              <%= plan_form.label :price_currency, "Currency" %>
+              <%= plan_form.text_field :price_currency, value: plan_form.object.price_currency || "PHP", class: "input" %>
+            </div>
+          </div>
+
+          <%= plan_form.hidden_field :_destroy, class: "plan-destroy-field" %>
+        </div>
+      <% end %>
+
+      <% if product.product_plans.empty? %>
+        <div class="empty-state text-center py-8">
+          <span class="icon icon--inbox" aria-hidden="true" style="--icon-size: 3rem; opacity: 0.3;"></span>
+          <p class="text-gray-500 mt-2">No pricing plans yet. Click "Add Plan" to create one.</p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <div class="flex form-actions">
+    <div class="mis-auto flex gap-4">
+      <%= link_to "Cancel", products_path, class: "btn btn--secondary" %>
+      <%= form.submit product.persisted? ? "Save Changes" : "Create Product", class: "btn btn--primary" %>
+    </div>
+  </div>
+<% end %>

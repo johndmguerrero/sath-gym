@@ -49,3 +49,8 @@ label.required::after {
     content: ' *';
     color: var(--color-negative);
 }
+
+.login-bg {
+  background-image: url("background-sath-gym.jpg");
+  background-size: cover;
+}

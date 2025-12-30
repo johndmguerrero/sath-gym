@@ -1,0 +1,21 @@
+<tr id="transaction_<%= transaction.id %>">
+  <td class="whitespace-nowrap"><%= transaction.created_at.strftime("%b %d, %Y %H:%M") %></td>
+  <td class="whitespace-nowrap">
+    <% if transaction.subscription&.user %>
+      <%= link_to edit_member_path(transaction.subscription.user.customer_number),
+          class: "text-blue-400 hover:underline",
+          data: { turbo_frame: "_top" } do %>
+        <%= transaction.subscription.user.fullname %>
+      <% end %>
+    <% else %>
+      <span class="text-subtle">Walk-in</span>
+    <% end %>
+  </td>
+  <td class="whitespace-nowrap">
+    <span class="badge badge--<%= transaction.payment_method %>">
+      <%= transaction.payment_method.titleize.gsub('_', ' ') %>
+    </span>
+  </td>
+  <td class="whitespace-nowrap"><%= transaction.reference_number.presence || "-" %></td>
+  <td class="whitespace-nowrap text-right font-medium"><%= transaction.total.format %></td>
+</tr>

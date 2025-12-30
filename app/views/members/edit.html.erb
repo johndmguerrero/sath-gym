@@ -10,18 +10,26 @@
     <h2 class="text-3xl"><%= @member.fullname %></h2>
     <p class="text-subtle"> Last activty <%= @member.updated_at %></p>
 
-    <% if @member.active? %>
-    <div class="mis-auto">
-      <button class="btn btn--secondary">Renew</button>
+    <div class="mis-auto flex gap-2">
+      <% if !@member.face_scan %>
+        <%= link_to "http://127.0.0.1:5000/?register=#{@member.customer_number}", class: "btn btn--primary", target: "_blank", rel: "noopener noreferrer" do %>
+          <span class="icon icon--camera" aria-hidden="true"></span>
+          <span>Face Scan</span>
+        <% end %>
+      <% end %>
+
+      <% if @member.active? %>
+        <%= link_to renewal_transactions_path(customer_number: @member.customer_number), class: "btn btn--secondary" do %>
+          <span>Renew</span>
+        <% end %>
+      <% end %>
     </div>
-    <% end %>
   </div>
 
   <%= render partial: "members/partials/edit/members-content", locals: { member: @member} %>
 
   <%= render "members/partials/edit/member-tab" %>
   <div class="tab_member-content pb-3">
-    <%= render "members/partials/edit/information", locals: { member: @member } %>
     <%= render "members/partials/edit/membership", locals: { member: @member } %>
     <%= render "members/partials/edit/attendance", locals: { member: @member } %>
     <%= render "members/partials/edit/settings", locals: { member: @member } %>

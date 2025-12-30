@@ -22,17 +22,22 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "dashboard#index"
 
-  resources :equipments, only: [:index, :new, :create, :edit, :destroy]
+  resources :equipments, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :equipment_categories, only: [:index, :new, :create, :edit, :update]
   resources :members, only: [:index, :new, :edit, :create] do
     post "on_subscription_change", on: :collection
   end
 
   get "members/:id", to: "members#show", defaults: { format: :json }, constraints: { format: :json }, as: :member_json
+  post "members/update_face_scan", to: "members#update_face_scan", defaults: { format: :json }, constraints: { format: :json }
   resources :attendances, only: [:index, :create]
   resources :products, except: :show do
     patch "toggle_status", to: "products#toggle_status", on: :member, as: :toggle_status
   end
-  resources :transactions, only: [:index, :edit] do
+  resources :transactions, only: [:index, :new, :create, :edit] do
     get "checkout/:customer_number", to: "transactions#checkout", on: :collection, as: :checkout
+    post "checkout/:customer_number", to: "transactions#create", on: :collection
+    get "renewal/:customer_number", to: "transactions#renewal", on: :collection, as: :renewal
+    post "renewal/:customer_number", to: "transactions#create", on: :collection
   end
 end

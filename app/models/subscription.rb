@@ -27,4 +27,12 @@ class Subscription < ApplicationRecord
   belongs_to :product_plan
 
   has_many :transactions
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[id user_id]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[user]
+  end
 end

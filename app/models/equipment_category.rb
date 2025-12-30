@@ -9,4 +9,13 @@
 #  updated_at :datetime         not null
 #
 class EquipmentCategory < ApplicationRecord
+  has_many :equipment, foreign_key: :equipment_categories_id
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "desciption", "id", "name", "updated_at"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["equipment"]
+  end
 end

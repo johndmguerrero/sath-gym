@@ -1,0 +1,81 @@
+<%= form_with(model: equipment, url: equipment.persisted? ? equipment_path(equipment) : equipments_path, local: true) do |form| %>
+  <section class="card mbe-5">
+    <div class="card-header mbe-3">
+      <div class="flex items-center gap-2 mbe-2">
+        <span class="icon icon--id-card-lanyard" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+        <h4 class="text-xl">
+          Basic Information
+        </h4>
+      </div>
+    </div>
+    <div class="separator mb-4" aria-hidden="true"></div>
+    <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3">
+      <div class="form-name">
+        <%= form.label :name, "Equipment Name" %>
+        <%= form.text_field :name, placeholder: "e.g. Treadmill T-200", class: "input" %>
+      </div>
+      <div class="form-brand">
+        <%= form.label :brand, "Brand / Manufacturer" %>
+        <%= form.text_field :brand, placeholder: "e.g. LifeFitness", class: "input" %>
+      </div>
+      <div class="form-category col-span-2">
+        <%= form.label :equipment_categories_id, "Category" %>
+        <%= form.collection_select :equipment_categories_id, EquipmentCategory.all, :id, :name, { prompt: "Select Category" }, { class: "input" } %>
+      </div>
+    </div>
+  </section>
+
+  <section class="card mbe-5">
+    <div class="card-header mbe-3">
+      <div class="flex items-center gap-2 mbe-2">
+        <span class="icon icon--id-card-lanyard" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+        <h4 class="text-xl">
+          Specification
+        </h4>
+      </div>
+    </div>
+    <div class="separator mb-4" aria-hidden="true"></div>
+    <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3">
+      <div class="form-sku">
+        <%= form.label :sku, "SKU / Serial Number" %>
+        <%= form.text_field :sku, placeholder: "EQ-2023-001", class: "input" %>
+      </div>
+      <div class="form-quantity">
+        <%= form.label :quantity, "Quantity" %>
+        <%= form.number_field :quantity, placeholder: "e.g. 5", class: "input" %>
+      </div>
+      <div class="form-weight">
+        <%= form.label :weight, "Weight" %>
+        <%= form.number_field :weight, placeholder: "e.g. 150kg", class: "input" %>
+      </div>
+      <div class="form-height">
+        <%= form.label :height, "Height" %>
+        <%= form.number_field :height, placeholder: "e.g. 180cm", class: "input" %>
+      </div>
+    </div>
+  </section>
+
+  <section class="card mbe-5">
+    <div class="card-header mbe-3">
+      <div class="flex items-center gap-2 mbe-2">
+        <span class="icon icon--id-card-lanyard" aria-hidden="true" style="--icon-size: 1.25rem"></span>
+        <h4 class="text-xl">
+          Details
+        </h4>
+      </div>
+    </div>
+    <div class="separator mb-4" aria-hidden="true"></div>
+    <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3">
+      <div class="form-description col-span-2">
+        <%= form.label :description, "Description" %>
+        <%= form.text_area :description, rows: 5, placeholder: "Describe the condition, usage instructions, or any specific notes about this equipment...", class: "input" %>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex form-actions">
+    <div class="mis-auto flex gap-4">
+      <%= form.submit equipment.persisted? ? "Update Equipment" : "Add Equipment", class: "btn btn--primary" %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<%= form_with model: equipment_category, id: "equipment_category_form", class: "flex flex-col gap", autocomplete: "off" do |form| %>
+  <div class="flex flex-col">
+    <h3 class="font-semibold leading-none mbe-1"><%= equipment_category.persisted? ? "Edit Equipment Category" : "New Equipment Category" %></h3>
+    <p class="text-sm text-subtle"><%= equipment_category.persisted? ? "Make changes to the equipment category. Click save when you're done." : "Add a new equipment category to organize your equipment." %></p>
+  </div>
+
+  <div class="flex flex-col gap mb-2">
+    <div class="flex flex-col gap-half">
+      <%= form.label :name, "Name", class: "text-sm font-medium leading-none" %>
+      <%= form.text_field :name, class: "input", autofocus: true, required: true %>
+      <% if equipment_category.errors[:name].any? %>
+        <p class="text-sm text-red-600"><%= equipment_category.errors[:name].first %></p>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col gap-half">
+      <%= form.label :desciption, "Description", class: "text-sm font-medium leading-none" %>
+      <%= form.text_area :desciption, class: "input", rows: 4 %>
+      <% if equipment_category.errors[:desciption].any? %>
+        <p class="text-sm text-red-600"><%= equipment_category.errors[:desciption].first %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end gap">
+    <button type="button" class="btn" data-action="dialog#close">Cancel</button>
+    <%= form.submit equipment_category.persisted? ? "Save changes" : "Create category", class: "btn btn--primary" %>
+  </div>
+<% end %>

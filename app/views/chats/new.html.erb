@@ -1,11 +1,27 @@
 <% content_for :title, "New chat" %>
 
-<h1>New chat</h1>
+<!-- Page Header -->
+<div class="flex items-center gap-4 mbe-6">
+  <%= link_to chats_path, class: "btn btn--borderless btn--icon" do %>
+    <span class="icon icon--arrow-left" style="--icon-size: var(--size-5);"></span>
+  <% end %>
+  <div>
+    <h1 class="text-2xl font-bold text-(--color-text)">New Chat</h1>
+    <p class="text-sm text-(--color-text-muted) mbs-1">Start a new conversation with the AI assistant</p>
+  </div>
+</div>
 
-<%= render "form", chat: @chat %>
+<!-- Chat Form Card -->
+<div class="card max-w-2xl">
+  <div class="flex items-center gap-3 mbe-6">
+    <div class="p-3 rounded-lg bg-(--color-primary) bg-opacity-10">
+      <span class="icon icon--bot-message-square text-(--color-primary)" style="--icon-size: var(--size-6);"></span>
+    </div>
+    <div>
+      <h2 class="font-semibold text-(--color-text)">What would you like to discuss?</h2>
+      <p class="text-sm text-(--color-text-muted)">Enter your message to begin the conversation</p>
+    </div>
+  </div>
 
-<br>
-
-<div>
-  <%= link_to "Back to chats", chats_path %>
+  <%= render "form", chat: @chat %>
 </div>

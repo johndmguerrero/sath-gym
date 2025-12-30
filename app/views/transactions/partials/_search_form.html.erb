@@ -1,0 +1,15 @@
+<%= search_form_for search, url: transactions_path, class: "flex items-center justify-between gap mbe-4" do |form| %>
+  <div class="flex items-center flex-item-grow gap">
+    <%= form.search_field :reference_number_or_subscription_user_first_name_or_subscription_user_last_name_cont,
+        placeholder: "Search by member name or reference...",
+        autocomplete: "off",
+        class: "input",
+        style: "max-inline-size: 300px" %>
+    <%= link_to "Reset", transactions_path, class: "btn btn--borderless show@md" if params.has_key?(:q) %>
+    <%= form.submit "Search", class: "btn" %>
+  </div>
+
+  <%= link_to new_transaction_path, class: "btn btn--primary", data: { action: "dialog#showModal", turbo_frame: "transaction_dialog" } do %>
+    New Transaction <span class="icon icon--plus" aria-hidden="true"></span>
+  <% end %>
+<% end %>

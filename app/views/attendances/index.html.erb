@@ -7,18 +7,18 @@
       <% end %>
     </div>
     <h2 class="text-2xl">Manage Attendance</h2>
-  </div>
-
-  <%= link_to "http://127.0.0.1:5000/start", target: "_blank", class: "btn btn--primary" do %>
-    Face scan
-  <% end %>
-
-    <div class="relative i-full overflow-x-auto border rounded-lg mbe-4">
-      <table class="table" data-controller="check-all">
-        <%= render partial: "attendances/partials/table_header", locals: { attendances: @attendances } %>
-        <%= render partial: "attendances/partials/table_body", locals: { attendances: @attendances } %>
-      </table>
+    <div class="mis-auto">
+      <%= link_to "http://127.0.0.1:5000", target: "_blank", class: "btn btn--primary" do %>
+        Face scan
+      <% end %>
     </div>
+  </div>
+  <div class="relative i-full overflow-x-auto border rounded-lg mbe-4">
+    <table class="table" data-controller="check-all">
+      <%= render partial: "attendances/partials/table_header", locals: { attendances: @attendances } %>
+      <%= render partial: "attendances/partials/table_body", locals: { attendances: @attendances } %>
+    </table>
+  </div>
 
 
 </div>

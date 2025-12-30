@@ -1,9 +1,10 @@
-<%= form_with(model: message, url: [@chat, message], id: "new_message") do |form| %>
+<%= form_with(model: message, url: [@chat, message], id: "new_message", class: "chat-form", data: { controller: "chat-form" }) do |form| %>
   <% if message.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
-
-      <ul>
+    <div class="chat-form__errors">
+      <h3 class="chat-form__errors-title">
+        <%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:
+      </h3>
+      <ul class="chat-form__errors-list">
         <% message.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,11 +12,19 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.text_field :content, style: "width: 100%; max-width: 600px;", placeholder: "Message...", autofocus: true %>
+  <div class="chat-form__input-wrapper">
+    <%= form.text_field :content,
+        class: "chat-form__input input",
+        placeholder: "Type your message...",
+        autofocus: true,
+        autocomplete: "off",
+        data: { action: "keydown.enter->chat-form#submit" } %>
   </div>
 
-  <div>
-    <%= form.submit "Send message" %>
-  </div>
+  <%= form.button type: "submit", class: "chat-form__submit", title: "Send message" do %>
+    <svg class="chat-form__submit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 2L11 13"></path>
+      <path d="M22 2L15 22L11 13L2 9L22 2Z"></path>
+    </svg>
+  <% end %>
 <% end %>

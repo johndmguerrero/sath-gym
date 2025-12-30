@@ -14,7 +14,7 @@ class Product < ApplicationRecord
   has_many :product_plans
   alias_method :plans, :product_plans
 
-  accepts_nested_attributes_for :product_plans
+  accepts_nested_attributes_for :product_plans, allow_destroy: true, reject_if: :all_blank
 
   validates :name, presence: true
   validate :must_have_at_least_one_plan
@@ -22,7 +22,9 @@ class Product < ApplicationRecord
   private
 
   def must_have_at_least_one_plan
-    if product_plans.empty?
+    # Check for plans that are not marked for destruction
+    active_plans = product_plans.reject { |plan| plan.marked_for_destruction? }
+    if active_plans.empty?
       errors.add(:base, "Product must have at least one plan")
     end
   end

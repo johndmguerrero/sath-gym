@@ -1,16 +1,12 @@
-<div class="edit_product">
-  <div class="page-title mbe-5 flex items-center gap-4">
-    <div class="page-title-btn-wrapper">
-      <%= link_to "",  class: "btn btn--icon", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
-        <span class="icon icon--arrow-left" aria-hidden="true"></span>
-      <% end %>
-    </div>
-    <h2 class="text-2xl">Edit Product</h2>
-    <div class="quick-action mis-auto">
-      <%= button_tag class: "btn btn--positive" do %>
-        Save Changes <span class="icon icon--save" aria-hidden="true"></span>
-      <% end %>
-    </div>
+<div class="page-title mbe-5 flex items-center gap-4">
+  <div class="page-title-btn-wrapper">
+    <%= link_to "",  class: "btn btn--icon", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
+      <span class="icon icon--arrow-left" aria-hidden="true"></span>
+    <% end %>
   </div>
+  <h2 class="text-2xl">Edit Product</h2>
 </div>
-<div class="separator mb-4" aria-hidden="true"></div>
+
+<div class="form-for-product-edit">
+  <%= render "products/form", product: @product %>
+</div>

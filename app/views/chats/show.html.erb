@@ -1,23 +1,48 @@
-<p style="color: green"><%= notice %></p>
-
 <%= turbo_stream_from "chat_#{@chat.id}" %>
 
 <% content_for :title, "Chat" %>
 
-<h1>Chat <%= @chat.id %></h1>
+<!-- Flash Notice -->
+<% if notice.present? %>
+  <div class="flash flash--positive mbe-4">
+    <%= notice %>
+  </div>
+<% end %>
 
-<p>Using <strong><%= @chat.model.name %></strong></p>
+<!-- Back Link -->
+<%= link_to chats_path, class: "chat-back-link" do %>
+  <span class="icon icon--arrow-left" style="--icon-size: var(--size-4);"></span>
+  Back to chats
+<% end %>
 
-<div id="messages">
-  <% @chat.messages.where.not(id: nil).each do |message| %>
-    <%= render message %>
-  <% end %>
-</div>
+<!-- Chat Container -->
+<div class="chat-container">
+  <!-- Chat Header -->
+  <div class="chat-header">
+    <h1 class="chat-header__title">Chat Conversation</h1>
+    <div class="chat-header__model">
+      <span class="icon icon--bot-message-square" style="--icon-size: var(--size-3);"></span>
+      <%= @chat.model.name %>
+    </div>
+  </div>
 
-<div style="margin-top: 30px;">
-  <%= render "messages/form", chat: @chat, message: @message %>
-</div>
+  <!-- Messages Area -->
+  <div id="messages" class="chat-messages" data-controller="scroll-bottom">
+    <% if @chat.messages.where.not(id: nil).any? %>
+      <% @chat.messages.where.not(id: nil).each do |message| %>
+        <%= render message %>
+      <% end %>
+    <% else %>
+      <div class="chat-empty">
+        <span class="icon icon--message-circle chat-empty__icon" style="--icon-size: var(--size-16);"></span>
+        <h3 class="chat-empty__title">Start the conversation</h3>
+        <p class="chat-empty__description">Send a message to begin chatting with the AI assistant.</p>
+      </div>
+    <% end %>
+  </div>
 
-<div style="margin-top: 20px;">
-  <%= link_to "Back to chats", chats_path %>
+  <!-- Input Area -->
+  <div class="chat-input-area">
+    <%= render "messages/form", chat: @chat, message: @message %>
+  </div>
 </div>

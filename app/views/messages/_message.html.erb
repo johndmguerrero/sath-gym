@@ -1,13 +1,28 @@
-<div id="message_<%= message.id %>" class="message"
-     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid <%= message.role == 'user' ? '#007bff' : '#28a745' %>">
-  <div style="font-weight: bold; margin-bottom: 5px;">
-    <%= message.role&.capitalize %>
+<div id="message_<%= message.id %>" class="message message--<%= message.role %>">
+  <div class="message__role">
+    <% if message.role == 'assistant' %>
+      <span class="message__role-icon">
+        <span class="icon icon--bot-message-square" style="--icon-size: var(--size-3); color: white;"></span>
+      </span>
+      <span>Assistant</span>
+    <% else %>
+      <span>You</span>
+      <span class="message__role-icon">
+        <span class="icon icon--user" style="--icon-size: var(--size-3); color: white;"></span>
+      </span>
+    <% end %>
   </div>
-  <div id="message_<%= message.id %>_content" style="white-space: pre-wrap;"><%= message.content %></div>
-  <% if message.tool_call? %>
-    <%= render "messages/tool_calls", message: message %>
-  <% end %>
-  <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
+
+  <div class="message__bubble">
+    <div id="message_<%= message.id %>_content" class="message__content"><%= message.content %></div>
+    <% if message.tool_call? %>
+      <div class="message__tool-calls">
+        <%= render "messages/tool_calls", message: message %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="message__timestamp">
     <%= message.created_at&.strftime("%I:%M %p") %>
   </div>
 </div>

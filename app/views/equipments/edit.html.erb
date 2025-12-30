@@ -1,0 +1,12 @@
+<div class="page-title mbe-5 flex items-center gap-4">
+  <div class="page-title-btn-wrapper">
+    <%= link_to "",  class: "btn btn--icon", data: { controller: "back-navigation", back_navigation_fallback_destination_value: equipments_path }  do %>
+      <span class="icon icon--arrow-left" aria-hidden="true"></span>
+    <% end %>
+  </div>
+  <h2 class="text-2xl">Edit Equipment</h2>
+</div>
+
+<div class="form-for-equipment-edit">
+  <%= render "equipments/partials/form", equipment: @equipment %>
+</div>

@@ -1,4 +1,18 @@
   <%= form_with url: members_path, html: { autocomplete: "off" }, model: member, id: "register-member", data: { controller: "form" } do |f| %>
+    <% if member.errors.any? %>
+      <div class="alert alert--error mbe-5">
+        <div class="alert-header">
+          <span class="icon icon--circle-exclamation" aria-hidden="true"></span>
+          <strong><%= pluralize(member.errors.count, "error") %> prohibited this member from being saved:</strong>
+        </div>
+        <ul class="mbs-2">
+          <% member.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="card personal-information mbe-5">
       <div class="card-header mbe-3">
         <div class="flex items-center gap-2 mbe-2">
@@ -13,11 +27,17 @@
       <div class="grid gap-4 grid-cols-1 lg:grid-cols-3 mbe-3">
         <div class="form-first-name">
           <%= f.label :first_name, class: "mbe-2 block required" %>
-          <%= f.text_field :first_name, class: "input" %>
+          <%= f.text_field :first_name, class: "input #{'input--error' if member.errors[:first_name].any?}" %>
+          <% if member.errors[:first_name].any? %>
+            <span class="text-error text-sm"><%= member.errors[:first_name].first %></span>
+          <% end %>
         </div>
         <div class="form-last-name">
           <%= f.label :last_name, class: "mbe-2 block required" %>
-          <%= f.text_field :last_name, class: "input" %>
+          <%= f.text_field :last_name, class: "input #{'input--error' if member.errors[:last_name].any?}" %>
+          <% if member.errors[:last_name].any? %>
+            <span class="text-error text-sm"><%= member.errors[:last_name].first %></span>
+          <% end %>
         </div>
         <div class="form-nickname">
           <%= f.label :nickname, class: "mbe-2 block" %>
@@ -27,21 +47,33 @@
       <div class="grid gap-4 grid-cols-1 lg:grid-cols-4 mbe-3">
         <div class="form-email lg:col-span-2">
           <%= f.label :email, class: "mbe-2 block required" %>
-          <%= f.email_field :email, class: "input" %>
+          <%= f.email_field :email, class: "input #{'input--error' if member.errors[:email].any?}" %>
+          <% if member.errors[:email].any? %>
+            <span class="text-error text-sm"><%= member.errors[:email].first %></span>
+          <% end %>
         </div>
         <div class="form-phone-number">
           <%= f.label :phone_number, class: "mbe-2 block required" %>
-          <%= f.text_field :phone_number, class: "input" %>
+          <%= f.text_field :phone_number, class: "input #{'input--error' if member.errors[:phone_number].any?}" %>
+          <% if member.errors[:phone_number].any? %>
+            <span class="text-error text-sm"><%= member.errors[:phone_number].first %></span>
+          <% end %>
         </div>
         <div class="form-gender">
           <%= f.label :gender, class: "mbe-2 block required" %>
-          <%= f.collection_select :gender, genders, :to_s, :humanize, {}, { class: "input" } %>
+          <%= f.collection_select :gender, genders, :to_s, :humanize, {}, { class: "input #{'input--error' if member.errors[:gender].any?}" } %>
+          <% if member.errors[:gender].any? %>
+            <span class="text-error text-sm"><%= member.errors[:gender].first %></span>
+          <% end %>
         </div>
       </div>
       <div class="grid gap-4 grid-cols-1 lg:grid-cols-4 mbe-3">
         <div class="form-date-of-birth">
           <%= f.label :date_of_birth, class: "mbe-2 block required" %>
-          <%= f.text_field :date_of_birth, class: "input", placeholder: "Pick members birthday", data: { controller: "datepicker"} %>
+          <%= f.text_field :date_of_birth, class: "input #{'input--error' if member.errors[:date_of_birth].any?}", placeholder: "Pick members birthday", data: { controller: "datepicker"} %>
+          <% if member.errors[:date_of_birth].any? %>
+            <span class="text-error text-sm"><%= member.errors[:date_of_birth].first %></span>
+          <% end %>
         </div>
         <div class="form-address lg:col-span-3">
           <%= f.label :address, class: "mbe-2 block" %>

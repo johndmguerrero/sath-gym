@@ -1,16 +1,41 @@
-<div id="<%= dom_id chat %>">
-  <div>
-    <strong>Model:</strong>
-    <%= chat.model&.name || 'Default' %>
-  </div>
+<div id="<%= dom_id chat %>" class="card hover:shadow-md transition-shadow mbe-3 duration-200">
+  <%= link_to chat, class: "block" do %>
+    <div class="flex items-start gap-4">
+      <!-- Chat Icon -->
+      <div class="shrink-0 p-3 rounded-lg bg-(--color-primary) bg-opacity-10">
+        <span class="icon icon--bot-message-square text-(--color-primary)" style="--icon-size: var(--size-6);"></span>
+      </div>
 
-  <div>
-    <strong>Messages:</strong>
-    <%= chat.messages.count %>
-  </div>
+      <!-- Chat Details -->
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between gap-2 mb-2">
+          <h3 class="font-semibold text-(--color-text) truncate">
+            Chat #<%= chat.id %>
+          </h3>
+          <span class="badge badge--secondary shrink-0">
+            <%= chat.model&.name || 'Default' %>
+          </span>
+        </div>
 
-  <div>
-    <strong>Created:</strong>
-    <%= chat.created_at.strftime("%B %d, %Y at %I:%M %p") %>
-  </div>
+        <div class="flex items-center gap-4 text-sm text-(--color-text-muted)">
+          <!-- Messages Count -->
+          <div class="flex items-center gap-1">
+            <span class="icon icon--inbox" style="--icon-size: var(--size-4);"></span>
+            <span><%= chat.messages.count %> <%= 'message'.pluralize(chat.messages.count) %></span>
+          </div>
+
+          <!-- Created Date -->
+          <div class="flex items-center gap-1">
+            <span class="icon icon--calendar-days" style="--icon-size: var(--size-4);"></span>
+            <span><%= time_ago_in_words(chat.created_at) %> ago</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow Indicator -->
+      <div class="shrink-0 self-center">
+        <span class="icon icon--chevron-right text-(--color-text-muted)" style="--icon-size: var(--size-5);"></span>
+      </div>
+    </div>
+  <% end %>
 </div>

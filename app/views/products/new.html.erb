@@ -1,1 +1,12 @@
-new product
+<div class="page-title mbe-5 flex items-center gap-4">
+  <div class="page-title-btn-wrapper">
+    <%= link_to "",  class: "btn btn--icon", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
+      <span class="icon icon--arrow-left" aria-hidden="true"></span>
+    <% end %>
+  </div>
+  <h2 class="text-2xl">Create Product</h2>
+</div>
+
+<div class="form-for-product-creation">
+  <%= render "products/form", product: @product %>
+</div>

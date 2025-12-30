@@ -1,7 +1,17 @@
-<div style="display: flex; flex-direction: column; gap: 3px; align-items: flex-start; font-family: monospace;">
+<div class="flex flex-col gap-1">
   <% message.tool_calls.each do |tool_call| %>
-    <div style="background: #eee; padding: 5px; border-radius: 4px;">
-      <%= tool_call.name %>(<%= tool_call.arguments.map { |k, v| "#{k}: #{v.inspect}" }.join(", ") %>)
+    <div class="tool-call">
+      <span class="tool-call__icon">
+        <span class="icon icon--terminal" style="--icon-size: var(--size-3);"></span>
+      </span>
+      <div>
+        <span class="tool-call__name"><%= tool_call.name %></span>
+        <% if tool_call.arguments.present? %>
+          <span class="tool-call__args">
+            (<%= tool_call.arguments.map { |k, v| "#{k}: #{v.inspect.truncate(50)}" }.join(", ") %>)
+          </span>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>

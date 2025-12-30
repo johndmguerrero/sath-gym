@@ -1,0 +1,2 @@
+<%= turbo_stream.prepend "transactions_tbody", partial: "transactions/partials/table_row", locals: { transaction: @transaction } %>
+<%= turbo_stream.update "transaction_dialog", "" %>

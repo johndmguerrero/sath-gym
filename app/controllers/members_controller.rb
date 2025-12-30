@@ -1,6 +1,7 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: [:show]
+  skip_before_action :authenticate_user!, only: [:show, :update_face_scan]
+  skip_before_action :verify_authenticity_token, only: [:update_face_scan]
   include Pagy::Backend
   before_action :set_member, only: [:edit, :show]
   before_action :set_product_plan, only: [:create]
@@ -25,8 +26,11 @@ class MembersController < ApplicationController
   def create
     subscription = UserSubscription.new(user: nil, product_plan: @plan, product: nil, options: member_params)
     if subscription.register
-      redirect_to edit_member_path(subscription.user.customer_number)
+      redirect_to checkout_transactions_path(customer_number: subscription.user.customer_number), notice: "Member registered successfully. Please complete payment to activate membership."
     else
+      @member    = subscription.user
+      @products  = Product.includes(:product_plans).all
+      @genders   = User.genders.keys
       render :new, status: :unprocessable_entity
     end
   end
@@ -48,6 +52,16 @@ class MembersController < ApplicationController
 
   def on_subscription_change
     @plans = ProductPlan.where(product_id: params[:user][:product_id]).order(:price_cents)
+  end
+
+  def update_face_scan
+    member = User.members.find_by(customer_number: params[:customer_number])
+
+    if member
+      member.update(face_scan: true)
+    end
+
+    head :no_content
   end
 
   private

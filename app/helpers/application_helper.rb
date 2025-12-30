@@ -3,9 +3,18 @@ module ApplicationHelper
 
   GYM_GOERS_MENU = ["members", "attendances", "products"].freeze
   PAYMENTS_MENU = ["transactions", "renewals", "invoices"].freeze
+  MACHINES_MENU = ["equipments", "equipment_categories"].freeze
 
   def breadcrumbs_divider
     '<span class="icon icon--chevron-right" aria-hidden="true"></span>'.html_safe
+  end
+
+  def machines_menu
+    MACHINES_MENU
+  end
+
+  def machines_menu_open?
+    MACHINES_MENU.include?(controller_name)
   end
 
   def payment_menu
