@@ -92,3 +92,5 @@ gem "ransack"
 gem "pagy", "~> 9.3"
 
 gem "ruby_llm", "~> 1.9"
+
+gem 'ruby_llm-schema'

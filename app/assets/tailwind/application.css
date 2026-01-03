@@ -1,4 +1,17 @@
 @import "tailwindcss";
+@theme {
+  --color-crusta-50: #fff5ed;
+  --color-crusta-100: #fee8d6;
+  --color-crusta-200: #fcceac;
+  --color-crusta-300: #faaa77;
+  --color-crusta-400: #f77839;
+  --color-crusta-500: #f55a1a;
+  --color-crusta-600: #e64010;
+  --color-crusta-700: #be2d10;
+  --color-crusta-800: #972615;
+  --color-crusta-900: #7a2214;
+  --color-crusta-950: #420e08;
+}
 
 .btn.btn--tabs-plain {
   @apply pb-3;

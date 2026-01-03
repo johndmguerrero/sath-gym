@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     post "on_subscription_change", on: :collection
   end
 
+  resources :social_media, only: [:index]
+
   get "members/:id", to: "members#show", defaults: { format: :json }, constraints: { format: :json }, as: :member_json
   post "members/update_face_scan", to: "members#update_face_scan", defaults: { format: :json }, constraints: { format: :json }
   resources :attendances, only: [:index, :create]

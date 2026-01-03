@@ -33,7 +33,10 @@
         <main id="main">
           <%= render "layouts/partials/mobile_menu" %>
           <div>
-          <%= render "layouts/partials/breadcrumbs" %>
+            <div class="flex justify-between">
+              <%= render "layouts/partials/breadcrumbs" %>
+              <%= render "layouts/partials/notification" %>
+            </div>
           <%= yield %>
           </div>
         </main>

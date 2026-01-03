@@ -79,5 +79,7 @@ img.icon {
 .icon--credit-card { --svg: url("credit-card.svg"); }
 .icon--inbox { --svg: url("inbox.svg"); }
 .icon--box { --svg: url("box.svg"); }
+.icon--bot-message-square { --svg: url("bot-message-square.svg"); }
+.icon--bell { --svg: url("bell.svg"); }
 
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

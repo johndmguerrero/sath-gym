@@ -30,7 +30,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  enum :status, { draft: 0, active: 1, inactive: 2}
+  enum :status, { draft: 0, active: 1, inactive: 2 }
   enum :gender, { male: 0, female: 1 }
 
   # Include default devise modules. Others available are:
@@ -41,6 +41,8 @@ class User < ApplicationRecord
   has_one :subscription
   has_one :subscription_product, through: :subscription
 
+  has_one :user_address
+
   has_many :attendances
 
   after_initialize :build_default_subscription, if: :new_record?
@@ -48,6 +50,10 @@ class User < ApplicationRecord
   before_validation :set_default_required_values, on: :create
 
   accepts_nested_attributes_for :subscription
+
+  accepts_nested_attributes_for :user_address
+
+  delegate :full_address, to: :user_address, allow_nil: true
 
   # Validations for member creation
   validates :first_name, presence: true

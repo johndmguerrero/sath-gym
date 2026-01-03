@@ -22,6 +22,10 @@ class ChatResponseJob < ApplicationJob
   def perform(chat_id, content)
     chat = Chat.find(chat_id)
 
+    user_tool = UserLookup.new
+
+    chat.with_tool(user_tool)
+
     chat.with_instructions(SYSTEM_PROMPT).ask(content) do |chunk|
       if chunk.content && !chunk.content.blank?
         message = chat.messages.last

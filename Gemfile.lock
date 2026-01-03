@@ -141,11 +141,11 @@ GEM
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-multipart (1.1.1)
+    faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    faraday-retry (2.3.2)
+    faraday-retry (2.4.0)
       faraday (~> 2.0)
     fugit (1.11.2)
       et-orbi (~> 1, >= 1.2.11)
@@ -204,7 +204,7 @@ GEM
       railties (>= 3.0)
     msgpack (1.8.0)
     multipart-post (2.4.1)
-    net-http (0.8.0)
+    net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.5.12)
       date
@@ -444,7 +444,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
-    uri (1.0.4)
+    uri (1.1.1)
     useragent (0.16.11)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -460,7 +460,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.3)
+    zeitwerk (2.7.4)
 
 PLATFORMS
   aarch64-linux
@@ -500,6 +500,7 @@ DEPENDENCIES
   rspec-rails (~> 7.1)
   rubocop-rails-omakase
   ruby_llm (~> 1.9)
+  ruby_llm-schema
   selenium-webdriver
   shoulda-matchers (~> 6.0)
   simplecov

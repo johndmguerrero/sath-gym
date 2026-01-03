@@ -19,6 +19,7 @@ class MembersController < ApplicationController
     add_breadcrumb "Add Member"
 
     @member    = User.new
+    @address   = @member.build_user_address
     @products  = Product.includes(:product_plans).all
     @genders   = User.genders.keys
   end
@@ -85,7 +86,7 @@ class MembersController < ApplicationController
       :phone_number,
       :gender,
       :date_of_birth,
-      :address,
+      user_address_attributes: [:region, :province, :city, :barangay],
       subscription_attributes: [:product_plan_id]
     )
   end

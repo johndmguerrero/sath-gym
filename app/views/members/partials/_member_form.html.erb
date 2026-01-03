@@ -75,11 +75,102 @@
             <span class="text-error text-sm"><%= member.errors[:date_of_birth].first %></span>
           <% end %>
         </div>
-        <div class="form-address lg:col-span-3">
-          <%= f.label :address, class: "mbe-2 block" %>
-          <%= f.text_field :address, class: "input" %>
-        </div>
       </div>
+    </div>
+
+    <div class="card address mbe-5">
+      <div class="card-header mbe-3">
+        <div class="flex items-center gap-2 mbe-2">
+          <span class="icon icon--id-card-lanyard" aria-hidden="true" style="--icon-size:1.25rem"></span>
+          <h4 class="text-xl">
+            Personal Address
+          </h4>
+        </div>
+        <p class="text-subtle">Person address</p>
+
+      </div>
+      <div class="separator mb-4" aria-hidden="true"></div>
+
+      <%= f.fields_for :user_address do |address_form| %>
+        <div class="grid gap-4 grid-cols-1 lg:grid-cols-3 mbe-3" data-controller="address">
+          <div class="form-region">
+            <%= address_form.label :region, class: "mbe-2 block" %>
+            <%= select_tag "region_code",
+                [],
+                {
+                  id: 'region',
+                  class: 'form-control input',
+                  data: {
+                    address_target: "region",
+                    action: "change->address#fillProvinces"
+                  }
+                }
+
+            %>
+            <%= address_form.hidden_field :region,
+                id: 'region-text',
+                data: { address_target: "regionText" }
+            %>
+          </div>
+          <div class="form-province">
+            <%= address_form.label :province, class: "mbe-2 block" %>
+            <%= select_tag "province_code",
+                [],
+                {
+                  id: 'province',
+                  class: 'form-control input',
+                  data: {
+                    address_target: "province",
+                    action: "change->address#fillCities"
+                  }
+                }
+
+            %>
+            <%= address_form.hidden_field :province,
+                id: 'province-text',
+                data: { address_target: "provinceText" }
+            %>
+          </div>
+          <div class="form-city">
+            <%= address_form.label :city, class: "mbe-2 block" %>
+            <%= select_tag "city_code",
+                [],
+                {
+                  id: 'city',
+                  class: 'form-control input',
+                  data: {
+                    address_target: "city",
+                    action: "change->address#fillBarangays"
+                  }
+                }
+
+            %>
+            <%= address_form.hidden_field :city,
+                id: 'city-text',
+                data: { address_target: "cityText" }
+            %>
+          </div>
+          <div class="form-barangay">
+            <%= address_form.label :barangay, class: "mbe-2 block" %>
+            <%= select_tag "barangay_code",
+                [],
+                {
+                  id: 'barangay',
+                  class: 'form-control input',
+                  data: {
+                    address_target: "barangay",
+                    action: "change->address#updateBarangayText"
+                  }
+                }
+
+            %>
+            <%= address_form.hidden_field :barangay,
+                id: 'barangay-text',
+                data: { address_target: "barangayText" }
+            %>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <div class="card health-information mbe-5">

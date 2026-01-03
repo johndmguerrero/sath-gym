@@ -1,4 +1,189 @@
 <div>
-  <h1 class="font-bold text-4xl w-[10px]">Dashboard#index</h1>
-  <p>Find me in app/views/dashboard/index.html.erb</p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- Total Walk-in Card -->
+      <div class="stat-card">
+          <div>
+              <div class="stat-label">Today's Walk-in</div>
+              <div class="stat-value">247</div>
+              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">↑ 12% from yesterday</p>
+          </div>
+          <div class="stat-icon primary">👥</div>
+      </div>
+
+      <!-- Active Members Card -->
+      <div class="stat-card">
+          <div>
+              <div class="stat-label">Active Members</div>
+              <div class="stat-value">1,248</div>
+              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">↑ 8% this month</p>
+          </div>
+          <div class="stat-icon accent">💪</div>
+      </div>
+
+      <!-- Expiring Soon Card -->
+      <div class="stat-card">
+          <div>
+              <div class="stat-label">Expiring Soon</div>
+              <div class="stat-value">34</div>
+              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">Next 30 days</p>
+          </div>
+          <div class="stat-icon warning">⚠️</div>
+      </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Recent Attendance -->
+      <div class="lg:col-span-2">
+          <div class="card">
+              <div class="flex justify-between items-center mb-6">
+                  <h2 style="font-size: 20px; font-weight: 600; margin: 0;">Recent Attendance</h2>
+                  <span class="time-badge">Last 24 Hours</span>
+              </div>
+
+              <div class="space-y-0">
+                  <!-- Attendance Row 1 -->
+                  <div class="table-row">
+                      <div class="member-info">
+                          <div class="member-avatar">JD</div>
+                          <div class="member-details">
+                              <h3>John Doe</h3>
+                              <p>Check-in: 06:30 AM</p>
+                          </div>
+                      </div>
+                      <div style="text-align: right;">
+                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Chest Day</p>
+                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 1h 30m</p>
+                      </div>
+                  </div>
+
+                  <!-- Attendance Row 2 -->
+                  <div class="table-row">
+                      <div class="member-info">
+                          <div class="member-avatar" style="background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);">SK</div>
+                          <div class="member-details">
+                              <h3>Sarah Kim</h3>
+                              <p>Check-in: 07:15 AM</p>
+                          </div>
+                      </div>
+                      <div style="text-align: right;">
+                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Cardio</p>
+                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 45m</p>
+                      </div>
+                  </div>
+
+                  <!-- Attendance Row 3 -->
+                  <div class="table-row">
+                      <div class="member-info">
+                          <div class="member-avatar" style="background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);">MP</div>
+                          <div class="member-details">
+                              <h3>Michael Patel</h3>
+                              <p>Check-in: 08:45 AM</p>
+                          </div>
+                      </div>
+                      <div style="text-align: right;">
+                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Legs & Back</p>
+                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 2h</p>
+                      </div>
+                  </div>
+
+                  <!-- Attendance Row 4 -->
+                  <div class="table-row">
+                      <div class="member-info">
+                          <div class="member-avatar" style="background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);">EA</div>
+                          <div class="member-details">
+                              <h3>Emma Adams</h3>
+                              <p>Check-in: 09:20 AM</p>
+                          </div>
+                      </div>
+                      <div style="text-align: right;">
+                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Yoga</p>
+                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 1h</p>
+                      </div>
+                  </div>
+
+                  <!-- Attendance Row 5 -->
+                  <div class="table-row">
+                      <div class="member-info">
+                          <div class="member-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);">RC</div>
+                          <div class="member-details">
+                              <h3>Robert Chen</h3>
+                              <p>Check-in: 10:00 AM</p>
+                          </div>
+                      </div>
+                      <div style="text-align: right;">
+                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Swimming</p>
+                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 50m</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Expiring Memberships -->
+      <div>
+          <div class="card">
+              <div class="flex justify-between items-center mb-6">
+                  <h2 style="font-size: 20px; font-weight: 600; margin: 0;">Expiring Soon</h2>
+                  <span class="time-badge">Next 30 Days</span>
+              </div>
+
+              <div class="space-y-4">
+                  <!-- Expiring Member 1 -->
+                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
+                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                          <div>
+                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Lisa Johnson</p>
+                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 5 days</p>
+                          </div>
+                          <span class="badge badge-warning">5 Days</span>
+                      </div>
+                  </div>
+
+                  <!-- Expiring Member 2 -->
+                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
+                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                          <div>
+                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">David Martinez</p>
+                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 8 days</p>
+                          </div>
+                          <span class="badge badge-warning">8 Days</span>
+                      </div>
+                  </div>
+
+                  <!-- Expiring Member 3 -->
+                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
+                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                          <div>
+                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Jennifer White</p>
+                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 12 days</p>
+                          </div>
+                          <span class="badge badge-warning">12 Days</span>
+                      </div>
+                  </div>
+
+                  <!-- Expiring Member 4 -->
+                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
+                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                          <div>
+                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Chris Thompson</p>
+                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 18 days</p>
+                          </div>
+                          <span class="badge badge-warning">18 Days</span>
+                      </div>
+                  </div>
+
+                  <!-- Expiring Member 5 -->
+                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
+                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                          <div>
+                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Rachel Green</p>
+                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 22 days</p>
+                          </div>
+                          <span class="badge badge-warning">22 Days</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
