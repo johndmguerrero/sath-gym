@@ -1,0 +1,38 @@
+<tr id="post_<%= post.id %>">
+  <td class="whitespace-nowrap">#<%= post.id %></td>
+  <td class="max-w-md">
+    <div class="truncate">
+      <%= post.content.truncate(80) %>
+    </div>
+    <div class="text-xs text-subtle">
+      <%= post.word_count %> words, <%= post.character_count %> chars
+    </div>
+  </td>
+  <td class="whitespace-nowrap">
+    <span class="badge badge--<%= post.status %>">
+      <%= post.status.titleize %>
+    </span>
+  </td>
+  <td class="whitespace-nowrap"><%= post.user.fullname %></td>
+  <td class="whitespace-nowrap">
+    <%= post.created_at.strftime("%b %d, %Y %H:%M") %>
+  </td>
+  <td class="whitespace-nowrap text-center">
+    <div class="flex items-center justify-center gap-2">
+      <%= link_to social_medium_path(post), class: "btn btn--icon", data: { turbo_frame: "_top" } do %>
+        <span class="icon icon--eye" aria-hidden="true"></span>
+      <% end %>
+      <%= link_to edit_social_medium_path(post), class: "btn btn--icon", data: { turbo_frame: "_top" } do %>
+        <span class="icon icon--pencil-line" aria-hidden="true"></span>
+      <% end %>
+      <% if post.draft? %>
+        <%= button_to publish_social_medium_path(post), method: :patch, class: "btn btn--icon btn--success", data: { turbo_frame: "_top" } do %>
+          <span class="icon icon--send" aria-hidden="true"></span>
+        <% end %>
+      <% end %>
+      <%= button_to social_medium_path(post), method: :delete, class: "btn btn--icon btn--danger", data: { turbo_confirm: "Delete this post?" } do %>
+        <span class="icon icon--trash" aria-hidden="true"></span>
+      <% end %>
+    </div>
+  </td>
+</tr>

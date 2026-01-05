@@ -1,0 +1,59 @@
+<div class="social-media-index">
+  <div class="page-title mbe-5 flex items-center gap-4">
+    <div class="page-title-btn-wrapper">
+      <%= link_to "",  class: "btn", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path }  do %>
+        <span class="icon icon--arrow-left" aria-hidden="true"></span>
+        Back
+      <% end %>
+    </div>
+    <h2 class="text-2xl">Social Media Posts</h2>
+    <div class="quick-action mis-auto flex items-center gap-2">
+      <%= link_to new_social_medium_path, class: "btn" do %>
+        <span class="icon icon--plus" aria-hidden="true"></span>
+        Manual Post
+      <% end %>
+      <%= button_to generate_social_media_path, method: :post, class: "btn btn--primary", data: { turbo_frame: "_top" } do %>
+        <span class="icon icon--sparkles" aria-hidden="true"></span>
+        Generate Post with AI
+      <% end %>
+    </div>
+  </div>
+
+  <%= turbo_frame_tag :social_media_table do %>
+    <div class="relative i-full overflow-x-auto border rounded-lg mbe-4">
+      <table class="table">
+        <%= render partial: "social_media/partials/table_header" %>
+        <%= render partial: "social_media/partials/table_body", locals: { posts: @posts } %>
+      </table>
+    </div>
+
+    <div class="flex items-center">
+      <div class="text-sm text-subtle show@md">Total of <%= @pagy.count %> post(s).</div>
+      <div class="flex items-center mis-auto justify-end" style="column-gap: 1rem">
+        <%= form_with url: social_media_path, class: "flex items-center gap show@md", method: :get, data: { controller: "form", action: "change->form#submit" } do |form| %>
+          <%= form.label :limit, "Rows per page", class: "text-sm font-medium" %>
+          <%= form.select :limit, [10, 20, 30, 40, 50], { selected: @pagy.limit }, { class: "input", style: "--input-inline-size: 70px" } %>
+        <% end %>
+        <div class="text-sm font-medium"><%= "Page #{@pagy.page} of #{@pagy.pages}" %></div>
+        <nav class="flex items-center flex-item-no-shrink gap" style="--btn-padding: .5rem;" aria-label="Pagination">
+          <%= link_to pagy_url_for(@pagy, 1), class: "btn", aria: { disabled: @pagy.prev.nil? }.compact_blank do %>
+            <span class="icon icon--chevrons-left" aria-hidden="true"></span>
+            <span class="sr-only">Go to first page</span>
+          <% end %>
+          <%= link_to pagy_url_for(@pagy, @pagy.prev || @pagy.page), class: "btn", aria: { disabled: @pagy.prev.nil? }.compact_blank do %>
+            <span class="icon icon--chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Go to previous page</span>
+          <% end %>
+          <%= link_to pagy_url_for(@pagy, @pagy.next || @pagy.page), class: "btn", aria: { disabled: @pagy.next.nil? }.compact_blank do %>
+            <span class="icon icon--chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Go to next page</span>
+          <% end %>
+          <%= link_to pagy_url_for(@pagy, @pagy.last), class: "btn", aria: { disabled: @pagy.next.nil? }.compact_blank do %>
+            <span class="icon icon--chevrons-right" aria-hidden="true"></span>
+            <span class="sr-only">Go to last page</span>
+          <% end %>
+        </nav>
+      </div>
+    </div>
+  <% end %>
+</div>

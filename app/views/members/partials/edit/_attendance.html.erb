@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @member.attendances.order(created_at: :desc).limit(20).each do |attendance| %>
+          <% @member.attendances.order(created_at: :desc).limit(10).each do |attendance| %>
             <tr>
               <td><%= attendance.created_at.strftime("%B %d, %Y") %></td>
               <td><%= attendance.created_at.strftime("%I:%M %p") %></td>

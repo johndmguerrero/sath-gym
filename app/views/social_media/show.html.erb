@@ -1,0 +1,62 @@
+<div class="social-media-show">
+  <div class="page-title mbe-5 flex items-center gap-4">
+    <div class="page-title-btn-wrapper">
+      <%= link_to social_media_path, class: "btn" do %>
+        <span class="icon icon--arrow-left" aria-hidden="true"></span>
+        Back
+      <% end %>
+    </div>
+    <h2 class="text-2xl">Post #<%= @post.id %></h2>
+    <div class="quick-action mis-auto flex items-center gap-2">
+      <%= link_to edit_social_medium_path(@post), class: "btn" do %>
+        <span class="icon icon--pencil" aria-hidden="true"></span>
+        Edit
+      <% end %>
+      <% if @post.draft? %>
+        <%= button_to publish_social_medium_path(@post), method: :patch, class: "btn btn--success" do %>
+          <span class="icon icon--send" aria-hidden="true"></span>
+          Publish
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="flex items-center gap-4">
+        <span class="badge badge--<%= @post.status %>"><%= @post.status.titleize %></span>
+      </div>
+    </div>
+
+    <div class="card__body">
+      <div class="prose max-w-none">
+        <%= simple_format(@post.content) %>
+      </div>
+
+      <div class="mbs-4 pbs-4 border-t text-sm text-subtle">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <strong>Created by:</strong> <%= @post.user.fullname %>
+          </div>
+          <div>
+            <strong>Created at:</strong> <%= @post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+          </div>
+          <div>
+            <strong>Word count:</strong> <%= @post.word_count %>
+          </div>
+          <div>
+            <strong>Character count:</strong> <%= @post.character_count %>
+          </div>
+          <% if @post.input_tokens.present? %>
+            <div>
+              <strong>Input tokens:</strong> <%= @post.input_tokens %>
+            </div>
+            <div>
+              <strong>Output tokens:</strong> <%= @post.output_tokens %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

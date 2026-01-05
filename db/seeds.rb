@@ -31,6 +31,8 @@ User.create(
   last_name: "Sath",
   role: "Admin",
   email: "admin@email.com",
+  phone_number: Faker::PhoneNumber.phone_number,
+  date_of_birth: Faker::Date.birthday(min_age: 18, max_age: 65),
   password: "Testing123",
   password_confirmation: "Testing123",
   subscription_attributes: {
@@ -74,6 +76,8 @@ puts "[SEED] Members..."
     date_of_birth: DateTime.now - 20.years,
     height: height,
     weight: weight,
+    phone_number: Faker::PhoneNumber.phone_number,
+    date_of_birth: Faker::Date.birthday(min_age: 18, max_age: 65),
     role: User::ROLE_MEMBER,
     status: status,
     password: "Testing123",

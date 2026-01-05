@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   resources :chats do
     resources :messages, only: [:create]
   end
@@ -8,6 +9,17 @@ Rails.application.routes.draw do
     end
   end
   devise_for :users
+
+  resources :notifications, only: [] do
+    member do
+      patch :mark_as_read
+    end
+
+    collection do
+      post :mark_all_as_read
+    end
+  end
+
   get "dashboard/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -28,7 +40,16 @@ Rails.application.routes.draw do
     post "on_subscription_change", on: :collection
   end
 
-  resources :social_media, only: [:index]
+  resources :social_media do
+    collection do
+      post :generate
+    end
+
+    member do
+      patch :publish
+      patch :archive
+    end
+  end
 
   get "members/:id", to: "members#show", defaults: { format: :json }, constraints: { format: :json }, as: :member_json
   post "members/update_face_scan", to: "members#update_face_scan", defaults: { format: :json }, constraints: { format: :json }

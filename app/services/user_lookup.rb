@@ -1,6 +1,10 @@
 class UserLookup < RubyLLM::Tool
   description "Gets user information for referencing or looking up details by using customer_number"
 
+  def name
+    "member_look_up"
+  end
+
   params do  # the params DSL is only available in v1.9+. older versions should use the param helper instead
     string :customer_number, description: "reference or unique identifier of the user with format of cust-XXXXXX"
   end

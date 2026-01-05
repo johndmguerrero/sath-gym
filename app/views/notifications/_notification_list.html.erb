@@ -1,0 +1,10 @@
+<% if notifications.any? %>
+  <%= render partial: "notifications/notification_item",
+             collection: notifications,
+             as: :notification %>
+<% else %>
+  <div class="notification__empty" data-notification-target="empty">
+    <span class="icon icon--inbox" aria-hidden="true"></span>
+    <p>No notifications yet</p>
+  </div>
+<% end %>

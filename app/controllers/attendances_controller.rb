@@ -1,11 +1,14 @@
 class AttendancesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
+  include Pagy::Backend
   before_action :set_user, only: [:create]
 
   def index
     add_breadcrumb "Attendances"
 
-    @attendances = Attendance.includes(:user).all
+    records = Attendance.includes(:user).order(created_at: :desc)
+    @search = records.ransack(params[:q])
+    @pagy, @attendances = pagy(@search.result)
   end
 
   def create

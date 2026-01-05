@@ -1,33 +1,41 @@
 <div>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <!-- Total Walk-in Card -->
-      <div class="stat-card">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Total Members Card -->
+      <div class="stat-card card">
           <div>
-              <div class="stat-label">Today's Walk-in</div>
-              <div class="stat-value">247</div>
-              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">↑ 12% from yesterday</p>
+              <div class="stat-label">Total Members</div>
+              <div class="stat-value"><%= @total_members %></div>
+              <div class="text-xs text-subtle mbs-2">
+                <%= @active_members.size %> active, <%= @draft_members.size %> draft
+              </div>
           </div>
-          <div class="stat-icon primary">👥</div>
       </div>
 
-      <!-- Active Members Card -->
-      <div class="stat-card">
+      <!-- Today's Attendance Card -->
+      <div class="stat-card card">
           <div>
-              <div class="stat-label">Active Members</div>
-              <div class="stat-value">1,248</div>
-              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">↑ 8% this month</p>
+              <div class="stat-label">Today's Check-ins</div>
+              <div class="stat-value"><%= @today_attendance_count %></div>
+              <div class="text-xs text-subtle mbs-2">Last 24 hours: <%= @recent_attendances.size %></div>
           </div>
-          <div class="stat-icon accent">💪</div>
       </div>
 
       <!-- Expiring Soon Card -->
-      <div class="stat-card">
+      <div class="stat-card card">
           <div>
               <div class="stat-label">Expiring Soon</div>
-              <div class="stat-value">34</div>
-              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 8px;">Next 30 days</p>
+              <div class="stat-value"><%= @expiring_soon.size %></div>
+              <div class="text-xs text-subtle mbs-2">Next 30 days</div>
           </div>
-          <div class="stat-icon warning">⚠️</div>
+      </div>
+
+      <!-- Revenue Card -->
+      <div class="stat-card card">
+          <div>
+              <div class="stat-label">Monthly Revenue</div>
+              <div class="stat-value">₱<%= number_with_delimiter(@monthly_revenue.to_i) %></div>
+              <div class="text-xs text-subtle mbs-2">Today: ₱<%= number_with_delimiter(@today_revenue.to_i) %></div>
+          </div>
       </div>
   </div>
 
@@ -41,81 +49,51 @@
               </div>
 
               <div class="space-y-0">
-                  <!-- Attendance Row 1 -->
-                  <div class="table-row">
-                      <div class="member-info">
-                          <div class="member-avatar">JD</div>
-                          <div class="member-details">
-                              <h3>John Doe</h3>
-                              <p>Check-in: 06:30 AM</p>
+                  <% if @recent_attendances.any? %>
+                    <% @recent_attendances.each_with_index do |attendance, index| %>
+                      <%
+                        colors = [
+                          "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+                          "linear-gradient(135deg, #ec4899 0%, #f59e0b 100%)",
+                          "linear-gradient(135deg, #06b6d4 0%, #10b981 100%)",
+                          "linear-gradient(135deg, #a78bfa 0%, #ec4899 100%)",
+                          "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)"
+                        ]
+                        gradient = colors[index % colors.length]
+                        initials = attendance.user.first_name[0..0].upcase + attendance.user.last_name[0..0].upcase
+                      %>
+                      <div class="table-row">
+                          <div class="member-info">
+                              <div class="avatar" style="">
+                                <span role="img"><%= initials %></span>
+                              </div>
+                              <div class="member-details">
+                                  <h3><%= attendance.user.fullname %></h3>
+                                  <p>Check-in: <%= attendance.created_at.strftime("%I:%M %p") %></p>
+                              </div>
                           </div>
+                          <% if attendance.remarks.present? %>
+                            <div style="text-align: right;">
+                                <p style="font-size: 14px; margin: 0; color: var(--accent);"><%= attendance.remarks %></p>
+                            </div>
+                          <% end %>
                       </div>
-                      <div style="text-align: right;">
-                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Chest Day</p>
-                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 1h 30m</p>
-                      </div>
-                  </div>
-
-                  <!-- Attendance Row 2 -->
-                  <div class="table-row">
-                      <div class="member-info">
-                          <div class="member-avatar" style="background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);">SK</div>
-                          <div class="member-details">
-                              <h3>Sarah Kim</h3>
-                              <p>Check-in: 07:15 AM</p>
-                          </div>
-                      </div>
-                      <div style="text-align: right;">
-                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Cardio</p>
-                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 45m</p>
-                      </div>
-                  </div>
-
-                  <!-- Attendance Row 3 -->
-                  <div class="table-row">
-                      <div class="member-info">
-                          <div class="member-avatar" style="background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);">MP</div>
-                          <div class="member-details">
-                              <h3>Michael Patel</h3>
-                              <p>Check-in: 08:45 AM</p>
-                          </div>
-                      </div>
-                      <div style="text-align: right;">
-                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Legs & Back</p>
-                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 2h</p>
-                      </div>
-                  </div>
-
-                  <!-- Attendance Row 4 -->
-                  <div class="table-row">
-                      <div class="member-info">
-                          <div class="member-avatar" style="background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);">EA</div>
-                          <div class="member-details">
-                              <h3>Emma Adams</h3>
-                              <p>Check-in: 09:20 AM</p>
-                          </div>
-                      </div>
-                      <div style="text-align: right;">
-                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Yoga</p>
-                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 1h</p>
-                      </div>
-                  </div>
-
-                  <!-- Attendance Row 5 -->
-                  <div class="table-row">
-                      <div class="member-info">
-                          <div class="member-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);">RC</div>
-                          <div class="member-details">
-                              <h3>Robert Chen</h3>
-                              <p>Check-in: 10:00 AM</p>
-                          </div>
-                      </div>
-                      <div style="text-align: right;">
-                          <p style="font-size: 14px; margin: 0; color: var(--accent);">Swimming</p>
-                          <p style="font-size: 12px; margin: 4px 0 0 0; color: var(--text-secondary);">Duration: 50m</p>
-                      </div>
-                  </div>
+                    <% end %>
+                  <% else %>
+                    <div class="text-center p-8 text-subtle">
+                      <p>No recent check-ins in the last 24 hours</p>
+                    </div>
+                  <% end %>
               </div>
+
+              <% if @recent_attendances.any? %>
+                <div class="mbs-4 pbs-4 border-t text-center">
+                  <%= link_to attendances_path, class: "btn btn--sm" do %>
+                    View All Attendance
+                    <span class="icon icon--arrow-right" aria-hidden="true"></span>
+                  <% end %>
+                </div>
+              <% end %>
           </div>
       </div>
 
@@ -128,61 +106,54 @@
               </div>
 
               <div class="space-y-4">
-                  <!-- Expiring Member 1 -->
-                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
-                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                          <div>
-                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Lisa Johnson</p>
-                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 5 days</p>
+                  <% if @expiring_soon.any? %>
+                    <% @expiring_soon.each do |subscription| %>
+                      <%
+                        days_until_expiry = ((subscription.expires_at.to_date - Date.current).to_i)
+                        badge_class = if days_until_expiry <= 7
+                          "badge-danger"
+                        elsif days_until_expiry <= 14
+                          "badge-warning"
+                        else
+                          "badge-info"
+                        end
+                        border_color = if days_until_expiry <= 7
+                          "var(--danger)"
+                        elsif days_until_expiry <= 14
+                          "var(--warning)"
+                        else
+                          "var(--info)"
+                        end
+                      %>
+                      <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid <%= border_color %>;">
+                          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                              <div>
+                                  <%= link_to edit_member_path(subscription.user.customer_number), class: "text-decoration-none", data: { turbo_frame: "_top" } do %>
+                                    <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);"><%= subscription.user.fullname %></p>
+                                  <% end %>
+                                  <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">
+                                    Expires <%= subscription.expires_at.strftime("%b %d, %Y") %>
+                                  </p>
+                              </div>
+                              <span class="badge <%= badge_class %>"><%= days_until_expiry %> Days</span>
                           </div>
-                          <span class="badge badge-warning">5 Days</span>
                       </div>
-                  </div>
-
-                  <!-- Expiring Member 2 -->
-                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
-                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                          <div>
-                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">David Martinez</p>
-                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 8 days</p>
-                          </div>
-                          <span class="badge badge-warning">8 Days</span>
-                      </div>
-                  </div>
-
-                  <!-- Expiring Member 3 -->
-                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
-                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                          <div>
-                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Jennifer White</p>
-                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 12 days</p>
-                          </div>
-                          <span class="badge badge-warning">12 Days</span>
-                      </div>
-                  </div>
-
-                  <!-- Expiring Member 4 -->
-                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
-                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                          <div>
-                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Chris Thompson</p>
-                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 18 days</p>
-                          </div>
-                          <span class="badge badge-warning">18 Days</span>
-                      </div>
-                  </div>
-
-                  <!-- Expiring Member 5 -->
-                  <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid var(--warning);">
-                      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                          <div>
-                              <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Rachel Green</p>
-                              <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">Expires in 22 days</p>
-                          </div>
-                          <span class="badge badge-warning">22 Days</span>
-                      </div>
-                  </div>
+                    <% end %>
+                  <% else %>
+                    <div class="text-center p-8 text-subtle">
+                      <p>No memberships expiring in the next 30 days</p>
+                    </div>
+                  <% end %>
               </div>
+
+              <% if @expiring_soon.any? %>
+                <div class="mbs-4 pbs-4 border-t text-center">
+                  <%= link_to members_path, class: "btn btn--sm" do %>
+                    View All Members
+                    <span class="icon icon--arrow-right" aria-hidden="true"></span>
+                  <% end %>
+                </div>
+              <% end %>
           </div>
       </div>
   </div>

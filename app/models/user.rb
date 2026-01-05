@@ -44,6 +44,8 @@ class User < ApplicationRecord
   has_one :user_address
 
   has_many :attendances
+  has_many :social_media_posts
+  has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
 
   after_initialize :build_default_subscription, if: :new_record?
 
@@ -88,6 +90,23 @@ class User < ApplicationRecord
 
   def member?
     !admin?
+  end
+
+  # Notification helpers
+  def unread_notifications_count
+    notifications.unread.count
+  end
+
+  def subscription_status_badge
+    return "No Subscription" unless subscription
+
+    if subscription.active? && subscription.expires_at > Time.current
+      "Active"
+    elsif subscription.active? && subscription.expires_at <= Time.current
+      "Expired"
+    else
+      "Inactive"
+    end
   end
 
   private

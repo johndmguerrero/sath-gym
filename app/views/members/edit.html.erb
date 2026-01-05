@@ -8,7 +8,7 @@
       <% end %>
     </div>
     <h2 class="text-3xl"><%= @member.fullname %></h2>
-    <p class="text-subtle"> Last activty <%= @member.updated_at %></p>
+    <p class="text-subtle text-sm"> Last activty <br/> <%= @member.updated_at.strftime("%B %d, %Y") %></p>
 
     <div class="mis-auto flex gap-2">
       <% if !@member.face_scan %>

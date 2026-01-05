@@ -1,8 +1,43 @@
-<div class="notification">
-  <div contents data-controller="popover" data-popover-placement-value="top-start">
-    <button class="btn" data-popover-target="trigger" popovertarget="popover" aria-haspopup="true">
+<div class="notification" data-controller="notification">
+  <div contents data-controller="dialog">
+    <button class="btn btn--relative" data-action="dialog#showModal">
       <span class="icon icon--bell" aria-hidden="true"></span>
       <span>Notification</span>
+      <span class="badge badge--number badge--negative notification__badge"
+            data-notification-target="badge"
+            style="<%= current_user.unread_notifications_count.zero? ? 'display: none;' : '' %>">
+        <%= current_user.unread_notifications_count %>
+      </span>
     </button>
+
+    <dialog class="sheet sheet--right"
+            data-dialog-target="content"
+            data-action="click->dialog#closeOnClickOutside"
+            aria-label="Notifications">
+      <button type="button" class="btn btn--plain sheet__close" data-action="dialog#close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+        <span class="sr-only">Close</span>
+      </button>
+
+      <div class="sheet__content">
+        <div class="notification__header">
+          <h2 class="notification__title">Notifications</h2>
+          <button class="btn btn--plain btn--sm"
+                  data-action="click->notification#markAllAsRead"
+                  style="<%= current_user.unread_notifications_count.zero? ? 'display: none;' : '' %>"
+                  data-notification-target="markAllButton">
+            <span class="icon icon--check-check" aria-hidden="true"></span>
+            Mark all as read
+          </button>
+        </div>
+
+        <%= turbo_stream_from current_user, "notifications" %>
+
+        <div id="notification-list" data-notification-target="list" class="notification__list">
+          <%= render partial: "notifications/notification_list",
+                     locals: { notifications: current_user.notifications.recent.limit(20) } %>
+        </div>
+      </div>
+    </dialog>
   </div>
 </div>

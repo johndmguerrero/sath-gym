@@ -81,5 +81,12 @@ img.icon {
 .icon--box { --svg: url("box.svg"); }
 .icon--bot-message-square { --svg: url("bot-message-square.svg"); }
 .icon--bell { --svg: url("bell.svg"); }
-
+.icon--pencil-line { --svg: url("pencil-line.svg"); }
+.icon--eye { --svg: url("eye.svg"); }
+.icon--send { --svg: url("send.svg"); }
+.icon--trash { --svg: url("trash.svg"); }
+.icon--sparkles { --svg: url("sparkles.svg"); }
+.icon--printer { --svg: url("printer.svg"); }
+.icon--user-check { --svg: url("user-check.svg"); }
+.icon--check { --svg: url("check.svg"); }
 /* .icon--chart-pie { --svg: url("chart-pie.svg"); } */

@@ -1,0 +1,17 @@
+<div class="social-media-new">
+  <div class="page-title mbe-5 flex items-center gap-4">
+    <div class="page-title-btn-wrapper">
+      <%= link_to social_media_path, class: "btn" do %>
+        <span class="icon icon--arrow-left" aria-hidden="true"></span>
+        Back
+      <% end %>
+    </div>
+    <h2 class="text-2xl">New Social Media Post</h2>
+  </div>
+
+  <div class="card">
+    <div class="card__body">
+      <%= render "form", post: @post %>
+    </div>
+  </div>
+</div>

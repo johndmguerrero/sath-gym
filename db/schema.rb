@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_01_192451) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_05_084318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -119,6 +119,24 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_01_192451) do
     t.index ["provider"], name: "index_models_on_provider"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "recipient_id", null: false
+    t.string "notifiable_type", null: false
+    t.bigint "notifiable_id", null: false
+    t.string "notification_type", null: false
+    t.text "message", null: false
+    t.jsonb "metadata", default: {}
+    t.boolean "read", default: false, null: false
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["notification_type"], name: "index_notifications_on_notification_type"
+    t.index ["read"], name: "index_notifications_on_read"
+    t.index ["recipient_id", "read", "created_at"], name: "index_notifications_on_recipient_unread_recent"
+    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
+  end
+
   create_table "product_plans", force: :cascade do |t|
     t.bigint "product_id", null: false
     t.integer "price_cents", default: 0, null: false
@@ -137,6 +155,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_01_192451) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "social_media_posts", force: :cascade do |t|
+    t.text "content", null: false
+    t.integer "status", default: 0, null: false
+    t.jsonb "metadata", default: {}
+    t.integer "input_tokens"
+    t.integer "output_tokens"
+    t.integer "cached_tokens"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_social_media_posts_on_created_at"
+    t.index ["status"], name: "index_social_media_posts_on_status"
+    t.index ["user_id"], name: "index_social_media_posts_on_user_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -222,7 +255,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_01_192451) do
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "models"
   add_foreign_key "messages", "tool_calls"
+  add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "product_plans", "products"
+  add_foreign_key "social_media_posts", "users"
   add_foreign_key "subscriptions", "product_plans"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "tool_calls", "messages"

@@ -1,3 +1,4 @@
+<div data-controller="print">
 <%= form_with(model: @transaction, url: renewal_transactions_path(customer_number: @user.customer_number, renewal: true), local: true) do |form| %>
   <% if @transaction.errors.any? %>
     <div class="alert alert--negative mbe-5" role="alert">
@@ -214,6 +215,13 @@
     <div class="separator mb-4" aria-hidden="true"></div>
 
     <div class="flex form-actions">
+      <button type="button"
+              class="btn btn--secondary print-button"
+              data-action="click->print#print"
+              aria-label="Print receipt">
+        <span class="icon icon--printer" aria-hidden="true"></span>
+        Print
+      </button>
       <div class="mis-auto flex gap-4">
         <%= link_to "Cancel", edit_member_path(@user.customer_number), class: "btn btn--secondary" %>
         <%= form.submit "Complete Renewal Payment", class: "btn btn--primary" %>
@@ -221,6 +229,7 @@
     </div>
   </div>
 <% end %>
+</div>
 
 <script>
   // Update display amounts in real-time

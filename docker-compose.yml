@@ -9,6 +9,8 @@ services:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     ports:
       - "5432:5432"
+    networks:
+      - sath-gym-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U sath_gym"]
       interval: 5s
@@ -27,6 +29,9 @@ services:
       RAILS_SERVE_STATIC_FILES: "true"
       ANTHROPIC_API_KEY:
       DISABLE_SSL: "true"
+    networks:
+      - sath-gym-network  # Add this
+    container_name: sath-gym-web
     depends_on:
       db:
         condition: service_healthy
@@ -41,8 +46,15 @@ services:
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
       ANTHROPIC_API_KEY:
       DISABLE_SSL: "true"
+    networks:
+      - sath-gym-network
     depends_on:
       db:
         condition: service_healthy
+
 volumes:
   postgres_data:
+
+networks:
+  sath-gym-network:
+    external: true

@@ -1,0 +1,30 @@
+<%= form_with model: @post, url: @post.persisted? ? social_medium_path(@post) : social_media_path, class: "form" do |f| %>
+  <% if @post.errors.any? %>
+    <div class="alert alert--negative mbe-4">
+      <h3><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h3>
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form__group">
+    <%= f.label :content, class: "form__label" %>
+    <%= f.text_area :content, rows: 10, class: "input", placeholder: "Write your post content here..." %>
+    <div class="text-sm text-subtle">
+      Recommended: 150-300 words for Facebook
+    </div>
+  </div>
+
+  <div class="form__group">
+    <%= f.label :status, class: "form__label" %>
+    <%= f.select :status, SocialMediaPost.statuses.keys.map { |k| [k.titleize, k] }, {}, class: "input" %>
+  </div>
+
+  <div class="form__actions">
+    <%= f.submit @post.persisted? ? "Update Post" : "Create Post", class: "btn btn--primary" %>
+    <%= link_to "Cancel", social_media_path, class: "btn" %>
+  </div>
+<% end %>

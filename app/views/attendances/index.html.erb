@@ -8,11 +8,12 @@
     </div>
     <h2 class="text-2xl">Manage Attendance</h2>
     <div class="mis-auto">
-      <%= link_to "http://127.0.0.1:5000", target: "_blank", class: "btn btn--primary" do %>
+      <%= link_to "http://127.0.0.1:5001", target: "_blank", class: "btn btn--primary" do %>
         Face scan
       <% end %>
     </div>
   </div>
+  <%= turbo_frame_tag :attendance_table do %>
   <div class="relative i-full overflow-x-auto border rounded-lg mbe-4">
     <table class="table" data-controller="check-all">
       <%= render partial: "attendances/partials/table_header", locals: { attendances: @attendances } %>
@@ -20,5 +21,33 @@
     </table>
   </div>
 
-
+  <div class="flex items-center">
+    <div class="text-sm text-subtle show@md">Total of <%= @pagy.count %> record(s).</div>
+    <div class="flex items-center mis-auto justify-end" style="column-gap: 1rem">
+      <%= form_with url: pagy_url_for(@pagy, 1), class: "flex items-center gap show@md", method: :get, data: { controller: "form", action: "change->form#submit" } do |form| %>
+        <%= form.label :limit, "Rows per page", class: "text-sm font-medium" %>
+        <%= form.select :limit, [10, 20, 30, 40, 50], { selected: @pagy.limit }, { class: "input", style: "--input-inline-size: 70px" } %>
+      <% end %>
+      <div class="text-sm font-medium"><%= "Page #{@pagy.page} of #{@pagy.pages}" %></div>
+      <nav class="flex items-center flex-item-no-shrink gap" style="--btn-padding: .5rem;" aria-label="Pagination">
+        <%= link_to pagy_url_for(@pagy, 1), class: "btn", aria: { disabled: @pagy.prev.nil? }.compact_blank do %>
+          <span class="icon icon--chevrons-left" aria-hidden="true"></span>
+          <span class="sr-only">Go to first page</span>
+        <% end %>
+        <%= link_to pagy_url_for(@pagy, @pagy.prev || @pagy.page), class: "btn", aria: { disabled: @pagy.prev.nil? }.compact_blank do %>
+          <span class="icon icon--chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Go to previous page</span>
+        <% end %>
+        <%= link_to pagy_url_for(@pagy, @pagy.next || @pagy.page), class: "btn", aria: { disabled: @pagy.next.nil? }.compact_blank do %>
+          <span class="icon icon--chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Go to next page</span>
+        <% end %>
+        <%= link_to pagy_url_for(@pagy, @pagy.last), class: "btn", aria: { disabled: @pagy.next.nil? }.compact_blank do %>
+          <span class="icon icon--chevrons-right" aria-hidden="true"></span>
+          <span class="sr-only">Go to last page</span>
+        <% end %>
+      </nav>
+    </div>
+  </div>
+  <% end %>
 </div>

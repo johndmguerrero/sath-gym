@@ -6,6 +6,7 @@
 }
 
 .sidebar-menu__button {
+  --btn-hover-color: var(--color-crusta-500);
   --btn-background: transparent;
   --btn-border-color: transparent;
   --btn-box-shadow: none;
@@ -16,11 +17,11 @@
   --btn-padding: var(--size-1) var(--size-2);
 
   &[aria-current="page"] {
-    --btn-background: var(--color-border-light);
+    --btn-background: var(--color-crusta-500);
   }
 
   &:focus-visible {
-    --btn-background: var(--color-border-light);
+    --btn-background: var(--color-crusta-500);
   }
 
   &:is(summary) {

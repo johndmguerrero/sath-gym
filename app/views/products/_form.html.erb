@@ -50,7 +50,7 @@
 
       <div class="form-description col-span-2">
         <%= form.label :description, "Description" %>
-        <%= form.text_area :description, rows: 4, placeholder: "The ultimate AI-powered development platform for building modern web applications.", class: "input" %>
+        <%= form.text_area :description, rows: 4, placeholder: "", class: "input" %>
       </div>
     </div>
   </section>
@@ -107,7 +107,7 @@
               <%= plan_form.label :price_cents, "Price" %>
               <div class="input-group">
                 <%= plan_form.number_field :price_cents, placeholder: "0", class: "input", min: 0, step: 1 %>
-                <span class="input-addon"><%= plan_form.object.price_currency || "PHP" %></span>
+                <span class="input-addon text-black"><%= plan_form.object.price_currency || "PHP" %></span>
               </div>
               <p class="text-xs text-gray-500 mt-1">Amount in cents</p>
             </div>

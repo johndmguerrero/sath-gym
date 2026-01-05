@@ -1,0 +1,10 @@
+<tbody id="posts_table_body">
+  <% if !posts.any? %>
+    <tr><td colspan="6" class="text-center p-8">No posts yet. Generate your first AI-powered post!</td></tr>
+  <% else %>
+    <%= turbo_stream_from "social_media_posts" %>
+    <% posts.each do |post| %>
+      <%= render partial: "social_media/partials/post_row", locals: { post: post } %>
+    <% end %>
+  <% end %>
+</tbody>

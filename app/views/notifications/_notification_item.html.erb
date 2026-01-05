@@ -1,0 +1,32 @@
+<div class="notification-item <%= 'notification-item--unread' unless notification.read %>"
+     id="notification_<%= notification.id %>"
+     data-notification-id="<%= notification.id %>">
+  <div class="notification-item__header">
+    <div class="notification-item__icon">
+      <span class="icon icon--user-check" aria-hidden="true"></span>
+    </div>
+    <div class="notification-item__badge">
+      <% subscription_status = notification.metadata["subscription_status"] %>
+      <% badge_class = subscription_status == "Active" ? "badge--positive" : "badge--negative" %>
+      <span class="badge <%= badge_class %>"><%= subscription_status %></span>
+    </div>
+  </div>
+
+  <div class="notification-item__content">
+    <p class="notification-item__message">
+      <%= notification.message %>
+    </p>
+  </div>
+
+  <div class="notification-item__footer">
+    <span class="notification-item__time"><%= notification.time_ago %></span>
+    <% unless notification.read %>
+      <button class="btn btn--plain btn--sm"
+              data-action="click->notification#markAsRead"
+              data-notification-id="<%= notification.id %>">
+        <span class="icon icon--check" aria-hidden="true"></span>
+        Mark as read
+      </button>
+    <% end %>
+  </div>
+</div>

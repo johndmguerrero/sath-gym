@@ -1,0 +1,154 @@
+@media print {
+  /* Hide all non-essential UI elements */
+  header, nav, footer, .sidebar, .btn, button,
+  form input, form select, form textarea,
+  .form-actions, .page-title, .separator,
+  .alert, .icon, .input-addon, .input-group span,
+  aside, .sheet__close, .print-button {
+    display: none !important;
+  }
+
+  /* Reset page */
+  * {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+    color: #000;
+    background: #fff;
+  }
+
+  /* Gym Header */
+  body::before {
+    content: "SATH GYM\AOFFICIAL RECEIPT";
+    display: block;
+    text-align: center;
+    font-size: 18pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #000;
+    white-space: pre;
+    line-height: 1.4;
+  }
+
+  /* Card becomes simple sections */
+  .card {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .card-header {
+    display: block !important;
+  }
+
+  /* Section headings */
+  h4, h5, h6 {
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 15px 0 5px 0;
+    text-transform: uppercase;
+  }
+
+  /* Labels and values */
+  label {
+    display: inline-block;
+    width: 40%;
+    font-weight: bold;
+  }
+
+  .input, div[style*="cursor: not-allowed"] {
+    display: inline-block;
+    width: 55%;
+    border: none;
+    background: none !important;
+    padding: 0;
+    color: #000 !important;
+  }
+
+  /* Grid layout becomes single column */
+  .grid {
+    display: block !important;
+  }
+
+  .grid > div {
+    margin-bottom: 8px;
+  }
+
+  /* Payment summary styling */
+  .bg-gray-50, .bg-blue-50, .bg-red-50 {
+    background: #f5f5f5 !important;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd !important;
+  }
+
+  /* Table for transactions list */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table th, table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+  }
+
+  table th {
+    background: #f0f0f0;
+    font-weight: bold;
+  }
+
+  /* Badge styling for payment methods */
+  .badge {
+    border: 1px solid #000;
+    padding: 2px 6px;
+    display: inline-block;
+  }
+
+  /* Page breaks */
+  .card, section {
+    page-break-inside: avoid;
+  }
+
+  /* Hide pagination and search */
+  nav[aria-label="Pagination"], .pagy, form[action*="transactions"] {
+    display: none !important;
+  }
+
+  /* Show payment summary values */
+  #display-subtotal, #display-total, #display-paying, #display-change {
+    display: inline-block !important;
+    font-weight: bold;
+  }
+
+  /* Text color fixes */
+  .text-gray-600, .text-gray-800, .text-subtle,
+  .text-green-600, .text-red-600 {
+    color: #000 !important;
+  }
+
+  /* Make sure sections are visible */
+  section {
+    display: block !important;
+  }
+
+  /* Thank you message footer */
+  body::after {
+    content: "\A\AThank you for your business!\A\A---\ASath Gym";
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #000;
+    white-space: pre;
+    font-size: 11pt;
+  }
+}

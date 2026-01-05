@@ -1,4 +1,4 @@
-<div class="transactions" data-controller="dialog">
+<div class="transactions" data-controller="dialog print">
   <div class="page-title mbe-5 flex items-center gap-4">
     <div class="page-title-btn-wrapper">
       <%= link_to "", class: "btn", data: { controller: "back-navigation", back_navigation_fallback_destination_value: dashboard_index_path } do %>
@@ -7,6 +7,13 @@
       <% end %>
     </div>
     <h2 class="text-2xl">Transactions</h2>
+    <button type="button"
+            class="btn btn--secondary print-button"
+            data-action="click->print#print"
+            aria-label="Print transactions report">
+      <span class="icon icon--printer" aria-hidden="true"></span>
+      Print Report
+    </button>
   </div>
 
   <%= render partial: "transactions/partials/search_form", locals: { search: @search } %>

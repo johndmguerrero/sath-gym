@@ -55,6 +55,6 @@ label.required::after {
   background-size: cover;
 }
 
-.message--system {
+.message--system, .message--tool {
   display: none !important;
 }
