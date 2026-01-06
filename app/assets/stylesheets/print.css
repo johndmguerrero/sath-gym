@@ -20,7 +20,7 @@
     font-family: Arial, sans-serif;
     font-size: 12pt;
     color: #000;
-    background: #fff;
+    background: red;
   }
 
   /* Gym Header */
@@ -119,7 +119,7 @@
   }
 
   /* Hide pagination and search */
-  nav[aria-label="Pagination"], .pagy, form[action*="transactions"] {
+  nav[aria-label="Pagination"], .pagy {
     display: none !important;
   }
 
@@ -138,6 +138,10 @@
   /* Make sure sections are visible */
   section {
     display: block !important;
+  }
+
+  div.payment-information{
+    display: none !important;
   }
 
   /* Thank you message footer */

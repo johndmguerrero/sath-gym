@@ -22,7 +22,7 @@ class SocialMediaController < ApplicationController
     @post = current_user.social_media_posts.build(post_params)
 
     if @post.save
-      redirect_to social_media_path, notice: "Post created successfully!"
+      redirect_to social_media_path
     else
       add_breadcrumb "Social Media", :social_media_path
       add_breadcrumb "New Post"

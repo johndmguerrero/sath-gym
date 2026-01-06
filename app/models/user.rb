@@ -30,7 +30,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  enum :status, { draft: 0, active: 1, inactive: 2 }
+  enum :status, { active: 0, inactive: 1 }
   enum :gender, { male: 0, female: 1 }
 
   # Include default devise modules. Others available are:
@@ -73,7 +73,7 @@ class User < ApplicationRecord
   scope :members, -> { where(:role => ROLE_MEMBER)}
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[ nickname first_name last_name status email]
+    %w[ nickname first_name last_name status customer_number email]
   end
 
   def self.ransackable_associations(auth_object = nil)
@@ -90,6 +90,13 @@ class User < ApplicationRecord
 
   def member?
     !admin?
+  end
+
+  def at_risk?
+    return false unless subscription&.expires_at
+
+    days_until_expiration = (subscription.expires_at.to_date - Date.today).to_i
+    days_until_expiration >= 0 && days_until_expiration <= 7
   end
 
   # Notification helpers

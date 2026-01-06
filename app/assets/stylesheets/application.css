@@ -58,3 +58,10 @@ label.required::after {
 .message--system, .message--tool {
   display: none !important;
 }
+
+.payment-information.member-active input,
+.payment-information.member-active select {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}

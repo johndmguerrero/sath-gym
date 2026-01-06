@@ -46,11 +46,11 @@ class TransactionsController < ApplicationController
           # For renewal, extend the subscription expiration
           extend_subscription_expiration(@user.subscription)
           @user.update(status: :active)
-          redirect_to edit_member_path(@user.customer_number), notice: "Subscription renewed successfully. Expiration date has been extended."
+          redirect_to edit_member_path(@user.customer_number)
         else
           # For initial checkout, just activate the member
           @user.update(status: :active)
-          redirect_to edit_member_path(@user.customer_number), notice: "Payment completed successfully. Member is now active."
+          redirect_to edit_member_path(@user.customer_number)
         end
       else
         render (is_renewal ? :renewal : :checkout), status: :unprocessable_entity
@@ -62,7 +62,7 @@ class TransactionsController < ApplicationController
       respond_to do |format|
         if @transaction.save
           format.turbo_stream
-          format.html { redirect_to transactions_path, notice: "Transaction created successfully." }
+          format.html { redirect_to transactions_path }
         else
           format.turbo_stream { render turbo_stream: turbo_stream.replace("transaction_form", partial: "transactions/form", locals: { transaction: @transaction }), status: :unprocessable_entity }
           format.html { render :new, status: :unprocessable_entity }

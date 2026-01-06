@@ -1,40 +1,52 @@
 <div>
+  <!-- Welcome Header -->
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h1 class="text-3xl font-bold text-primary mb-1">Welcome, <%= current_user.fullname %></h1>
+      <p class="text-sm text-secondary">Here's what's happening with your gym today</p>
+    </div>
+    <div data-controller="clock" class="text-right">
+      <div data-clock-target="time" class="text-2xl font-bold text-primary"></div>
+      <div data-clock-target="date" class="text-sm text-secondary"></div>
+    </div>
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <!-- Total Members Card -->
-      <div class="stat-card card">
+      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
           <div>
               <div class="stat-label">Total Members</div>
               <div class="stat-value"><%= @total_members %></div>
-              <div class="text-xs text-subtle mbs-2">
-                <%= @active_members.size %> active, <%= @draft_members.size %> draft
+              <div class="text-xs mbs-2">
+                <%= @active_members.size %> active, <%= @draft_members.size %> inactive
               </div>
           </div>
       </div>
 
       <!-- Today's Attendance Card -->
-      <div class="stat-card card">
+      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
           <div>
               <div class="stat-label">Today's Check-ins</div>
               <div class="stat-value"><%= @today_attendance_count %></div>
-              <div class="text-xs text-subtle mbs-2">Last 24 hours: <%= @recent_attendances.size %></div>
+              <div class="text-xs mbs-2">Last 24 hours: <%= @recent_attendances.size %></div>
           </div>
       </div>
 
       <!-- Expiring Soon Card -->
-      <div class="stat-card card">
+      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
           <div>
               <div class="stat-label">Expiring Soon</div>
               <div class="stat-value"><%= @expiring_soon.size %></div>
-              <div class="text-xs text-subtle mbs-2">Next 30 days</div>
+              <div class="text-xs mbs-2">Next 30 days</div>
           </div>
       </div>
 
       <!-- Revenue Card -->
-      <div class="stat-card card">
+      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
           <div>
               <div class="stat-label">Monthly Revenue</div>
               <div class="stat-value">₱<%= number_with_delimiter(@monthly_revenue.to_i) %></div>
-              <div class="text-xs text-subtle mbs-2">Today: ₱<%= number_with_delimiter(@today_revenue.to_i) %></div>
+              <div class="text-xs mbs-2">Today: ₱<%= number_with_delimiter(@today_revenue.to_i) %></div>
           </div>
       </div>
   </div>
@@ -43,54 +55,37 @@
       <!-- Recent Attendance -->
       <div class="lg:col-span-2">
           <div class="card">
-              <div class="flex justify-between items-center mb-6">
+              <div class="flex justify-between items-center mbe-3">
                   <h2 style="font-size: 20px; font-weight: 600; margin: 0;">Recent Attendance</h2>
                   <span class="time-badge">Last 24 Hours</span>
               </div>
 
-              <div class="space-y-0">
-                  <% if @recent_attendances.any? %>
-                    <% @recent_attendances.each_with_index do |attendance, index| %>
-                      <%
-                        colors = [
-                          "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-                          "linear-gradient(135deg, #ec4899 0%, #f59e0b 100%)",
-                          "linear-gradient(135deg, #06b6d4 0%, #10b981 100%)",
-                          "linear-gradient(135deg, #a78bfa 0%, #ec4899 100%)",
-                          "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)"
-                        ]
-                        gradient = colors[index % colors.length]
-                        initials = attendance.user.first_name[0..0].upcase + attendance.user.last_name[0..0].upcase
-                      %>
-                      <div class="table-row">
-                          <div class="member-info">
-                              <div class="avatar" style="">
-                                <span role="img"><%= initials %></span>
-                              </div>
-                              <div class="member-details">
-                                  <h3><%= attendance.user.fullname %></h3>
-                                  <p>Check-in: <%= attendance.created_at.strftime("%I:%M %p") %></p>
-                              </div>
-                          </div>
-                          <% if attendance.remarks.present? %>
-                            <div style="text-align: right;">
-                                <p style="font-size: 14px; margin: 0; color: var(--accent);"><%= attendance.remarks %></p>
-                            </div>
-                          <% end %>
+              <div class="list">
+                <% if @recent_attendances.any? %>
+                  <% @recent_attendances.each_with_index do |attendance, index| %>
+                    <%
+                      initials = attendance.user.first_name[0..0].upcase + attendance.user.last_name[0..0].upcase
+                    %>
+                    <%= link_to edit_member_path(id: attendance.user.customer_number), class: "list-row list-row--link flex items-center justify-between" do %>
+                      <div class="flex flex-col gap-half">
+                        <h5 class="text-sm leading-none font-medium"><%= attendance.user.fullname %></h5>
+                        <p class="text-sm text-subtle">Check-in: <%= attendance.created_at.strftime("%I:%M %p") %></p>
                       </div>
+                      <span class="icon icon--chevron-right" aria-hidden="true"></span>
                     <% end %>
-                  <% else %>
-                    <div class="text-center p-8 text-subtle">
-                      <p>No recent check-ins in the last 24 hours</p>
-                    </div>
                   <% end %>
+                <% else %>
+                  <div class="text-center p-8 text-subtle">
+                    <p>No recent check-ins in the last 24 hours</p>
+                  </div>
+                <% end %>
               </div>
 
               <% if @recent_attendances.any? %>
                 <div class="mbs-4 pbs-4 border-t text-center">
                   <%= link_to attendances_path, class: "btn btn--sm" do %>
                     View All Attendance
-                    <span class="icon icon--arrow-right" aria-hidden="true"></span>
+                    <span class="icon icon--chevron-right" aria-hidden="true"></span>
                   <% end %>
                 </div>
               <% end %>
@@ -100,12 +95,12 @@
       <!-- Expiring Memberships -->
       <div>
           <div class="card">
-              <div class="flex justify-between items-center mb-6">
+              <div class="flex justify-between items-center mbe-3">
                   <h2 style="font-size: 20px; font-weight: 600; margin: 0;">Expiring Soon</h2>
                   <span class="time-badge">Next 30 Days</span>
               </div>
 
-              <div class="space-y-4">
+              <div class="list">
                   <% if @expiring_soon.any? %>
                     <% @expiring_soon.each do |subscription| %>
                       <%
@@ -125,19 +120,13 @@
                           "var(--info)"
                         end
                       %>
-                      <div style="padding: 12px; background-color: var(--bg-darker); border-radius: 8px; border-left: 3px solid <%= border_color %>;">
-                          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                              <div>
-                                  <%= link_to edit_member_path(subscription.user.customer_number), class: "text-decoration-none", data: { turbo_frame: "_top" } do %>
-                                    <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);"><%= subscription.user.fullname %></p>
-                                  <% end %>
-                                  <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-secondary);">
-                                    Expires <%= subscription.expires_at.strftime("%b %d, %Y") %>
-                                  </p>
-                              </div>
-                              <span class="badge <%= badge_class %>"><%= days_until_expiry %> Days</span>
+                        <%= link_to edit_member_path(id: subscription.user.customer_number), class: "list-row list-row--link flex items-center justify-between" do %>
+                          <div class="flex flex-col gap-half">
+                            <h5 class="text-sm leading-none font-medium"><%= subscription.user.fullname %></h5>
+                            <p class="text-sm text-subtle">Expires <%= subscription.expires_at.strftime("%b %d, %Y") %></p>
                           </div>
-                      </div>
+                          <span class="badge <%= badge_class %>"><%= days_until_expiry %> Days</span>
+                        <% end %>
                     <% end %>
                   <% else %>
                     <div class="text-center p-8 text-subtle">
@@ -150,7 +139,7 @@
                 <div class="mbs-4 pbs-4 border-t text-center">
                   <%= link_to members_path, class: "btn btn--sm" do %>
                     View All Members
-                    <span class="icon icon--arrow-right" aria-hidden="true"></span>
+                    <span class="icon icon--chevron-right" aria-hidden="true"></span>
                   <% end %>
                 </div>
               <% end %>

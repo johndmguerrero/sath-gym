@@ -9,7 +9,14 @@
     <%= form.submit "Search", class: "btn" %>
   </div>
 
-  <%= link_to new_transaction_path, class: "btn btn--primary", data: { action: "dialog#showModal", turbo_frame: "transaction_dialog" } do %>
+  <% link_to new_transaction_path, class: "btn btn--primary hidden", data: { action: "dialog#showModal", turbo_frame: "transaction_dialog" } do %>
     New Transaction <span class="icon icon--plus" aria-hidden="true"></span>
   <% end %>
+  <button type="button"
+          class="btn btn--secondary print-button"
+          data-action="click->print#print"
+          aria-label="Print transactions report">
+    <span class="icon icon--printer" aria-hidden="true"></span>
+    Print Report
+  </button>
 <% end %>

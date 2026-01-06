@@ -36,17 +36,19 @@
         <p class="text-base"><%= display_value(member.full_address) %></p>
       </div>
       <div class="member-weight text-xs">
-        <p class="text-subtle mbe-3">Registered Weight</p>
+        <p class="text-subtle mbe-3">Member Status</p>
         <p class="text-base">
-          <%= member.weight.present? ? "#{member.weight} " : "--" %>
-          <span class="text-subtle text-xs"><%= "kg" if member.weight.present? %></span>
+          <% if member.at_risk? %>
+            At Risk
+          <% else %>
+            <%= member.status.titleize %>
+          <% end %>
         </p>
       </div>
       <div class="member-height text-xs">
-        <p class="text-subtle mbe-3">Registered Height</p>
+        <p class="text-subtle mbe-3">Face Registered</p>
         <p class="text-base">
-          <%= member.height.present? ? "#{member.height} " : "--" %>
-          <span class="text-subtle text-xs"><%= "cm" if member.height.present? %></span>
+          <%= member.face_scan ? "Registered " : "Unregistered" %>
         </p>
       </div>
     </div>

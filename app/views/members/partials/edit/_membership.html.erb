@@ -25,6 +25,11 @@
             <dt>Expires At</dt>
             <dd><%= @member.subscription.expires_at.strftime("%B %d, %Y") if @member.subscription.expires_at %></dd>
           </div>
+          <div class="mb-3">
+            <%= link_to checkout_transactions_path(customer_number: @member.customer_number), class: "btn btn--primary" do %>
+              View Transaction
+            <% end %>
+          </div>
         </div>
       <% else %>
         <p>No active subscription</p>

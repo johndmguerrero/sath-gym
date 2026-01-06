@@ -19,7 +19,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      redirect_to edit_product_path(@product), notice: "Product successfully created!"
+      redirect_to edit_product_path(@product)
     else
       add_breadcrumb "Product & Plans", :products_path
       add_breadcrumb "Create Product"
@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to edit_product_path(@product), notice: "Product successfully updated!"
+      redirect_to edit_product_path(@product)
     else
       add_breadcrumb "Product & Plans", :products_path
       add_breadcrumb "Edit \"#{@product.name}\""

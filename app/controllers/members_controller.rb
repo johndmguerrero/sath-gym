@@ -27,7 +27,7 @@ class MembersController < ApplicationController
   def create
     subscription = UserSubscription.new(user: nil, product_plan: @plan, product: nil, options: member_params)
     if subscription.register
-      redirect_to checkout_transactions_path(customer_number: subscription.user.customer_number), notice: "Member registered successfully. Please complete payment to activate membership."
+      redirect_to checkout_transactions_path(customer_number: subscription.user.customer_number)
     else
       @member    = subscription.user
       @products  = Product.includes(:product_plans).all

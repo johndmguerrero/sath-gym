@@ -17,7 +17,7 @@
 
     <div class="flex flex-col gap-half">
       <%= form.label :total, "Total Amount (PHP)", class: "text-sm font-medium leading-none" %>
-      <%= form.number_field :total_cents, class: "input", required: true, min: 0, step: 1, placeholder: "Amount in centavos" %>
+      <%= form.number_field :total_cents, class: "input", required: true, min: 0, step: 1, placeholder: "Amount" %>
       <% if transaction.errors[:total_cents].any? %>
         <p class="text-sm text-red-600"><%= transaction.errors[:total_cents].first %></p>
       <% end %>

@@ -21,7 +21,7 @@ class EquipmentCategoriesController < ApplicationController
     respond_to do |format|
       if @equipment_category.save
         format.turbo_stream
-        format.html { redirect_to equipment_categories_path, notice: "Equipment category was successfully created." }
+        format.html { redirect_to equipment_categories_path }
       else
         format.turbo_stream { render turbo_stream: turbo_stream.replace("equipment_category_form", partial: "equipment_categories/form", locals: { equipment_category: @equipment_category }), status: :unprocessable_entity }
         format.html { render :new, status: :unprocessable_entity }
@@ -36,7 +36,7 @@ class EquipmentCategoriesController < ApplicationController
     respond_to do |format|
       if @equipment_category.update(equipment_category_params)
         format.turbo_stream
-        format.html { redirect_to equipment_categories_path, notice: "Equipment category was successfully updated." }
+        format.html { redirect_to equipment_categories_path }
       else
         format.turbo_stream { render turbo_stream: turbo_stream.replace("equipment_category_form", partial: "equipment_categories/form", locals: { equipment_category: @equipment_category }), status: :unprocessable_entity }
         format.html { render :edit, status: :unprocessable_entity }

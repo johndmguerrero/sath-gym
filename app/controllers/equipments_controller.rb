@@ -21,7 +21,7 @@ class EquipmentsController < ApplicationController
     @equipment = Equipment.new(equipment_params)
 
     if @equipment.save
-      redirect_to equipments_path, notice: "Equipment was successfully created."
+      redirect_to equipments_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class EquipmentsController < ApplicationController
 
   def update
     if @equipment.update(equipment_params)
-      redirect_to equipments_path, notice: "Equipment was successfully updated."
+      redirect_to equipments_path
     else
       render :edit, status: :unprocessable_entity
     end

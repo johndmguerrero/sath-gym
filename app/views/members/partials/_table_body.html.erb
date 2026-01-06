@@ -16,8 +16,13 @@
         </td>
         <td class="whitespace-nowrap">
           <div class="flex items-center gap">
-            <span class="icon <%= status_icons[member.status] %>" aria-hidden="true"></span>
-            <span><%= member.status.titleize %></span>
+            <% if !member.at_risk? %>
+              <span class="icon <%= status_icons[member.status] %>" aria-hidden="true"></span>
+              <span><%= member.status.titleize %></span>
+            <% else %>
+              <span class="icon <%= status_icons["draft"] %>" aria-hidden="true"></span>
+              <span>At Risk</span>
+            <% end %>
           </div>
         </td>
         <td class="whitespace-nowrap">

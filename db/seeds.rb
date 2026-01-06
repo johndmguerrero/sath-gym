@@ -18,8 +18,8 @@ product.plans.build(
 
 product.plans.build(
   interval: 1,
-  interval_count: 30,
-  price: 2000
+  interval_count: 1,
+  price: 20000
 )
 
 product.save

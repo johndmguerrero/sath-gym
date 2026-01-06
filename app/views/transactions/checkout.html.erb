@@ -1,4 +1,4 @@
-<div data-controller="print">
+<div data-controller="print checkout">
 <%= form_with(model: @transaction, url: checkout_transactions_path(customer_number: @user.customer_number), local: true) do |form| %>
   <% if @transaction.errors.any? %>
     <div class="alert alert--negative mbe-5" role="alert">
@@ -54,7 +54,7 @@
         <div>
           <label class="text-sm text-gray-600">Phone</label>
           <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed;">
-            <%= @user.phone_number %>
+            <%= @user.phone_number || "--" %>
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@
     <section class="mbe-5">
       <h5 class="font-semibold mbe-3">Payment Information</h5>
 
-      <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3">
+      <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3 payment-information <%= @user.active? ? "member-active" : "" %>" style="--color-surface-secondary: var(--color-bg)">
         <div class="form-payment-method col-span-2 lg:col-span-1">
           <%= form.label :payment_method, "Payment Method" %>
           <%= form.select :payment_method,
@@ -116,7 +116,7 @@
         </div>
 
         <div class="form-subtotal col-span-2 lg:col-span-1">
-          <%= form.label :subtotal_cents, "Subtotal (in cents)" %>
+          <%= form.label :subtotal_cents, "Subtotal" %>
           <div class="input-group">
             <%= form.number_field :subtotal_cents,
                 value: @user.subscription.product_plan.price_cents,
@@ -124,14 +124,17 @@
                 class: "input",
                 min: 0,
                 step: 1,
-                required: true %>
+                required: true , data: {
+                  checkout_target: "subtotalInput",
+                  action: "input->checkout#updateDisplays change->checkout#updateDisplays"
+                }%>
             <span class="input-addon">PHP</span>
           </div>
-          <p class="text-xs text-gray-500 mt-1">Amount before taxes/fees (in centavos)</p>
+          <p class="text-xs text-gray-500 mt-1">Amount before taxes/fees </p>
         </div>
 
         <div class="form-total col-span-2 lg:col-span-1">
-          <%= form.label :total_cents, "Total Amount (in cents)" %>
+          <%= form.label :total_cents, "Total Amount" %>
           <div class="input-group">
             <%= form.number_field :total_cents,
                 value: @user.subscription.product_plan.price_cents,
@@ -139,14 +142,17 @@
                 class: "input",
                 min: 0,
                 step: 1,
-                required: true %>
+                required: true , data: {
+                  checkout_target: "totalInput",
+                  action: "input->checkout#updateDisplays change->checkout#updateDisplays"
+                }%>
             <span class="input-addon">PHP</span>
           </div>
-          <p class="text-xs text-gray-500 mt-1">Final amount including taxes/fees (in centavos)</p>
+          <p class="text-xs text-gray-500 mt-1">Final amount including taxes/fees </p>
         </div>
 
         <div class="form-paying-amount col-span-2 lg:col-span-1">
-          <%= form.label :paying_amount_cents, "Amount Paid (in cents)" %>
+          <%= form.label :paying_amount_cents, "Amount Paid" %>
           <div class="input-group">
             <%= form.number_field :paying_amount_cents,
                 value: @user.subscription.product_plan.price_cents,
@@ -154,10 +160,13 @@
                 class: "input",
                 min: 0,
                 step: 1,
-                required: true %>
+                required: true, data: {
+                  checkout_target: "payingInput",
+                  action: "input->checkout#updateDisplays change->checkout#updateDisplays"
+                } %>
             <span class="input-addon">PHP</span>
           </div>
-          <p class="text-xs text-gray-500 mt-1">Amount received from customer (in centavos)</p>
+          <p class="text-xs text-gray-500 mt-1">Amount received from customer </p>
         </div>
 
         <div class="form-remarks col-span-2">
@@ -168,21 +177,21 @@
       </div>
 
       <!-- Amount Summary -->
-      <div class="card bg-gray-50 mbe-3">
+      <div class="card bg-gray-50 mbe-3" data-checkout-target="summaryCard">
         <h6 class="font-semibold mbe-2">Payment Summary</h6>
         <div class="space-y-2 text-sm">
           <div class="flex justify-between">
             <span class="text-gray-600">Subtotal:</span>
-            <span class="font-medium" id="display-subtotal">₱ 0.00</span>
+            <span class="font-medium" id="display-subtotal" data-checkout-target="displaySubtotal">₱ 0.00</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-600">Total:</span>
-            <span class="font-medium" id="display-total">₱ 0.00</span>
+            <span class="font-medium" id="display-total" data-checkout-target="displayTotal">₱ 0.00</span>
           </div>
           <div class="separator my-2" aria-hidden="true"></div>
           <div class="flex justify-between">
             <span class="text-gray-600">Amount Paid:</span>
-            <span class="font-semibold" id="display-paying">₱ 0.00</span>
+            <span class="font-semibold" id="display-paying" data-checkout-target="displayPaying">₱ 0.00</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-600">Change:</span>
@@ -204,79 +213,10 @@
       </button>
       <div class="mis-auto flex gap-4">
         <%= link_to "Cancel", members_path, class: "btn btn--secondary" %>
-        <%= form.submit "Complete Payment & Activate Member", class: "btn btn--primary" %>
+        <%= form.submit "Complete Payment & Activate Member", class: "btn btn--primary" if @user.inactive?%>
       </div>
     </div>
   </div>
 <% end %>
 </div>
 
-<script>
-  // Update display amounts in real-time
-  document.addEventListener('DOMContentLoaded', function() {
-    const subtotalInput = document.querySelector('[name="transaction[subtotal_cents]"]');
-    const totalInput = document.querySelector('[name="transaction[total_cents]"]');
-    const payingInput = document.querySelector('[name="transaction[paying_amount_cents]"]');
-
-    function formatCurrency(amount) {
-      return '₱ ' + amount.toLocaleString('en-PH', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-    }
-
-    function updateDisplays() {
-      const subtotal = parseFloat(subtotalInput?.value || 0) / 100;
-      const total = parseFloat(totalInput?.value || 0) / 100;
-      const paying = parseFloat(payingInput?.value || 0) / 100;
-      const change = paying - total;
-
-      // Update display elements with formatted currency
-      const displaySubtotal = document.getElementById('display-subtotal');
-      const displayTotal = document.getElementById('display-total');
-      const displayPaying = document.getElementById('display-paying');
-      const displayChange = document.getElementById('display-change');
-
-      if (displaySubtotal) displaySubtotal.textContent = formatCurrency(subtotal);
-      if (displayTotal) displayTotal.textContent = formatCurrency(total);
-      if (displayPaying) displayPaying.textContent = formatCurrency(paying);
-      if (displayChange) displayChange.textContent = formatCurrency(change);
-
-      // Highlight change in red if negative, green if positive
-      if (displayChange) {
-        if (change < 0) {
-          displayChange.classList.remove('text-green-600');
-          displayChange.classList.add('text-red-600');
-        } else {
-          displayChange.classList.remove('text-red-600');
-          displayChange.classList.add('text-green-600');
-        }
-      }
-
-      // Visual feedback: highlight the payment summary card if there's insufficient payment
-      const summaryCard = document.querySelector('.card.bg-gray-50');
-      if (summaryCard) {
-        if (change < 0) {
-          summaryCard.classList.remove('bg-gray-50');
-          summaryCard.classList.add('bg-red-50', 'border', 'border-red-200');
-        } else {
-          summaryCard.classList.remove('bg-red-50', 'border', 'border-red-200');
-          summaryCard.classList.add('bg-gray-50');
-        }
-      }
-    }
-
-    // Attach event listeners to all inputs
-    if (subtotalInput) subtotalInput.addEventListener('input', updateDisplays);
-    if (totalInput) totalInput.addEventListener('input', updateDisplays);
-    if (payingInput) payingInput.addEventListener('input', updateDisplays);
-
-    // Also listen for 'change' event (for manual entry completion)
-    if (subtotalInput) subtotalInput.addEventListener('change', updateDisplays);
-    if (totalInput) totalInput.addEventListener('change', updateDisplays);
-    if (payingInput) payingInput.addEventListener('change', updateDisplays);
-
-    // Initial update on page load
-    updateDisplays();
-  });
-</script>
