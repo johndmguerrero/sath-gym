@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: attendances
+# Database name: primary
 #
 #  id         :bigint           not null, primary key
 #  remarks    :string

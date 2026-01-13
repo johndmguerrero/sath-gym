@@ -1,25 +1,28 @@
 # == Schema Information
 #
 # Table name: social_media_posts
+# Database name: primary
 #
 #  id            :bigint           not null, primary key
-#  platform      :string           default("facebook"), not null
-#  content       :text             not null
-#  status        :integer          default("draft"), not null
-#  metadata      :jsonb            default({})
-#  input_tokens  :integer
-#  output_tokens :integer
 #  cached_tokens :integer
-#  user_id       :bigint           not null
+#  content       :text             not null
+#  input_tokens  :integer
+#  metadata      :jsonb
+#  output_tokens :integer
+#  status        :integer          default("draft"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  user_id       :bigint           not null
 #
 # Indexes
 #
 #  index_social_media_posts_on_created_at  (created_at)
-#  index_social_media_posts_on_platform    (platform)
 #  index_social_media_posts_on_status      (status)
 #  index_social_media_posts_on_user_id     (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 class SocialMediaPost < ApplicationRecord
   belongs_to :user

@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: product_plans
+# Database name: primary
 #
 #  id             :bigint           not null, primary key
 #  interval       :integer          default("monthly")
@@ -28,6 +29,6 @@ class ProductPlan < ApplicationRecord
   monetize :price_cents
 
   def display_plan
-    "#{price_cents} -- #{interval}"
+    "#{price.format} -- #{interval}"
   end
 end

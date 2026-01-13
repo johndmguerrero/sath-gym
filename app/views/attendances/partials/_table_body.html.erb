@@ -6,7 +6,7 @@
       <tr>
         <td class="whitespace-nowrap">#<%= attendance.customer_number %></td>
         <td class="whitespace-nowrap">
-          <span><%= attendance.created_at.strftime("%b %d, %Y %H:%M") %></span>
+          <span><%= attendance.created_at.strftime("%b %d, %Y %I:%M %p") %></span>
         </td>
       </tr>
     <% end %>

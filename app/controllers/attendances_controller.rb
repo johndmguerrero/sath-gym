@@ -1,4 +1,5 @@
 class AttendancesController < ApplicationController
+  before_action :authenticate_user!, except: [:create]
   skip_before_action :verify_authenticity_token, only: [:create]
   include Pagy::Backend
   before_action :set_user, only: [:create]
@@ -12,6 +13,13 @@ class AttendancesController < ApplicationController
   end
 
   def create
+    existing_attendance = @user.attendances.where(created_at: Date.current.all_day).first
+
+    if existing_attendance
+      render json: @user, status: :ok
+      return
+    end
+
     @attendance = @user.attendances.build(
       remarks: attendance_params[:remarks]
     )

@@ -18,9 +18,9 @@ export default class extends Controller {
   }
 
   updateDisplays() {
-    const subtotal = this.getCentsValue(this.subtotalInputTarget) / 100
-    const total = this.getCentsValue(this.totalInputTarget) / 100
-    const paying = this.getCentsValue(this.payingInputTarget) / 100
+    const subtotal = this.getCentsValue(this.subtotalInputTarget)
+    const total = this.getCentsValue(this.totalInputTarget)
+    const paying = this.getCentsValue(this.payingInputTarget)
     const change = paying - total
 
     // Update display elements with formatted currency
@@ -45,7 +45,9 @@ export default class extends Controller {
   }
 
   getCentsValue(target) {
-    return parseFloat(target?.value || 0)
+    // Use unmasked value from Maska if available, otherwise fall back to raw value
+    const rawValue = target?.dataset?.maskRawValue || target?.value || '0'
+    return parseFloat(rawValue.replace(/,/g, '')) || 0
   }
 
   formatCurrency(amount) {

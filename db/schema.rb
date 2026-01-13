@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_05_084318) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_13_081030) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -208,6 +208,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_05_084318) do
     t.bigint "subscription_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "transaction_type", default: 0, null: false
     t.index ["subscription_id"], name: "index_transactions_on_subscription_id"
   end
 

@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: equipment
+# Database name: primary
 #
 #  id                      :bigint           not null, primary key
 #  brand                   :string

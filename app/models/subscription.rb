@@ -1,10 +1,11 @@
 # == Schema Information
 #
 # Table name: subscriptions
+# Database name: primary
 #
 #  id              :bigint           not null, primary key
 #  expires_at      :datetime         not null
-#  status          :integer          default("active"), not null
+#  status          :integer          default("inactive"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  product_plan_id :bigint           not null
@@ -21,7 +22,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Subscription < ApplicationRecord
-  enum :status, { active: 0, inactive: 1 }
+  enum :status, { inactive: 0, active: 1 }
 
   belongs_to :user
   belongs_to :product_plan
@@ -34,5 +35,11 @@ class Subscription < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     %w[user]
+  end
+
+  def expired?
+    return true if expires_at.nil?
+
+    expires_at < Time.now
   end
 end

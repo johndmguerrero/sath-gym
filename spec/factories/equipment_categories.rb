@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: equipment_categories
+# Database name: primary
 #
 #  id         :bigint           not null, primary key
 #  desciption :text

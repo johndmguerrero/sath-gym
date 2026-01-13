@@ -23,7 +23,7 @@
     <%= f.select :status, SocialMediaPost.statuses.keys.map { |k| [k.titleize, k] }, {}, class: "input" %>
   </div>
 
-  <div class="form__actions">
+  <div class="form__actions mbs-3">
     <%= f.submit @post.persisted? ? "Update Post" : "Create Post", class: "btn btn--primary" %>
     <%= link_to "Cancel", social_media_path, class: "btn" %>
   </div>

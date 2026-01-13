@@ -104,9 +104,9 @@
 
           <div class="grid gap-4 grid-cols-1 lg:grid-cols-3">
             <div class="form-price">
-              <%= plan_form.label :price_cents, "Price" %>
+              <%= plan_form.label :price, "Price" %>
               <div class="input-group">
-                <%= plan_form.number_field :price_cents, placeholder: "0", class: "input", min: 0, step: 1 %>
+                <%= plan_form.text_field :price, placeholder: "0", class: "input", inputmode: "decimal", data: { controller: "inputmask", maska_number_fraction: "2", maska_number_unsigned: true }%>
                 <span class="input-addon text-black"><%= plan_form.object.price_currency || "PHP" %></span>
               </div>
               <p class="text-xs text-gray-500 mt-1">Amount in cents</p>

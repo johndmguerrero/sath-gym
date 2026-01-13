@@ -1,28 +1,39 @@
-<div hidden id="tab_attendance" data-tabs-target="tab" role="tabpanel" aria-labelledby="trigger_account">
+<div hidden id="tab_attendance" data-tabs-target="tab" role="tabpanel" aria-labelledby="trigger_attendance">
   <div class="card">
-    <h3>Attendance History</h3>
+    <div class="card-header mbe-3">
+      <div class="flex items-center justify-between">
+        <div>
+          <h5 class="font-semibold">Attendance History</h5>
+          <p class="text-sm text-subtle">Recent attendance records for this member</p>
+        </div>
+      </div>
+    </div>
 
     <% if @member.attendances.any? %>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @member.attendances.order(created_at: :desc).limit(10).each do |attendance| %>
+      <div class="table-container">
+        <table class="table">
+          <thead>
             <tr>
-              <td><%= attendance.created_at.strftime("%B %d, %Y") %></td>
-              <td><%= attendance.created_at.strftime("%I:%M %p") %></td>
-              <td><%= attendance.remarks %></td>
+              <th>Date</th>
+              <th>Time</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @member.attendances.order(created_at: :desc).limit(10).each do |attendance| %>
+              <tr>
+                <td class="whitespace-nowrap"><%= attendance.created_at.strftime("%b %d, %Y") %></td>
+                <td class="whitespace-nowrap"><%= attendance.created_at.strftime("%I:%M %p") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     <% else %>
-      <p>No attendance records</p>
+      <div class="text-center py-8">
+        <span class="icon icon--calendar text-gray-400" aria-hidden="true" style="--icon-size: 3rem"></span>
+        <p class="text-subtle mt-2">No attendance records</p>
+        <p class="text-sm text-gray-500 mt-1">Attendance will appear here when the member checks in.</p>
+      </div>
     <% end %>
   </div>
 </div>

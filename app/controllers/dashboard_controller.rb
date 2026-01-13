@@ -28,5 +28,22 @@ class DashboardController < ApplicationController
                                  .sum(:total_cents) / 100.0
     @today_revenue = Transaction.where("created_at >= ?", Time.current.beginning_of_day)
                                .sum(:total_cents) / 100.0
+
+    # Chart data for monthly sales
+    @chart_data = Transaction.monthly_sales_data(months: 7)
+
+    # Pie chart data for product plan popularity
+    plan_counts = Subscription.joins(product_plan: :product)
+                              .group("products.name", "product_plans.interval")
+                              .count
+
+    @pie_data = {
+      labels: plan_counts.keys.map { |product_name, interval| "#{product_name} - #{interval}" },
+      datasets: [{
+        label: "Subscriptions by Plan",
+        backgroundColor: ["#93c5fd", "#fda4af", "#6ee7b7", "#c4b5fd", "#fbbf24", "#fb923c", "#a78bfa", "#34d399"],
+        data: plan_counts.values
+      }]
+    }
   end
 end

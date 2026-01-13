@@ -1,6 +1,6 @@
 <tbody>
   <% if !equipments.any? %>
-    <tr><td colspan="7" class="text-center p-8">No Results.</td></tr>
+    <tr id="equipment_empty_row"><td colspan="7" class="text-center p-8">No Results.</td></tr>
   <% else %>
     <% equipments.each do |equipment| %>
       <tr>

@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
         :id,
         :interval,
         :interval_count,
-        :price_cents,
+        :price,
         :price_currency,
         :status,
         :_destroy

@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: user_addresses
+# Database name: primary
 #
 #  id         :bigint           not null, primary key
 #  barangay   :string

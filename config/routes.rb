@@ -62,5 +62,7 @@ Rails.application.routes.draw do
     post "checkout/:customer_number", to: "transactions#create", on: :collection
     get "renewal/:customer_number", to: "transactions#renewal", on: :collection, as: :renewal
     post "renewal/:customer_number", to: "transactions#create", on: :collection
+    get "checkout/:customer_number/:id", to: "transactions#show_checkout", on: :collection, as: :show_checkout
+    get "renewal/:customer_number/:id", to: "transactions#show_renewal", on: :collection, as: :show_renewal
   end
 end

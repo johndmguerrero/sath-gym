@@ -1,14 +1,15 @@
 # == Schema Information
 #
 # Table name: notifications
+# Database name: primary
 #
 #  id                :bigint           not null, primary key
 #  message           :text             not null
 #  metadata          :jsonb
+#  notifiable_type   :string           not null
 #  notification_type :string           not null
 #  read              :boolean          default(FALSE), not null
 #  read_at           :datetime
-#  notifiable_type   :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  notifiable_id     :bigint           not null
@@ -16,11 +17,11 @@
 #
 # Indexes
 #
-#  index_notifications_on_notifiable                     (notifiable_type,notifiable_id)
-#  index_notifications_on_notification_type              (notification_type)
-#  index_notifications_on_read                           (read)
-#  index_notifications_on_recipient_id                   (recipient_id)
-#  index_notifications_on_recipient_unread_recent        (recipient_id,read,created_at)
+#  index_notifications_on_notifiable               (notifiable_type,notifiable_id)
+#  index_notifications_on_notification_type        (notification_type)
+#  index_notifications_on_read                     (read)
+#  index_notifications_on_recipient_id             (recipient_id)
+#  index_notifications_on_recipient_unread_recent  (recipient_id,read,created_at)
 #
 # Foreign Keys
 #

@@ -1,7 +1,8 @@
 class TransactionsController < ApplicationController
   before_action :authenticate_user!
   include Pagy::Backend
-  before_action :set_user, only: [:checkout, :renewal]
+  before_action :set_user, only: [:checkout, :renewal, :show_checkout, :show_renewal]
+  before_action :set_transaction, only: [:show_checkout, :show_renewal]
 
   def index
     add_breadcrumb "Transactions"
@@ -32,16 +33,27 @@ class TransactionsController < ApplicationController
     @transaction = @user.subscription.transactions.build
   end
 
+  def show_checkout
+    add_breadcrumb "Transactions", :transactions_path
+    add_breadcrumb "Checkout Details"
+    render :checkout
+  end
+
+  def show_renewal
+    add_breadcrumb "Transactions", :transactions_path
+    add_breadcrumb "Renewal Details"
+    render :renewal
+  end
+
   def create
     if params[:customer_number].present?
       # Existing flow for subscribed users (checkout or renewal)
       @user = User.find_by(customer_number: params[:customer_number])
+      is_renewal = params[:renewal].present?
       @transaction = @user.subscription.transactions.build(transaction_params)
+      @transaction.transaction_type = is_renewal ? :renewal : :checkout
 
       if @transaction.save
-        # Determine if this is a renewal or initial checkout
-        is_renewal = params[:renewal].present?
-
         if is_renewal
           # For renewal, extend the subscription expiration
           extend_subscription_expiration(@user.subscription)
@@ -50,23 +62,11 @@ class TransactionsController < ApplicationController
         else
           # For initial checkout, just activate the member
           @user.update(status: :active)
+          @user.subscription.active!
           redirect_to edit_member_path(@user.customer_number)
         end
       else
         render (is_renewal ? :renewal : :checkout), status: :unprocessable_entity
-      end
-    else
-      # Walk-in transaction (no subscription)
-      @transaction = Transaction.new(transaction_params)
-
-      respond_to do |format|
-        if @transaction.save
-          format.turbo_stream
-          format.html { redirect_to transactions_path }
-        else
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("transaction_form", partial: "transactions/form", locals: { transaction: @transaction }), status: :unprocessable_entity }
-          format.html { render :new, status: :unprocessable_entity }
-        end
       end
     end
   end
@@ -78,7 +78,7 @@ class TransactionsController < ApplicationController
   end
 
   def set_transaction
-
+    @transaction = @user.subscription.transactions.find(params[:id])
   end
 
   def extend_subscription_expiration(subscription)
@@ -105,9 +105,9 @@ class TransactionsController < ApplicationController
       :payment_method,
       :reference_number,
       :remarks,
-      :subtotal_cents,
-      :total_cents,
-      :paying_amount_cents
+      :subtotal,
+      :total,
+      :paying_amount
     )
   end
 end

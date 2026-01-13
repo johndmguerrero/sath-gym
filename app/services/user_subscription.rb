@@ -23,7 +23,14 @@ class UserSubscription
   end
 
   def set_expiry
-    DateTime.now + product_plan.interval_count.days
+    case product_plan.interval
+    when "daily"
+      DateTime.now + product_plan.interval_count.days
+    when "monthly"
+      DateTime.now + product_plan.interval_count.months
+    when "yearly"
+      DateTime.now + product_plan.interval_count.years
+    end
   end
 
   def subscription_statuses

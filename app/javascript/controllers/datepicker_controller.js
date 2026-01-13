@@ -7,7 +7,8 @@ export default class extends Controller {
     mode: { type: String, default: "single" },
     showMonths: { type: Number, default: 1 },
     dateFormat: { type: String, default: "F d, Y" },
-    dateTimeFormat: { type: String, default: "F d, Y H:i" }
+    dateTimeFormat: { type: String, default: "F d, Y H:i" },
+    minAge: { type: Number, default: 0 }
   }
 
   connect() {
@@ -37,6 +38,14 @@ export default class extends Controller {
   }
 
   get #baseOptions() {
-    return { altInput: true, disable: this.disableValue, mode: this.modeValue, showMonths: this.showMonthsValue }
+    const options = { altInput: true, disable: this.disableValue, mode: this.modeValue, showMonths: this.showMonthsValue }
+
+    if (this.minAgeValue > 0) {
+      const maxDate = new Date()
+      maxDate.setFullYear(maxDate.getFullYear() - this.minAgeValue)
+      options.maxDate = maxDate
+    }
+
+    return options
   }
 }

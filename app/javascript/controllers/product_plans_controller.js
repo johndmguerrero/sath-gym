@@ -71,9 +71,9 @@ export default class extends Controller {
 
         <div class="grid gap-4 grid-cols-1 lg:grid-cols-3">
           <div class="form-price">
-            <label for="product_product_plans_attributes_${index}_price_cents">Price</label>
+            <label for="product_product_plans_attributes_${index}_price">Price</label>
             <div class="input-group">
-              <input type="number" name="product[product_plans_attributes][${index}][price_cents]" id="product_product_plans_attributes_${index}_price_cents" placeholder="0" class="input" min="0" step="1">
+              <input type="text" name="product[product_plans_attributes][${index}][price]" id="product_product_plans_attributes_${index}_price" placeholder="0" class="input" inputmode="decimal" data-controller="inputmask" data-maska-number-fraction="2" data-maska-number-unsigned="true">
               <span class="input-addon">PHP</span>
             </div>
             <p class="text-xs text-gray-500 mt-1">Amount in cents</p>

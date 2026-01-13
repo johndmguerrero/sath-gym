@@ -8,11 +8,8 @@
         <td class="whitespace-nowrap">#<%= member.customer_number %></td>
         <td class="whitespace-nowrap">
           <div class="flex items-center gap">
-            <span class="overflow-ellipsis" style="inline-size: 450px"><%= member.email %></span>
+            <span class="overflow-ellipsis" style="inline-size: 450px"><%= member.fullname %></span>
           </div>
-        </td>
-        <td class="whitespace-nowrap">
-          <p>--</p>
         </td>
         <td class="whitespace-nowrap">
           <div class="flex items-center gap">
@@ -27,7 +24,7 @@
         </td>
         <td class="whitespace-nowrap">
           <%= link_to edit_member_path(member.customer_number), class: "btn btn--plain p-1 !cursor-pointer !text-blue-400", data: { turbo_frame: "_top" } do %>
-            Edit
+            View
             <span class="icon icon--arrow-up-right" aria-hidden="true"></span>
           <% end %>
         </td>

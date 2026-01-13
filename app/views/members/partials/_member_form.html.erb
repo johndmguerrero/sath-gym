@@ -70,7 +70,7 @@
       <div class="grid gap-4 grid-cols-1 lg:grid-cols-4 mbe-3">
         <div class="form-date-of-birth">
           <%= f.label :date_of_birth, class: "mbe-2 block required" %>
-          <%= f.text_field :date_of_birth, class: "input #{'input--error' if member.errors[:date_of_birth].any?}", placeholder: "Pick members birthday", data: { controller: "datepicker"} %>
+          <%= f.text_field :date_of_birth, class: "input #{'input--error' if member.errors[:date_of_birth].any?}", placeholder: "Pick members birthday", data: { controller: "datepicker", datepicker_min_age_value: 18 } %>
           <% if member.errors[:date_of_birth].any? %>
             <span class="text-error text-sm"><%= member.errors[:date_of_birth].first %></span>
           <% end %>

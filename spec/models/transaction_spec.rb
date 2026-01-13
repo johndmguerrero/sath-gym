@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: transactions
+# Database name: primary
 #
 #  id                     :bigint           not null, primary key
 #  paying_amount_cents    :integer          default(0), not null

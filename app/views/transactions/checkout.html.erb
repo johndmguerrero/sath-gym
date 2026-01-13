@@ -1,4 +1,5 @@
-<div data-controller="print checkout">
+<% is_view_mode = @transaction.persisted? %>
+<div data-controller="print <%= 'checkout' unless is_view_mode %>">
 <%= form_with(model: @transaction, url: checkout_transactions_path(customer_number: @user.customer_number), local: true) do |form| %>
   <% if @transaction.errors.any? %>
     <div class="alert alert--negative mbe-5" role="alert">
@@ -23,9 +24,34 @@
       <div class="flex items-center gap-2 mbe-2">
         <span class="icon icon--wallet-card" aria-hidden="true" style="--icon-size: 1.25rem"></span>
         <h4 class="text-xl">Checkout</h4>
+        <% if is_view_mode %>
+          <span class="badge badge--primary mis-2">Checkout</span>
+        <% end %>
       </div>
-      <p class="text-subtle">Complete the subscription payment for <%= @user.fullname %></p>
+      <p class="text-subtle"><%= is_view_mode ? "Transaction details for" : "Complete the subscription payment for" %> <%= @user.fullname %></p>
     </div>
+
+    <% if is_view_mode %>
+      <div class="separator mb-4" aria-hidden="true"></div>
+      <!-- Transaction Information -->
+      <section class="mbe-5">
+        <h5 class="font-semibold mbe-3">Transaction Information</h5>
+        <div class="grid gap-3 grid-cols-1 lg:grid-cols-2">
+          <div>
+            <label class="text-sm text-gray-600">Transaction ID</label>
+            <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed;">
+              #<%= @transaction.id %>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-600">Transaction Date</label>
+            <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed;">
+              <%= @transaction.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+            </div>
+          </div>
+        </div>
+      </section>
+    <% end %>
 
     <div class="separator mb-4" aria-hidden="true"></div>
 
@@ -99,106 +125,161 @@
     <section class="mbe-5">
       <h5 class="font-semibold mbe-3">Payment Information</h5>
 
-      <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3 payment-information <%= @user.active? ? "member-active" : "" %>" style="--color-surface-secondary: var(--color-bg)">
-        <div class="form-payment-method col-span-2 lg:col-span-1">
-          <%= form.label :payment_method, "Payment Method" %>
-          <%= form.select :payment_method,
-              Transaction.payment_methods.keys.map { |k| [k.humanize.titleize, k] },
-              { prompt: "Select payment method" },
-              { class: "input", required: true } %>
-          <p class="text-xs text-gray-500 mt-1">How will the member pay?</p>
+      <% if is_view_mode %>
+        <div class="grid gap-3 grid-cols-1 lg:grid-cols-2">
+          <div>
+            <label class="text-sm text-gray-600">Payment Method</label>
+            <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed;">
+              <%= @transaction.payment_method.humanize.titleize %>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-600">Reference Number</label>
+            <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed;">
+              <%= @transaction.reference_number.presence || "--" %>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-600">Subtotal</label>
+            <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed;">
+              <%= number_to_currency(@transaction.subtotal_cents / 100.0, unit: "₱") %>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-600">Total Amount</label>
+            <div class="input bg-gray-100 text-gray-800 font-semibold" style="cursor: not-allowed;">
+              <%= number_to_currency(@transaction.total_cents / 100.0, unit: "₱") %>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-600">Amount Paid</label>
+            <div class="input bg-green-50 text-green-800 font-semibold" style="cursor: not-allowed;">
+              <%= number_to_currency(@transaction.paying_amount_cents / 100.0, unit: "₱") %>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-600">Change</label>
+            <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed;">
+              <%= number_to_currency((@transaction.paying_amount_cents - @transaction.total_cents) / 100.0, unit: "₱") %>
+            </div>
+          </div>
+          <% if @transaction.remarks.present? %>
+            <div class="col-span-2">
+              <label class="text-sm text-gray-600">Remarks</label>
+              <div class="input bg-gray-100 text-gray-800" style="cursor: not-allowed; min-height: 80px;">
+                <%= @transaction.remarks %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="grid gap-4 grid-cols-1 lg:grid-cols-2 mbe-3 payment-information <%= @user.subscription.active? ? "member-active" : "" %>" style="--color-surface-secondary: var(--color-bg)">
+          <div class="form-payment-method col-span-2 lg:col-span-1">
+            <%= form.label :payment_method, "Payment Method" %>
+            <%= form.select :payment_method,
+                Transaction.payment_methods.keys.map { |k| [k.humanize.titleize, k] },
+                { prompt: "Select payment method" },
+                { class: "input", required: true } %>
+            <p class="text-xs text-gray-500 mt-1">How will the member pay?</p>
+          </div>
+
+          <div class="form-reference col-span-2 lg:col-span-1">
+            <%= form.label :reference_number, "Reference Number (Optional)" %>
+            <%= form.text_field :reference_number, placeholder: "e.g. TXN123456789", class: "input" %>
+            <p class="text-xs text-gray-500 mt-1">Transaction reference or receipt number</p>
+          </div>
+
+          <div class="form-subtotal col-span-2 lg:col-span-1">
+            <%= form.label :subtotal, "Subtotal" %>
+            <div class="input-group">
+              <%= form.text_field :subtotal,
+                  value: @user.subscription.product_plan.price_cents / 100.0,
+                  placeholder: "0",
+                  class: "input",
+                  inputmode: "decimal",
+                  required: true , data: {
+                    checkout_target: "subtotalInput",
+                    controller: "inputmask",
+                    maska_number_fraction: "2",
+                    maska_number_unsigned: true,
+                    action: "input->checkout#updateDisplays change->checkout#updateDisplays"
+                  }%>
+              <span class="input-addon">PHP</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Amount before taxes/fees </p>
+          </div>
+
+          <div class="form-total col-span-2 lg:col-span-1">
+            <%= form.label :total, "Total Amount" %>
+            <div class="input-group">
+              <%= form.text_field :total,
+                  value: @user.subscription.product_plan.price_cents / 100.0,
+                  placeholder: "0",
+                  class: "input",
+                  inputmode: "decimal",
+                  required: true , data: {
+                    checkout_target: "totalInput",
+                    controller: "inputmask",
+                    maska_number_fraction: "2",
+                    maska_number_unsigned: true,
+                    action: "input->checkout#updateDisplays change->checkout#updateDisplays"
+                  }%>
+              <span class="input-addon">PHP</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Final amount including taxes/fees </p>
+          </div>
+
+          <div class="form-paying-amount col-span-2 lg:col-span-1">
+            <%= form.label :paying_amount, "Amount Paid" %>
+            <div class="input-group">
+              <%= form.text_field :paying_amount,
+                  value: @user.subscription.product_plan.price_cents / 100.0,
+                  placeholder: "0.00",
+                  class: "input",
+                  inputmode: "decimal",
+                  required: true, data: {
+                    checkout_target: "payingInput",
+                    controller: "inputmask",
+                    maska_number_fraction: "2",
+                    maska_number_unsigned: true,
+                    action: "input->checkout#updateDisplays change->checkout#updateDisplays"
+                  } %>
+              <span class="input-addon">PHP</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Amount received from customer </p>
+          </div>
+
+          <div class="form-remarks col-span-2">
+            <%= form.label :remarks, "Remarks (Optional)" %>
+            <%= form.text_area :remarks, rows: 3, placeholder: "Add any notes about this transaction...", class: "input" %>
+            <p class="text-xs text-gray-500 mt-1">Internal notes or special instructions</p>
+          </div>
         </div>
 
-        <div class="form-reference col-span-2 lg:col-span-1">
-          <%= form.label :reference_number, "Reference Number (Optional)" %>
-          <%= form.text_field :reference_number, placeholder: "e.g. TXN123456789", class: "input" %>
-          <p class="text-xs text-gray-500 mt-1">Transaction reference or receipt number</p>
-        </div>
-
-        <div class="form-subtotal col-span-2 lg:col-span-1">
-          <%= form.label :subtotal_cents, "Subtotal" %>
-          <div class="input-group">
-            <%= form.number_field :subtotal_cents,
-                value: @user.subscription.product_plan.price_cents,
-                placeholder: "0",
-                class: "input",
-                min: 0,
-                step: 1,
-                required: true , data: {
-                  checkout_target: "subtotalInput",
-                  action: "input->checkout#updateDisplays change->checkout#updateDisplays"
-                }%>
-            <span class="input-addon">PHP</span>
-          </div>
-          <p class="text-xs text-gray-500 mt-1">Amount before taxes/fees </p>
-        </div>
-
-        <div class="form-total col-span-2 lg:col-span-1">
-          <%= form.label :total_cents, "Total Amount" %>
-          <div class="input-group">
-            <%= form.number_field :total_cents,
-                value: @user.subscription.product_plan.price_cents,
-                placeholder: "0",
-                class: "input",
-                min: 0,
-                step: 1,
-                required: true , data: {
-                  checkout_target: "totalInput",
-                  action: "input->checkout#updateDisplays change->checkout#updateDisplays"
-                }%>
-            <span class="input-addon">PHP</span>
-          </div>
-          <p class="text-xs text-gray-500 mt-1">Final amount including taxes/fees </p>
-        </div>
-
-        <div class="form-paying-amount col-span-2 lg:col-span-1">
-          <%= form.label :paying_amount_cents, "Amount Paid" %>
-          <div class="input-group">
-            <%= form.number_field :paying_amount_cents,
-                value: @user.subscription.product_plan.price_cents,
-                placeholder: "0",
-                class: "input",
-                min: 0,
-                step: 1,
-                required: true, data: {
-                  checkout_target: "payingInput",
-                  action: "input->checkout#updateDisplays change->checkout#updateDisplays"
-                } %>
-            <span class="input-addon">PHP</span>
-          </div>
-          <p class="text-xs text-gray-500 mt-1">Amount received from customer </p>
-        </div>
-
-        <div class="form-remarks col-span-2">
-          <%= form.label :remarks, "Remarks (Optional)" %>
-          <%= form.text_area :remarks, rows: 3, placeholder: "Add any notes about this transaction...", class: "input" %>
-          <p class="text-xs text-gray-500 mt-1">Internal notes or special instructions</p>
-        </div>
-      </div>
-
-      <!-- Amount Summary -->
-      <div class="card bg-gray-50 mbe-3" data-checkout-target="summaryCard">
-        <h6 class="font-semibold mbe-2">Payment Summary</h6>
-        <div class="space-y-2 text-sm">
-          <div class="flex justify-between">
-            <span class="text-gray-600">Subtotal:</span>
-            <span class="font-medium" id="display-subtotal" data-checkout-target="displaySubtotal">₱ 0.00</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600">Total:</span>
-            <span class="font-medium" id="display-total" data-checkout-target="displayTotal">₱ 0.00</span>
-          </div>
-          <div class="separator my-2" aria-hidden="true"></div>
-          <div class="flex justify-between">
-            <span class="text-gray-600">Amount Paid:</span>
-            <span class="font-semibold" id="display-paying" data-checkout-target="displayPaying">₱ 0.00</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-600">Change:</span>
-            <span class="font-semibold text-green-600" id="display-change">₱ 0.00</span>
+        <!-- Amount Summary -->
+        <div class="card bg-gray-50 mbe-3" data-checkout-target="summaryCard">
+          <h6 class="font-semibold mbe-2">Payment Summary</h6>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Subtotal:</span>
+              <span class="font-medium" id="display-subtotal" data-checkout-target="displaySubtotal">₱ 0.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Total:</span>
+              <span class="font-medium" id="display-total" data-checkout-target="displayTotal">₱ 0.00</span>
+            </div>
+            <div class="separator my-2" aria-hidden="true"></div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Amount Paid:</span>
+              <span class="font-semibold" id="display-paying" data-checkout-target="displayPaying">₱ 0.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Change:</span>
+              <span class="font-semibold text-green-600" id="display-change" data-checkout-target="displayChange">₱ 0.00</span>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     </section>
 
     <div class="separator mb-4" aria-hidden="true"></div>
@@ -212,8 +293,13 @@
         Print
       </button>
       <div class="mis-auto flex gap-4">
-        <%= link_to "Cancel", members_path, class: "btn btn--secondary" %>
-        <%= form.submit "Complete Payment & Activate Member", class: "btn btn--primary" if @user.inactive?%>
+        <% if is_view_mode %>
+          <%= link_to "Back to Transactions", transactions_path, class: "btn btn--secondary" %>
+          <%= link_to "View Member", edit_member_path(@user.customer_number), class: "btn btn--primary" %>
+        <% else %>
+          <%= link_to "Cancel", members_path, class: "btn btn--secondary" %>
+          <%= form.submit "Complete Payment & Activate Member", class: "btn btn--primary" if @user.active? %>
+        <% end %>
       </div>
     </div>
   </div>

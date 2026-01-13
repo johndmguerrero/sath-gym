@@ -1,5 +1,5 @@
 <tr id="transaction_<%= transaction.id %>">
-  <td class="whitespace-nowrap"><%= transaction.created_at.strftime("%b %d, %Y %H:%M") %></td>
+  <td class="whitespace-nowrap"><%= transaction.created_at.strftime("%b %d, %Y %I:%M %p") %></td>
   <td class="whitespace-nowrap">
     <% if transaction.subscription&.user %>
       <%= link_to edit_member_path(transaction.subscription.user.customer_number),
@@ -12,10 +12,14 @@
     <% end %>
   </td>
   <td class="whitespace-nowrap">
+    <span class="badge badge--<%= transaction.transaction_type %>">
+      <%= transaction.transaction_type.titleize %>
+    </span>
+  </td>
+  <td class="whitespace-nowrap">
     <span class="badge badge--<%= transaction.payment_method %>">
       <%= transaction.payment_method.titleize.gsub('_', ' ') %>
     </span>
   </td>
-  <td class="whitespace-nowrap"><%= transaction.reference_number.presence || "-" %></td>
   <td class="whitespace-nowrap text-right font-medium"><%= transaction.total.format %></td>
 </tr>

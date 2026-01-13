@@ -1,6 +1,7 @@
 # == Schema Information
 #
 # Table name: users
+# Database name: primary
 #
 #  id                     :bigint           not null, primary key
 #  address                :string
@@ -19,7 +20,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  role                   :string
-#  status                 :integer          default("draft"), not null
+#  status                 :integer          default("active"), not null
 #  weight                 :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -67,13 +68,19 @@ class User < ApplicationRecord
 
   before_create :generate_customer_number, if: -> { customer_number.blank? }
 
+  after_initialize :set_status
+
   ROLE_ADMIN = "Admin"
   ROLE_MEMBER = "Member"
 
-  scope :members, -> { where(:role => ROLE_MEMBER)}
+  scope :members, -> { includes(:subscription).where(:role => ROLE_MEMBER)}
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[ nickname first_name last_name status customer_number email]
+    %w[ fullname first_name last_name status customer_number email]
+  end
+
+  ransacker :fullname do
+    Arel.sql("CONCAT(first_name, ' ', last_name)")
   end
 
   def self.ransackable_associations(auth_object = nil)
@@ -86,6 +93,14 @@ class User < ApplicationRecord
 
   def admin?
     role.eql? ROLE_ADMIN
+  end
+
+  def set_status
+    return status if subscription.nil?
+
+    if subscription.expired? && persisted?
+      update(status: 1)
+    end
   end
 
   def member?

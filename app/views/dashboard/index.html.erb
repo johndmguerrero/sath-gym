@@ -13,10 +13,10 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <!-- Total Members Card -->
-      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
+      <div class="stat-card card text-white" style="background-color: var(--color-crusta-500)">
           <div>
               <div class="stat-label">Total Members</div>
-              <div class="stat-value"><%= @total_members %></div>
+              <div class="text-2xl font-bold"><%= @total_members %></div>
               <div class="text-xs mbs-2">
                 <%= @active_members.size %> active, <%= @draft_members.size %> inactive
               </div>
@@ -24,31 +24,40 @@
       </div>
 
       <!-- Today's Attendance Card -->
-      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
+      <div class="stat-card card text-white" style="background-color: var(--color-crusta-500)">
           <div>
               <div class="stat-label">Today's Check-ins</div>
-              <div class="stat-value"><%= @today_attendance_count %></div>
+              <div class="text-2xl font-bold"><%= @today_attendance_count %></div>
               <div class="text-xs mbs-2">Last 24 hours: <%= @recent_attendances.size %></div>
           </div>
       </div>
 
       <!-- Expiring Soon Card -->
-      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
+      <div class="stat-card card text-white" style="background-color: var(--color-crusta-500)">
           <div>
-              <div class="stat-label">Expiring Soon</div>
-              <div class="stat-value"><%= @expiring_soon.size %></div>
+              <div class="stat-label">Membership Expiring Soon</div>
+              <div class="text-2xl font-bold"><%= @expiring_soon.size %></div>
               <div class="text-xs mbs-2">Next 30 days</div>
           </div>
       </div>
 
       <!-- Revenue Card -->
-      <div class="stat-card card" style="background-color: var(--color-crusta-500)">
+      <div class="stat-card card text-white" style="background-color: var(--color-crusta-500)">
           <div>
               <div class="stat-label">Monthly Revenue</div>
-              <div class="stat-value">₱<%= number_with_delimiter(@monthly_revenue.to_i) %></div>
+              <div class="text-2xl font-bold">₱<%= number_with_delimiter(@monthly_revenue.to_i) %></div>
               <div class="text-xs mbs-2">Today: ₱<%= number_with_delimiter(@today_revenue.to_i) %></div>
           </div>
       </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="relative i-full" style="block-size: 400px;">
+      <%= tag.canvas aria: { label: "Monthly Sales" }, role: "img", data: { controller: "chart", chart_type_value: "line", chart_data_value: @chart_data.to_json } %>
+    </div>
+    <div class="relative i-full" style="block-size: 350px;">
+      <%= tag.canvas class: "m-auto" ,aria: { label: "Most Popular Plans" }, role: "img", data: { controller: "chart", chart_type_value: "pie", chart_data_value: @pie_data.to_json } %>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -96,7 +105,7 @@
       <div>
           <div class="card">
               <div class="flex justify-between items-center mbe-3">
-                  <h2 style="font-size: 20px; font-weight: 600; margin: 0;">Expiring Soon</h2>
+                  <h2 style="font-size: 20px; font-weight: 600; margin: 0;">Membership Expiring Soon</h2>
                   <span class="time-badge">Next 30 Days</span>
               </div>
 
