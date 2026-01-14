@@ -109,7 +109,7 @@
                 <%= plan_form.text_field :price, placeholder: "0", class: "input", inputmode: "decimal", data: { controller: "inputmask", maska_number_fraction: "2", maska_number_unsigned: true }%>
                 <span class="input-addon text-black"><%= plan_form.object.price_currency || "PHP" %></span>
               </div>
-              <p class="text-xs text-gray-500 mt-1">Amount in cents</p>
+              <p class="text-xs text-gray-500 mt-1 hidden">Amount in cents</p>
             </div>
 
             <div class="form-interval">

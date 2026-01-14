@@ -76,7 +76,7 @@ export default class extends Controller {
               <input type="text" name="product[product_plans_attributes][${index}][price]" id="product_product_plans_attributes_${index}_price" placeholder="0" class="input" inputmode="decimal" data-controller="inputmask" data-maska-number-fraction="2" data-maska-number-unsigned="true">
               <span class="input-addon">PHP</span>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Amount in cents</p>
+            <p class="text-xs text-gray-500 mt-1 hidden">Amount in cents</p>
           </div>
 
           <div class="form-interval">
