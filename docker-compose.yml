@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16
+    image: postgres:16-alpine #from 'postgres:16' to 'postgres:16-alpine' since this version works with lance laptop, probably ram issue.
     environment:
       POSTGRES_USER: sath_gym
       POSTGRES_PASSWORD: password

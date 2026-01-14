@@ -1,15 +1,7 @@
 <tr id="transaction_<%= transaction.id %>">
   <td class="whitespace-nowrap"><%= transaction.created_at.strftime("%b %d, %Y %I:%M %p") %></td>
   <td class="whitespace-nowrap">
-    <% if transaction.subscription&.user %>
-      <%= link_to edit_member_path(transaction.subscription.user.customer_number),
-          class: "text-blue-400 hover:underline",
-          data: { turbo_frame: "_top" } do %>
-        <%= transaction.subscription.user.fullname %>
-      <% end %>
-    <% else %>
-      <span class="text-subtle">Walk-in</span>
-    <% end %>
+    <span class="text-subtle"><%= transaction.subscription.user.fullname %></span>
   </td>
   <td class="whitespace-nowrap">
     <span class="badge badge--<%= transaction.transaction_type %>">
