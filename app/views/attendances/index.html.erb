@@ -8,7 +8,7 @@
     </div>
     <h2 class="text-2xl">Manage Attendance</h2>
     <div class="mis-auto">
-      <%= link_to "http://127.0.0.1:5001", target: "_blank", class: "btn btn--primary" do %>
+      <%= link_to ENV.fetch("FACE_SCAN_URL", "http://127.0.0.1:5001"), target: "_blank", class: "btn btn--primary" do %>
         Face scan
       <% end %>
     </div>

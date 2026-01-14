@@ -12,7 +12,7 @@
 
     <div class="mis-auto flex gap-2">
       <% if !@member.face_scan %>
-        <%= link_to "http://127.0.0.1:5001/?register=#{@member.customer_number}", class: "btn btn--primary", target: "_blank", rel: "noopener noreferrer" do %>
+        <%= link_to "#{ENV.fetch("FACE_SCAN_URL", "http://127.0.0.1:5001")}/?register=#{@member.customer_number}", class: "btn btn--primary", target: "_blank", rel: "noopener noreferrer" do %>
           <span class="icon icon--camera" aria-hidden="true"></span>
           <span>Register Face Scan</span>
         <% end %>
