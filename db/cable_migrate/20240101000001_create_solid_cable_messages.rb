@@ -1,6 +1,6 @@
 class CreateSolidCableMessages < ActiveRecord::Migration[8.0]
   def change
-    create_table :solid_cable_messages do |t|
+    create_table :solid_cable_messages, if_not_exists: true do |t|
       t.binary :channel, null: false
       t.binary :payload, null: false
       t.datetime :created_at, null: false
