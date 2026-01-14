@@ -4,7 +4,6 @@
   <% else %>
     <% members.each do |member| %>
       <tr>
-        <td><%= check_box_tag "selected_ids[]", member.id, id: "selected_ids_#{member.id}", class: "input", data: { action: "check-all#check", check_all_target: "dependant" } %></td>
         <td class="whitespace-nowrap">#<%= member.customer_number %></td>
         <td class="whitespace-nowrap">
           <div class="flex items-center gap">

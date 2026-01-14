@@ -1,12 +1,11 @@
 <tr id="equipment_category_<%= equipment_category.id %>">
-  <td><%= check_box_tag "selected_ids[]", equipment_category.id, id: "selected_ids_#{equipment_category.id}", class: "input", data: { action: "check-all#check", check_all_target: "dependant" } %></td>
   <td class="whitespace-nowrap">
     <span class="overflow-ellipsis" style="inline-size: 200px"><%= equipment_category.name %></span>
   </td>
   <td class="whitespace-nowrap">
     <span class="overflow-ellipsis" style="inline-size: 300px"><%= equipment_category.desciption || "--" %></span>
   </td>
-  <td class="whitespace-nowrap text-center">
+  <td class="whitespace-nowrap">
     <%= equipment_category.equipment.size %>
   </td>
   <td class="whitespace-nowrap">

@@ -4,7 +4,6 @@
   <% else %>
     <% equipments.each do |equipment| %>
       <tr>
-        <td><%= check_box_tag "selected_ids[]", equipment.id, id: "selected_ids_#{equipment.id}", class: "input", data: { action: "check-all#check", check_all_target: "dependant" } %></td>
         <td class="whitespace-nowrap">
           <span class="overflow-ellipsis" style="inline-size: 150px"><%= equipment.sku || "--" %></span>
         </td>
