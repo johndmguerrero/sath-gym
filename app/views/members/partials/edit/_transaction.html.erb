@@ -62,7 +62,7 @@
       <div class="text-center py-8">
         <span class="icon icon--receipt text-gray-400" aria-hidden="true" style="--icon-size: 3rem"></span>
         <p class="text-subtle mt-2">No transactions yet</p>
-        <% if member.subscription.present? %>
+        <% if @member.subscription.present? %>
           <p class="text-sm text-gray-500 mt-1">Transactions will appear here after checkout or renewal.</p>
         <% else %>
           <p class="text-sm text-gray-500 mt-1">This member needs a subscription first.</p>
