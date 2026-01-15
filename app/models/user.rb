@@ -76,11 +76,15 @@ class User < ApplicationRecord
   scope :members, -> { includes(:subscription).where(:role => ROLE_MEMBER)}
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[ fullname first_name last_name status customer_number email]
+    %w[ fullname first_name last_name status customer_number email fullname_or_customer_number]
   end
 
   ransacker :fullname do
     Arel.sql("CONCAT(first_name, ' ', last_name)")
+  end
+
+  ransacker :fullname_or_customer_number do
+    Arel.sql("CONCAT(first_name, ' ', last_name, ' ', COALESCE(customer_number, ''))")
   end
 
   def self.ransackable_associations(auth_object = nil)
