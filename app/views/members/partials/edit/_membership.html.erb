@@ -26,6 +26,15 @@
             <dd><%= @member.subscription.expires_at.strftime("%B %d, %Y") if @member.subscription.expires_at %></dd>
           </div>
         </div>
+
+        <% if @member.subscription.inactive? %>
+          <div class="mbs-4">
+            <%= link_to checkout_transactions_path(customer_number: @member.customer_number), class: "btn btn--primary" do %>
+              <span class="icon icon--wallet-card" aria-hidden="true"></span>
+              Complete Payment
+            <% end %>
+          </div>
+        <% end %>
       <% else %>
         <p>No active subscription</p>
       <% end %>
