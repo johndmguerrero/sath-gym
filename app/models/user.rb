@@ -68,15 +68,18 @@ class User < ApplicationRecord
 
   before_create :generate_customer_number, if: -> { customer_number.blank? }
 
-  after_initialize :set_status
 
   ROLE_ADMIN = "Admin"
   ROLE_MEMBER = "Member"
 
-  scope :members, -> { includes(:subscription).where(:role => ROLE_MEMBER)}
+  scope :members, -> { left_joins(:subscription).includes(:subscription).where(:role => ROLE_MEMBER)}
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[ fullname first_name last_name status customer_number email fullname_or_customer_number]
+    %w[ fullname first_name last_name status customer_number email fullname_or_customer_number display_status]
+  end
+
+  def self.ransortable_attributes(auth_object = nil)
+    ransackable_attributes(auth_object)
   end
 
   ransacker :fullname do
@@ -85,6 +88,21 @@ class User < ApplicationRecord
 
   ransacker :fullname_or_customer_number do
     Arel.sql("CONCAT(first_name, ' ', last_name, ' ', COALESCE(customer_number, ''))")
+  end
+
+  # Sort by display status: Active (0), At Risk (1), Inactive (2)
+  # At Risk = subscription expires within 7 days but not expired yet
+  ransacker :display_status do
+    Arel.sql(<<-SQL.squish)
+      CASE
+        WHEN subscriptions.expires_at IS NOT NULL
+             AND subscriptions.expires_at >= CURRENT_DATE
+             AND subscriptions.expires_at <= CURRENT_DATE + INTERVAL '7 days'
+        THEN 1
+        WHEN users.status = 0 THEN 0
+        ELSE 2
+      END
+    SQL
   end
 
   def self.ransackable_associations(auth_object = nil)
