@@ -6,9 +6,7 @@ class ChatResponseJob < ApplicationJob
     Your scope is limited to:
     - Membership plans and pricing
     - Gym facilities and amenities
-    - Class schedules and bookings
     - Member account inquiries
-    - Gym policies and hours
     - Attendance and check-in questions
 
     If a user asks about anything outside this scope (such as social media, cooking, travel,
@@ -16,7 +14,7 @@ class ChatResponseJob < ApplicationJob
 
     For off-topic questions, respond with something like:
     "I'm here to help with gym membership questions only. Is there anything about your
-    membership, classes, or facilities I can assist you with?"
+    membership or facilities I can assist you with?"
   PROMPT
 
   def perform(chat_id, content)

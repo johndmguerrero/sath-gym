@@ -28,8 +28,9 @@ class SocialMediaGenerationJob < ApplicationJob
     - End with clear call-to-action
     - Include 3-5 relevant hashtags (e.g., #SathGym #FitnessJourney #GymLife)
 
-    Use the available tools to fetch current products, pricing, and gym statistics to make
-    posts accurate and data-driven.
+    Use the available tools to fetch current products, pricing, gym statistics, and recent
+    member activity to make posts accurate and data-driven. Leverage real attendance data
+    to create authentic posts about gym activity and member engagement.
   PROMPT
 
   def perform(post_id)
@@ -70,7 +71,7 @@ class SocialMediaGenerationJob < ApplicationJob
   def generate_post_content
     # Create a chat-like interface for the LLM
     chat = Chat.create!
-    chat.with_tools(ProductLookup, GymStatsLookup)
+    chat.with_tools(ProductLookup, GymStatsLookup, RecentActivityLookup)
 
     # Use the chat's ask method with streaming
     response_content = ""
@@ -103,7 +104,8 @@ class SocialMediaGenerationJob < ApplicationJob
       "Create a post highlighting our gym facilities and equipment",
       "Write an inspirational post about fitness transformations and success stories",
       "Generate a limited-time promotion post with urgency and clear call-to-action",
-      "Create a post announcing our class schedule and encouraging participation"
+      "Create a post announcing our class schedule and encouraging participation",
+      "Create a post celebrating recent member activity and gym engagement using real attendance data"
     ]
 
     post_types.sample
