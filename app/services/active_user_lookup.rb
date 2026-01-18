@@ -1,5 +1,5 @@
 class ActiveUserLookup < RubyLLM::Tool
-  description "Look up gym users based on status filters. Can query active/inactive users and at-risk members (subscription expires within 7 days). Returns user details with subscription information."
+  description "Look up gym users based on status filters. Can query active/inactive users. Returns user details with subscription information."
 
   def name
     "active_user_lookup"
@@ -7,7 +7,6 @@ class ActiveUserLookup < RubyLLM::Tool
 
   params do
     string :status, description: "Filter users by status: 'active' for active users, 'inactive' for inactive users"
-    string :at_risk, description: "Filter users at risk of expiration: 'true' for users whose subscription expires within 7 days, 'false' for not at risk"
   end
 
   def execute(status: nil, at_risk: nil)
