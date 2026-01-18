@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
     # Member statistics
     @active_members = User.members.active
     @draft_members = User.members.inactive
-    @total_members = User.members.count
+    @total_members = @active_members + @draft_members
 
     # Attendance statistics
     @recent_attendances = Attendance.includes(:user)
