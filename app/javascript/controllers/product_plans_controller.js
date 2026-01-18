@@ -82,8 +82,7 @@ export default class extends Controller {
           <div class="form-interval">
             <label for="product_product_plans_attributes_${index}_interval">Billing Interval</label>
             <select name="product[product_plans_attributes][${index}][interval]" id="product_product_plans_attributes_${index}_interval" class="input">
-              <option value="">Select interval</option>
-              <option value="monthly">Monthly</option>
+              <option value="monthly" selected>Monthly</option>
               <option value="yearly">Yearly</option>
               <option value="daily">Daily</option>
             </select>

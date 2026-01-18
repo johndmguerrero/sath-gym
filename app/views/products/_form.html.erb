@@ -116,7 +116,7 @@
               <%= plan_form.label :interval, "Billing Interval" %>
               <%= plan_form.select :interval,
                   ProductPlan.intervals.keys.map { |k| [k.humanize, k] },
-                  { prompt: "Select interval" },
+                  { selected: plan_form.object.interval || "monthly" },
                   { class: "input" } %>
             </div>
 
