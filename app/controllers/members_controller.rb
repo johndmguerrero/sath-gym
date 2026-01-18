@@ -78,9 +78,10 @@ class MembersController < ApplicationController
 
   def unregister_face_scan
     api_url = "#{ENV.fetch('FACE_SCAN_API_URL', 'http://127.0.0.1:5000')}/unregister/#{@member.customer_number}"
+    uri = URI(api_url)
 
-    response = Net::HTTP.start(URI(api_url).host, URI(api_url).port) do |http|
-      http.delete(URI(api_url).path)
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https", open_timeout: 10, read_timeout: 10) do |http|
+      http.delete(uri.path)
     end
 
     case response
@@ -93,6 +94,10 @@ class MembersController < ApplicationController
       flash[:alert] = "Failed to unregister face scan"
     end
 
+    redirect_to edit_member_path(@member.customer_number)
+  rescue Errno::ECONNREFUSED, Net::OpenTimeout, Net::ReadTimeout, EOFError => e
+    Rails.logger.error("Face scan API error: #{e.message}")
+    flash[:alert] = "Could not connect to face scan service"
     redirect_to edit_member_path(@member.customer_number)
   end
 
