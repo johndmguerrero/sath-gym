@@ -1,9 +1,9 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: [:show, :update_face_scan]
-  skip_before_action :verify_authenticity_token, only: [:update_face_scan]
+  skip_before_action :authenticate_user!, only: [:show, :update_face_scan, :remove_face_scan]
+  skip_before_action :verify_authenticity_token, only: [:update_face_scan, :remove_face_scan]
   include Pagy::Backend
-  before_action :set_member, only: [:edit, :show]
+  before_action :set_member, only: [:edit, :show, :unregister_face_scan]
   before_action :set_product_plan, only: [:create]
 
   def index
@@ -63,6 +63,37 @@ class MembersController < ApplicationController
     end
 
     head :no_content
+  end
+
+  def remove_face_scan
+    member = User.members.find_by(customer_number: params[:customer_number])
+
+    if member
+      member.update(face_scan: false)
+      render json: { status: "success", customer_number: member.customer_number }
+    else
+      render json: { error: "Member not found" }, status: :not_found
+    end
+  end
+
+  def unregister_face_scan
+    api_url = "#{ENV.fetch('FACE_SCAN_API_URL', 'http://127.0.0.1:5000')}/unregister/#{@member.customer_number}"
+
+    response = Net::HTTP.start(URI(api_url).host, URI(api_url).port) do |http|
+      http.delete(URI(api_url).path)
+    end
+
+    case response
+    when Net::HTTPSuccess
+      @member.update(face_scan: false)
+      flash[:notice] = "Face scan unregistered successfully"
+    when Net::HTTPNotFound
+      flash[:alert] = "User not found in face scan system"
+    else
+      flash[:alert] = "Failed to unregister face scan"
+    end
+
+    redirect_to edit_member_path(@member.customer_number)
   end
 
   private

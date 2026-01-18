@@ -16,6 +16,11 @@
           <span class="icon icon--camera" aria-hidden="true"></span>
           <span>Register Face Scan</span>
         <% end %>
+      <% else %>
+        <%= button_to unregister_face_scan_member_path(@member.customer_number), method: :delete, class: "btn btn--secondary", data: { turbo_confirm: "Are you sure you want to unregister face scan for this member?" } do %>
+          <span class="icon icon--camera" aria-hidden="true"></span>
+          <span>Unregister Face Scan</span>
+        <% end %>
       <% end %>
 
       <% if @member.active? %>

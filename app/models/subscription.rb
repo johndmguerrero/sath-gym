@@ -27,7 +27,7 @@ class Subscription < ApplicationRecord
   belongs_to :user
   belongs_to :product_plan
 
-  has_many :transactions
+  has_many :transactions, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)
     %w[id user_id]

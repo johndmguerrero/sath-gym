@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   resources :equipment_categories, only: [:index, :new, :create, :edit, :update]
   resources :members, only: [:index, :new, :edit, :create] do
     post "on_subscription_change", on: :collection
+    delete "unregister_face_scan", on: :member
   end
 
   resources :social_media do
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
 
   get "members/:id", to: "members#show", defaults: { format: :json }, constraints: { format: :json }, as: :member_json
   post "members/update_face_scan", to: "members#update_face_scan", defaults: { format: :json }, constraints: { format: :json }
+  post "members/remove_face_scan", to: "members#remove_face_scan", defaults: { format: :json }, constraints: { format: :json }
   resources :attendances, only: [:index, :create]
   resources :products, except: :show do
     patch "toggle_status", to: "products#toggle_status", on: :member, as: :toggle_status

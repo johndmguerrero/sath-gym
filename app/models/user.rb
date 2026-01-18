@@ -39,12 +39,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one :subscription
+  has_one :subscription, dependent: :destroy
   has_one :subscription_product, through: :subscription
 
-  has_one :user_address
+  has_one :user_address, dependent: :destroy
 
-  has_many :attendances
+  has_many :attendances, dependent: :destroy
   has_many :social_media_posts
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
 
