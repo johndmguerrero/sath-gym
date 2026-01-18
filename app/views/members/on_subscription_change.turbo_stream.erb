@@ -1,7 +1,7 @@
 <%= turbo_stream.replace "user_subscription_attributes_product_plan_id" do %>
   <%= fields_for :user do |f| %>
     <%= f.fields_for :subscription_attributes do |sub| %>
-      <%= sub.collection_select :product_plan_id, @plans, :id, :display_plan, { include_blank: "Select one" }, { class: "input" } %>
+      <%= sub.collection_select :product_plan_id, @plans, :id, :display_plan, { selected: @plans.first&.id }, { class: "input" } %>
     <% end %>
   <% end %>
 <% end %>

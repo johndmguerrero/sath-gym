@@ -38,7 +38,10 @@ Rails.application.routes.draw do
   resources :equipment_categories, only: [:index, :new, :create, :edit, :update]
   resources :members, only: [:index, :new, :edit, :create] do
     post "on_subscription_change", on: :collection
+    post "on_plan_change", on: :collection
     delete "unregister_face_scan", on: :member
+    get "change_plan", on: :member
+    patch "update_plan", on: :member
   end
 
   resources :social_media do

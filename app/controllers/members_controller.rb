@@ -3,7 +3,7 @@ class MembersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:show, :update_face_scan, :remove_face_scan]
   skip_before_action :verify_authenticity_token, only: [:update_face_scan, :remove_face_scan]
   include Pagy::Backend
-  before_action :set_member, only: [:edit, :show, :unregister_face_scan]
+  before_action :set_member, only: [:edit, :show, :unregister_face_scan, :change_plan, :update_plan]
   before_action :set_product_plan, only: [:create]
 
   def index
@@ -53,6 +53,28 @@ class MembersController < ApplicationController
 
   def on_subscription_change
     @plans = ProductPlan.where(product_id: params[:user][:product_id]).order(:price_cents)
+  end
+
+  def on_plan_change
+    @plans = ProductPlan.active.where(product_id: params[:product_id]).order(:price_cents)
+  end
+
+  def change_plan
+    @products = Product.active.includes(:product_plans)
+    current_product = @member.subscription&.product_plan&.product
+    @plans = current_product&.product_plans&.active&.order(:price_cents) || []
+  end
+
+  def update_plan
+    subscription = @member.subscription
+    new_plan = ProductPlan.find_by(id: params[:product_plan_id])
+
+    if new_plan && subscription.update(product_plan: new_plan)
+      flash[:notice] = "Subscription plan updated successfully"
+    else
+      flash[:alert] = "Failed to update subscription plan"
+    end
+    redirect_to edit_member_path(@member.customer_number)
   end
 
   def update_face_scan

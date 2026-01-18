@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "change_plan_product_plan_id" do %>
+  <%= select_tag :product_plan_id, options_from_collection_for_select(@plans, :id, :display_plan, @plans.first&.id), class: "input", id: "change_plan_product_plan_id" %>
+<% end %>

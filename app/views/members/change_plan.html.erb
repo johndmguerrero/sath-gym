@@ -1,0 +1,28 @@
+<%= turbo_frame_tag "change_plan_dialog" do %>
+  <div class="sheet__content">
+    <%= form_with url: update_plan_member_path(@member.customer_number), method: :patch, id: "change_plan_form", class: "flex flex-col gap", autocomplete: "off", data: { controller: "form", turbo_frame: "_top" } do |form| %>
+      <div class="flex flex-col">
+        <h3 class="font-semibold leading-none mbe-1">Change Subscription Plan</h3>
+        <p class="text-sm text-subtle">Select a new product and plan for this member's subscription.</p>
+      </div>
+
+      <div class="flex flex-col gap mb-2">
+        <div class="flex flex-col gap-half">
+          <%= form.label :product_id, "Product", class: "text-sm font-medium leading-none" %>
+          <%= form.collection_select :product_id, @products, :id, :name, { selected: @member.subscription&.product_plan&.product_id }, { class: "input", data: { action: "form#submit", form_submitter_param: "on_plan_change" } } %>
+        </div>
+
+        <div class="flex flex-col gap-half">
+          <%= form.label :product_plan_id, "Plan", class: "text-sm font-medium leading-none" %>
+          <%= form.collection_select :product_plan_id, @plans, :id, :display_plan, { selected: @member.subscription&.product_plan_id }, { id: "change_plan_product_plan_id", class: "input" } %>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap">
+        <button type="button" class="btn" data-action="dialog#close">Cancel</button>
+        <%= form.submit "Update Plan", class: "btn btn--primary" %>
+        <%= form.submit id: "on_plan_change", hidden: true, formaction: on_plan_change_members_path, formmethod: :post, formnovalidate: true %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

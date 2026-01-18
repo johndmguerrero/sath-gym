@@ -1,8 +1,16 @@
-<div hidden id="tab_membership" data-tabs-target="tab" role="tabpanel" aria-labelledby="trigger_membership">
+<div hidden id="tab_membership" data-tabs-target="tab" role="tabpanel" aria-labelledby="trigger_membership" data-controller="dialog">
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="card">
-      <h3 class="mbe-3">Membership Information</h3>
+      <div class="flex items-center justify-between mbe-3">
+        <h3>Membership Information</h3>
+        <% if @member.subscription.present? %>
+          <%= link_to change_plan_member_path(@member.customer_number), class: "btn btn--secondary btn--sm", data: { turbo_frame: "change_plan_dialog", action: "dialog#showModal" } do %>
+            <span class="icon icon--pencil-line" aria-hidden="true"></span>
+            Change Plan
+          <% end %>
+        <% end %>
+      </div>
 
       <% if @member.subscription.present? %>
         <div>
@@ -41,4 +49,12 @@
     </div>
 
   </div>
+
+  <dialog class="sheet sheet--right" data-dialog-target="content" data-action="click->dialog#closeOnClickOutside" aria-label="Change Subscription Plan">
+    <button type="button" class="btn btn--plain sheet__close" data-action="dialog#close">
+      <span class="icon icon--x" aria-hidden="true"></span>
+      <span class="sr-only">Close</span>
+    </button>
+    <%= turbo_frame_tag "change_plan_dialog" %>
+  </dialog>
 </div>
