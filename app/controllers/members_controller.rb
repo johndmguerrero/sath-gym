@@ -20,7 +20,7 @@ class MembersController < ApplicationController
 
     @member    = User.new
     @address   = @member.build_user_address
-    @products  = Product.includes(:product_plans).all
+    @products  = Product.active.includes(:product_plans).all
     @genders   = User.genders.keys
   end
 
@@ -30,7 +30,7 @@ class MembersController < ApplicationController
       redirect_to checkout_transactions_path(customer_number: subscription.user.customer_number)
     else
       @member    = subscription.user
-      @products  = Product.includes(:product_plans).all
+      @products  = Product.active.includes(:product_plans).all
       @genders   = User.genders.keys
       render :new, status: :unprocessable_entity
     end
@@ -40,7 +40,10 @@ class MembersController < ApplicationController
     respond_to do |format|
       format.json {
         if member_inactive?
-          render json: { error: "User is inactive" }, status: :unprocessable_entity
+          render json: @member.as_json(
+            include: { subscription: { methods: [:active?] } },
+            methods: :fullname
+          ).merge(error: "User is inactive"), status: :unprocessable_entity
         else
           render json: @member,
                  include: { subscription: { methods: [:active?] } },

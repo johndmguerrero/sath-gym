@@ -13,7 +13,7 @@ class ActiveUserLookup < RubyLLM::Tool
 
   def execute(status: nil, at_risk: nil, subscription_status: nil)
     # Start with all users, eager load subscription and related data
-    users = User.includes(subscription: { product_plan: :product })
+    users = User.members.includes(subscription: { product_plan: :product })
 
     # Apply status filter (enum)
     users = users.active if status == "active"

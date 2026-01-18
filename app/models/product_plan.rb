@@ -26,9 +26,17 @@ class ProductPlan < ApplicationRecord
   enum :interval, { monthly: 0, yearly: 1, daily: 2}, default: 0
   belongs_to :product
 
+  after_initialize :set_default_interval_count
+
   monetize :price_cents
 
   def display_plan
     "#{price.format} -- #{interval}"
+  end
+
+  private
+
+  def set_default_interval_count
+    self.interval_count ||= 1
   end
 end

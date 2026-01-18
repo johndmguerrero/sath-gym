@@ -90,7 +90,7 @@ export default class extends Controller {
 
           <div class="form-interval-count">
             <label for="product_product_plans_attributes_${index}_interval_count">Interval Count</label>
-            <input type="number" name="product[product_plans_attributes][${index}][interval_count]" id="product_product_plans_attributes_${index}_interval_count" placeholder="1" class="input" min="1">
+            <input type="number" name="product[product_plans_attributes][${index}][interval_count]" id="product_product_plans_attributes_${index}_interval_count" class="input" min="1">
           </div>
 
           <div class="form-currency">
