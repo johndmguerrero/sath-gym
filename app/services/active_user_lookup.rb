@@ -1,5 +1,5 @@
 class ActiveUserLookup < RubyLLM::Tool
-  description "Look up gym users based on status filters. Can query active/inactive users, at-risk members (subscription expires within 7 days), and subscription status. Returns user details with subscription information."
+  description "Look up gym users based on status filters. Can query active/inactive users and at-risk members (subscription expires within 7 days). Returns user details with subscription information."
 
   def name
     "active_user_lookup"
@@ -8,10 +8,9 @@ class ActiveUserLookup < RubyLLM::Tool
   params do
     string :status, description: "Filter users by status: 'active' for active users, 'inactive' for inactive users"
     string :at_risk, description: "Filter users at risk of expiration: 'true' for users whose subscription expires within 7 days, 'false' for not at risk"
-    string :subscription_status, description: "Filter by subscription status: 'Active', 'Expired', 'Inactive', or 'No Subscription'"
   end
 
-  def execute(status: nil, at_risk: nil, subscription_status: nil)
+  def execute(status: nil, at_risk: nil)
     # Start with all users, eager load subscription and related data
     users = User.members.includes(subscription: { product_plan: :product })
 
@@ -29,17 +28,11 @@ class ActiveUserLookup < RubyLLM::Tool
       user_records = user_records.reject(&:at_risk?)
     end
 
-    # Apply subscription_status filter
-    if subscription_status.present?
-      user_records = user_records.select { |u| u.subscription_status_badge == subscription_status }
-    end
-
     {
       success: true,
       filters: {
         status: status,
-        at_risk: at_risk,
-        subscription_status: subscription_status
+        at_risk: at_risk
       },
       count: user_records.count,
       users: user_records.map do |user|

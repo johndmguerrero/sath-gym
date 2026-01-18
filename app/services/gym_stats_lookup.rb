@@ -3,7 +3,7 @@ class GymStatsLookup < RubyLLM::Tool
 
   def execute
     {
-      total_members: User.count,
+      total_members: User.members.count,
       active_subscriptions: Subscription.active.count,
       recent_attendance_24h: Attendance.logged_last_24_hours.count,
       total_attendance_this_month: Attendance.where(
