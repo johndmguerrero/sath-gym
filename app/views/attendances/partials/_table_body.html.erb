@@ -5,6 +5,7 @@
     <% attendances.each do |attendance| %>
       <tr>
         <td class="whitespace-nowrap">#<%= attendance.customer_number %></td>
+        <td class="whitespace-nowrap">#<%= attendance.user.fullname %></td>
         <td class="whitespace-nowrap">
           <span><%= attendance.created_at.strftime("%b %d, %Y %I:%M %p") %></span>
         </td>
