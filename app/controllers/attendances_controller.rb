@@ -13,6 +13,16 @@ class AttendancesController < ApplicationController
   end
 
   def create
+    unless @user
+      render json: { error: "User not found" }, status: :not_found
+      return
+    end
+
+    if user_inactive?
+      render json: { error: "User is inactive" }, status: :unprocessable_entity
+      return
+    end
+
     existing_attendance = @user.attendances.where(created_at: Date.current.all_day).first
 
     if existing_attendance
@@ -37,5 +47,12 @@ class AttendancesController < ApplicationController
 
   def attendance_params
     params.require(:attendances).permit(:customer_number, :remarks)
+  end
+
+  def user_inactive?
+    return true if @user.inactive?
+    return true if @user.subscription&.expired?
+
+    false
   end
 end

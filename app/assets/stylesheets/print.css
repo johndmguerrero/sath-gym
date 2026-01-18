@@ -140,7 +140,7 @@
     display: block !important;
   }
 
-  div.payment-information{
+  div.payment-information, section.subscription-section{
     display: none !important;
   }
 

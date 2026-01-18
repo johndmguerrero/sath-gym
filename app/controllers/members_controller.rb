@@ -39,9 +39,13 @@ class MembersController < ApplicationController
   def show
     respond_to do |format|
       format.json {
-        render json: @member,
-               include: { subscription: { methods: [:active?] } },
-               methods: :fullname
+        if member_inactive?
+          render json: { error: "User is inactive" }, status: :unprocessable_entity
+        else
+          render json: @member,
+                 include: { subscription: { methods: [:active?] } },
+                 methods: :fullname
+        end
       }
     end
   end
@@ -147,5 +151,12 @@ class MembersController < ApplicationController
       user_address_attributes: [:region, :province, :city, :barangay],
       subscription_attributes: [:product_plan_id]
     )
+  end
+
+  def member_inactive?
+    return true if @member.inactive?
+    return true if @member.subscription&.expired?
+
+    false
   end
 end

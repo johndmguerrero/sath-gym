@@ -49,6 +49,7 @@ class User < ApplicationRecord
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
 
   after_initialize :build_default_subscription, if: :new_record?
+  after_initialize :set_status
 
   before_validation :set_default_required_values, on: :create
 
